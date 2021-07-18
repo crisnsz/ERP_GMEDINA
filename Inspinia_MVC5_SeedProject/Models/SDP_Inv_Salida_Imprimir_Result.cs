@@ -13,11 +13,9 @@ namespace ERP_GMEDINA.Models
     
     public partial class SDP_Inv_Salida_Imprimir_Result
     {
-        public Nullable<int> sal_Id { get; set; }
         public Nullable<System.DateTime> sal_FechaElaboracion { get; set; }
         public string tsal_Descripcion { get; set; }
         public string bod_Nombre { get; set; }
-        public string bod_ResponsableBodega { get; set; }
         public string sal_BodDestino { get; set; }
         public string fact_Codigo { get; set; }
         public string prod_Codigo { get; set; }
@@ -30,6 +28,5 @@ namespace ERP_GMEDINA.Models
         public string pcat_Nombre { get; set; }
         public string uni_Descripcion { get; set; }
         public string prod_CodigoBarras { get; set; }
-        public decimal sald_Cantidad { get; set; }
     }
 }

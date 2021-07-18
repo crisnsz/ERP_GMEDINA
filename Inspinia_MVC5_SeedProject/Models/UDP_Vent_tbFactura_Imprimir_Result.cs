@@ -34,8 +34,12 @@ namespace ERP_GMEDINA.Models
         public decimal factd_Cantidad { get; set; }
         public Nullable<decimal> Importe { get; set; }
         public Nullable<decimal> MontoFactura { get; set; }
+        public Nullable<decimal> MontoDescuento { get; set; }
+        public Nullable<decimal> MontoImpuesto { get; set; }
+        public Nullable<decimal> MontoEfectivo { get; set; }
+        public Nullable<decimal> TotalCambio { get; set; }
+        public Nullable<decimal> TotalEfectivo { get; set; }
         public Nullable<decimal> TotalPagado { get; set; }
-        public Nullable<decimal> SaldoFactura { get; set; }
         public string IdentidadTE { get; set; }
         public string NombreTE { get; set; }
         public Nullable<System.DateTime> FechaTE { get; set; }

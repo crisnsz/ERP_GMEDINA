@@ -14,6 +14,8 @@ namespace ERP_GMEDINA.Models
     public partial class SPGetResponsableBodega_Result
     {
         public int bod_Id { get; set; }
-        public string bod_ResponsableBodega { get; set; }
+        public short bod_ResponsableBodega { get; set; }
+        public string emp_Nombres { get; set; }
+        public string emp_Apellidos { get; set; }
     }
 }

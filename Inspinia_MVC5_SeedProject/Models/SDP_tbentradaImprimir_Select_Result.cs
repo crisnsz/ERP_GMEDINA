@@ -22,7 +22,7 @@ namespace ERP_GMEDINA.Models
         public string ent_FacturaCompra { get; set; }
         public System.DateTime ent_FechaCompra { get; set; }
         public string tdev_descripcion { get; set; }
-        public string fact_Id { get; set; }
+        public int fact_Id { get; set; }
         public int ent_BodegaDestino { get; set; }
     }
 }

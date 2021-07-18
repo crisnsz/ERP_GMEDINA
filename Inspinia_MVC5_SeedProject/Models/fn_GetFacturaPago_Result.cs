@@ -14,9 +14,10 @@ namespace ERP_GMEDINA.Models
     public partial class fn_GetFacturaPago_Result
     {
         public long fact_Id { get; set; }
+        public int clte_Id { get; set; }
         public string fact_Codigo { get; set; }
         public Nullable<decimal> MontoFactura { get; set; }
-        public Nullable<decimal> pago_TotalPago { get; set; }
-        public Nullable<decimal> pago_SaldoAnterior { get; set; }
+        public Nullable<decimal> TotalPagado { get; set; }
+        public Nullable<decimal> SaldoFactura { get; set; }
     }
 }

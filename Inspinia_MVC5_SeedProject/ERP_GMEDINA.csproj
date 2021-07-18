@@ -1,6 +1,5 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
 <Project ToolsVersion="12.0" DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
-  <Import Project="..\packages\EntityFramework.6.4.4\build\EntityFramework.props" Condition="Exists('..\packages\EntityFramework.6.4.4\build\EntityFramework.props')" />
   <Import Project="$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props" Condition="Exists('$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props')" />
   <PropertyGroup>
     <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
@@ -23,8 +22,6 @@
     <IISExpressUseClassicPipelineMode />
     <UseGlobalApplicationHostFile />
     <Use64BitIISExpress />
-    <NuGetPackageImportStamp>
-    </NuGetPackageImportStamp>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
     <DebugSymbols>true</DebugSymbols>
@@ -48,131 +45,86 @@
       <HintPath>..\packages\Antlr.3.5.0.2\lib\Antlr3.Runtime.dll</HintPath>
       <Private>True</Private>
     </Reference>
-    <Reference Include="CrystalDecisions.CrystalReports.Design, Version=13.0.4000.0, Culture=neutral, PublicKeyToken=692fbea5521e1304, processorArchitecture=MSIL" />
-    <Reference Include="CrystalDecisions.CrystalReports.Engine, Version=13.0.4000.0, Culture=neutral, PublicKeyToken=692fbea5521e1304, processorArchitecture=MSIL" />
-    <Reference Include="CrystalDecisions.CrystalReports.TemplateEngine, Version=13.0.4000.0, Culture=neutral, PublicKeyToken=692fbea5521e1304, processorArchitecture=MSIL">
-      <EmbedInteropTypes>True</EmbedInteropTypes>
-    </Reference>
-    <Reference Include="CrystalDecisions.Enterprise.Viewing.ReportSource, Version=13.0.4000.0, Culture=neutral, PublicKeyToken=692fbea5521e1304, processorArchitecture=MSIL">
-      <EmbedInteropTypes>True</EmbedInteropTypes>
-    </Reference>
-    <Reference Include="CrystalDecisions.ReportAppServer.ClientDoc, Version=13.0.4000.0, Culture=neutral, PublicKeyToken=692fbea5521e1304, processorArchitecture=MSIL">
-      <HintPath>..\packages\CrystalReports.ReportAppServer.ClientDoc.13.0.4000\lib\net40\CrystalDecisions.ReportAppServer.ClientDoc.dll</HintPath>
-      <EmbedInteropTypes>True</EmbedInteropTypes>
-    </Reference>
-    <Reference Include="CrystalDecisions.ReportAppServer.CommLayer, Version=13.0.4000.0, Culture=neutral, PublicKeyToken=692fbea5521e1304, processorArchitecture=MSIL">
-      <EmbedInteropTypes>True</EmbedInteropTypes>
-    </Reference>
-    <Reference Include="CrystalDecisions.ReportAppServer.CommonControls, Version=13.0.4000.0, Culture=neutral, PublicKeyToken=692fbea5521e1304, processorArchitecture=MSIL">
-      <HintPath>..\packages\CrystalReports.ReportAppServer.CommonControls.13.0.4000\lib\net40\CrystalDecisions.ReportAppServer.CommonControls.dll</HintPath>
-      <EmbedInteropTypes>True</EmbedInteropTypes>
-    </Reference>
-    <Reference Include="CrystalDecisions.ReportAppServer.CommonObjectModel, Version=13.0.4000.0, Culture=neutral, PublicKeyToken=692fbea5521e1304, processorArchitecture=MSIL">
-      <EmbedInteropTypes>True</EmbedInteropTypes>
-    </Reference>
-    <Reference Include="CrystalDecisions.ReportAppServer.Controllers, Version=13.0.4000.0, Culture=neutral, PublicKeyToken=692fbea5521e1304, processorArchitecture=MSIL">
-      <EmbedInteropTypes>True</EmbedInteropTypes>
-    </Reference>
-    <Reference Include="CrystalDecisions.ReportAppServer.CubeDefModel, Version=13.0.4000.0, Culture=neutral, PublicKeyToken=692fbea5521e1304, processorArchitecture=MSIL">
-      <EmbedInteropTypes>True</EmbedInteropTypes>
-    </Reference>
-    <Reference Include="CrystalDecisions.ReportAppServer.DataDefModel, Version=13.0.4000.0, Culture=neutral, PublicKeyToken=692fbea5521e1304, processorArchitecture=MSIL">
-      <EmbedInteropTypes>True</EmbedInteropTypes>
-    </Reference>
-    <Reference Include="CrystalDecisions.ReportAppServer.DataSetConversion, Version=13.0.4000.0, Culture=neutral, PublicKeyToken=692fbea5521e1304, processorArchitecture=MSIL">
-      <HintPath>..\packages\CrystalReports.ReportAppServer.DataSetConversion.13.0.4000\lib\net40\CrystalDecisions.ReportAppServer.DataSetConversion.dll</HintPath>
-    </Reference>
-    <Reference Include="CrystalDecisions.ReportAppServer.ObjectFactory, Version=13.0.4000.0, Culture=neutral, PublicKeyToken=692fbea5521e1304, processorArchitecture=MSIL">
-      <HintPath>..\packages\CrystalReports.ReportAppServer.ObjectFactory.13.0.4000\lib\net40\CrystalDecisions.ReportAppServer.ObjectFactory.dll</HintPath>
-      <EmbedInteropTypes>True</EmbedInteropTypes>
-    </Reference>
-    <Reference Include="CrystalDecisions.ReportAppServer.Prompting, Version=13.0.4000.0, Culture=neutral, PublicKeyToken=692fbea5521e1304, processorArchitecture=MSIL">
-      <HintPath>..\packages\CrystalReports.ReportAppServer.Prompting.13.0.4000\lib\net40\CrystalDecisions.ReportAppServer.Prompting.dll</HintPath>
-      <EmbedInteropTypes>True</EmbedInteropTypes>
-    </Reference>
-    <Reference Include="CrystalDecisions.ReportAppServer.ReportDefModel, Version=13.0.4000.0, Culture=neutral, PublicKeyToken=692fbea5521e1304, processorArchitecture=MSIL">
-      <EmbedInteropTypes>True</EmbedInteropTypes>
-    </Reference>
-    <Reference Include="CrystalDecisions.ReportAppServer.XmlSerialize, Version=13.0.4000.0, Culture=neutral, PublicKeyToken=692fbea5521e1304, processorArchitecture=MSIL">
-      <HintPath>..\packages\CrystalReports.ReportAppServer.XmlSerialize.13.0.4000\lib\net40\CrystalDecisions.ReportAppServer.XmlSerialize.dll</HintPath>
-      <EmbedInteropTypes>True</EmbedInteropTypes>
-    </Reference>
-    <Reference Include="CrystalDecisions.ReportSource, Version=13.0.4000.0, Culture=neutral, PublicKeyToken=692fbea5521e1304, processorArchitecture=MSIL">
-      <HintPath>..\packages\CrystalReports.ReportSource.13.0.4000\lib\net40\CrystalDecisions.ReportSource.dll</HintPath>
-    </Reference>
-    <Reference Include="CrystalDecisions.Shared, Version=13.0.4000.0, Culture=neutral, PublicKeyToken=692fbea5521e1304, processorArchitecture=MSIL" />
-    <Reference Include="CrystalDecisions.VSDesigner, Version=13.0.4000.0, Culture=neutral, PublicKeyToken=692fbea5521e1304, processorArchitecture=MSIL" />
-    <Reference Include="CrystalDecisions.Web, Version=13.0.4000.0, Culture=neutral, PublicKeyToken=692fbea5521e1304, processorArchitecture=MSIL" />
-    <Reference Include="CrystalDecisions.Windows.Forms, Version=13.0.4000.0, Culture=neutral, PublicKeyToken=692fbea5521e1304, processorArchitecture=MSIL" />
+    <Reference Include="CrystalDecisions.CrystalReports.Design, Version=13.0.3500.0, Culture=neutral, PublicKeyToken=692fbea5521e1304, processorArchitecture=MSIL" />
+    <Reference Include="CrystalDecisions.CrystalReports.Engine, Version=13.0.3500.0, Culture=neutral, PublicKeyToken=692fbea5521e1304, processorArchitecture=MSIL" />
+    <Reference Include="CrystalDecisions.ReportSource, Version=13.0.3500.0, Culture=neutral, PublicKeyToken=692fbea5521e1304, processorArchitecture=MSIL" />
+    <Reference Include="CrystalDecisions.Shared, Version=13.0.3500.0, Culture=neutral, PublicKeyToken=692fbea5521e1304, processorArchitecture=MSIL" />
+    <Reference Include="CrystalDecisions.Web, Version=13.0.3500.0, Culture=neutral, PublicKeyToken=692fbea5521e1304, processorArchitecture=MSIL" />
     <Reference Include="EntityFramework, Version=6.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089, processorArchitecture=MSIL">
-      <HintPath>..\packages\EntityFramework.6.4.4\lib\net45\EntityFramework.dll</HintPath>
+      <HintPath>..\packages\EntityFramework.6.2.0\lib\net45\EntityFramework.dll</HintPath>
     </Reference>
     <Reference Include="EntityFramework.SqlServer, Version=6.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089, processorArchitecture=MSIL">
-      <HintPath>..\packages\EntityFramework.6.4.4\lib\net45\EntityFramework.SqlServer.dll</HintPath>
+      <HintPath>..\packages\EntityFramework.6.2.0\lib\net45\EntityFramework.SqlServer.dll</HintPath>
     </Reference>
-    <Reference Include="log4net, Version=2.0.12.0, Culture=neutral, PublicKeyToken=669e0ddf0bb1aa2a, processorArchitecture=MSIL">
-      <HintPath>..\packages\log4net.2.0.12\lib\net45\log4net.dll</HintPath>
+    <Reference Include="log4net, Version=1.2.10.0, Culture=neutral, PublicKeyToken=1b44e1d426115821, processorArchitecture=MSIL">
+      <HintPath>..\packages\log4net.1.2.10\lib\2.0\log4net.dll</HintPath>
+      <Private>True</Private>
     </Reference>
     <Reference Include="Microsoft.AspNet.Identity.Core, Version=2.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
-      <HintPath>..\packages\Microsoft.AspNet.Identity.Core.2.2.3\lib\net45\Microsoft.AspNet.Identity.Core.dll</HintPath>
+      <HintPath>..\packages\Microsoft.AspNet.Identity.Core.2.2.2\lib\net45\Microsoft.AspNet.Identity.Core.dll</HintPath>
+      <Private>True</Private>
     </Reference>
     <Reference Include="Microsoft.AspNet.Identity.EntityFramework, Version=2.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
-      <HintPath>..\packages\Microsoft.AspNet.Identity.EntityFramework.2.2.3\lib\net45\Microsoft.AspNet.Identity.EntityFramework.dll</HintPath>
+      <HintPath>..\packages\Microsoft.AspNet.Identity.EntityFramework.2.2.2\lib\net45\Microsoft.AspNet.Identity.EntityFramework.dll</HintPath>
+      <Private>True</Private>
     </Reference>
     <Reference Include="Microsoft.AspNet.Identity.Owin, Version=2.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
-      <HintPath>..\packages\Microsoft.AspNet.Identity.Owin.2.2.3\lib\net45\Microsoft.AspNet.Identity.Owin.dll</HintPath>
+      <HintPath>..\packages\Microsoft.AspNet.Identity.Owin.2.2.2\lib\net45\Microsoft.AspNet.Identity.Owin.dll</HintPath>
+      <Private>True</Private>
     </Reference>
     <Reference Include="Microsoft.CSharp" />
-    <Reference Include="Microsoft.Owin, Version=4.2.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
-      <HintPath>..\packages\Microsoft.Owin.4.2.0\lib\net45\Microsoft.Owin.dll</HintPath>
-    </Reference>
-    <Reference Include="Microsoft.Owin.Host.SystemWeb, Version=4.2.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
-      <HintPath>..\packages\Microsoft.Owin.Host.SystemWeb.4.2.0\lib\net45\Microsoft.Owin.Host.SystemWeb.dll</HintPath>
-    </Reference>
-    <Reference Include="Microsoft.Owin.Security, Version=4.2.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
-      <HintPath>..\packages\Microsoft.Owin.Security.4.2.0\lib\net45\Microsoft.Owin.Security.dll</HintPath>
-    </Reference>
-    <Reference Include="Microsoft.Owin.Security.Cookies, Version=4.2.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
-      <HintPath>..\packages\Microsoft.Owin.Security.Cookies.4.2.0\lib\net45\Microsoft.Owin.Security.Cookies.dll</HintPath>
-    </Reference>
-    <Reference Include="Microsoft.Owin.Security.Facebook, Version=4.2.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
-      <HintPath>..\packages\Microsoft.Owin.Security.Facebook.4.2.0\lib\net45\Microsoft.Owin.Security.Facebook.dll</HintPath>
-    </Reference>
-    <Reference Include="Microsoft.Owin.Security.Google, Version=4.2.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
-      <HintPath>..\packages\Microsoft.Owin.Security.Google.4.2.0\lib\net45\Microsoft.Owin.Security.Google.dll</HintPath>
-    </Reference>
-    <Reference Include="Microsoft.Owin.Security.MicrosoftAccount, Version=4.2.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
-      <HintPath>..\packages\Microsoft.Owin.Security.MicrosoftAccount.4.2.0\lib\net45\Microsoft.Owin.Security.MicrosoftAccount.dll</HintPath>
-    </Reference>
-    <Reference Include="Microsoft.Owin.Security.OAuth, Version=4.2.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
-      <HintPath>..\packages\Microsoft.Owin.Security.OAuth.4.2.0\lib\net45\Microsoft.Owin.Security.OAuth.dll</HintPath>
-    </Reference>
-    <Reference Include="Microsoft.Owin.Security.Twitter, Version=4.2.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
-      <HintPath>..\packages\Microsoft.Owin.Security.Twitter.4.2.0\lib\net45\Microsoft.Owin.Security.Twitter.dll</HintPath>
-    </Reference>
-    <Reference Include="Microsoft.SqlServer.Types, Version=14.0.0.0, Culture=neutral, PublicKeyToken=89845dcd8080cc91, processorArchitecture=MSIL">
-      <HintPath>..\packages\Microsoft.SqlServer.Types.14.0.1016.290\lib\net40\Microsoft.SqlServer.Types.dll</HintPath>
+    <Reference Include="Microsoft.Owin, Version=4.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <HintPath>..\packages\Microsoft.Owin.4.0.0\lib\net451\Microsoft.Owin.dll</HintPath>
       <Private>True</Private>
     </Reference>
-    <Reference Include="Microsoft.Web.Infrastructure, Version=1.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
-      <HintPath>..\packages\Microsoft.Web.Infrastructure.1.0.0.0\lib\net40\Microsoft.Web.Infrastructure.dll</HintPath>
+    <Reference Include="Microsoft.Owin.Host.SystemWeb, Version=4.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <HintPath>..\packages\Microsoft.Owin.Host.SystemWeb.4.0.0\lib\net451\Microsoft.Owin.Host.SystemWeb.dll</HintPath>
       <Private>True</Private>
     </Reference>
-    <Reference Include="Newtonsoft.Json, Version=13.0.0.0, Culture=neutral, PublicKeyToken=30ad4fe6b2a6aeed, processorArchitecture=MSIL">
-      <HintPath>..\packages\Newtonsoft.Json.13.0.1\lib\net45\Newtonsoft.Json.dll</HintPath>
+    <Reference Include="Microsoft.Owin.Security, Version=4.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <HintPath>..\packages\Microsoft.Owin.Security.4.0.0\lib\net451\Microsoft.Owin.Security.dll</HintPath>
+      <Private>True</Private>
     </Reference>
-    <Reference Include="Owin, Version=1.0.0.0, Culture=neutral, PublicKeyToken=f0ebd12fd5e55cc5, processorArchitecture=MSIL">
-      <HintPath>..\packages\Owin.1.0\lib\net40\Owin.dll</HintPath>
+    <Reference Include="Microsoft.Owin.Security.Cookies, Version=4.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <HintPath>..\packages\Microsoft.Owin.Security.Cookies.4.0.0\lib\net451\Microsoft.Owin.Security.Cookies.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="Microsoft.Owin.Security.Facebook, Version=4.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <HintPath>..\packages\Microsoft.Owin.Security.Facebook.4.0.0\lib\net451\Microsoft.Owin.Security.Facebook.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="Microsoft.Owin.Security.Google, Version=4.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <HintPath>..\packages\Microsoft.Owin.Security.Google.4.0.0\lib\net451\Microsoft.Owin.Security.Google.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="Microsoft.Owin.Security.MicrosoftAccount, Version=4.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <HintPath>..\packages\Microsoft.Owin.Security.MicrosoftAccount.4.0.0\lib\net451\Microsoft.Owin.Security.MicrosoftAccount.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="Microsoft.Owin.Security.OAuth, Version=4.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <HintPath>..\packages\Microsoft.Owin.Security.OAuth.4.0.0\lib\net451\Microsoft.Owin.Security.OAuth.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="Microsoft.Owin.Security.Twitter, Version=4.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <HintPath>..\packages\Microsoft.Owin.Security.Twitter.4.0.0\lib\net451\Microsoft.Owin.Security.Twitter.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="Microsoft.ReportViewer.WebForms, Version=12.0.0.0, Culture=neutral, PublicKeyToken=89845dcd8080cc91, processorArchitecture=MSIL" />
+    <Reference Include="Microsoft.VisualStudio.QualityTools.WebTestFramework, Version=10.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a, processorArchitecture=MSIL">
+      <HintPath>..\packages\Microsoft.VisualStudio.QualityTools.WebTestFramework.12.0.40629.1\lib\net40\Microsoft.VisualStudio.QualityTools.WebTestFramework.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="Newtonsoft.Json, Version=12.0.0.0, Culture=neutral, PublicKeyToken=30ad4fe6b2a6aeed, processorArchitecture=MSIL">
+      <HintPath>..\packages\Newtonsoft.Json.12.0.1\lib\net45\Newtonsoft.Json.dll</HintPath>
     </Reference>
     <Reference Include="SimpleCrypto, Version=26.0.0.0, Culture=neutral, processorArchitecture=MSIL">
       <HintPath>..\packages\SimpleCrypto.0.3.30.26\lib\SimpleCrypto.dll</HintPath>
-      <Private>True</Private>
     </Reference>
     <Reference Include="System" />
-    <Reference Include="System.Activities" />
     <Reference Include="System.Data" />
-    <Reference Include="System.Data.Entity" />
     <Reference Include="System.Drawing" />
+    <Reference Include="System.IdentityModel" />
+    <Reference Include="System.Net" />
     <Reference Include="System.Runtime.Serialization" />
     <Reference Include="System.Security" />
     <Reference Include="System.Transactions" />
@@ -184,6 +136,7 @@
     <Reference Include="System.Data.DataSetExtensions" />
     <Reference Include="System.Web.Helpers, Version=3.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
       <HintPath>..\packages\Microsoft.AspNet.WebPages.3.2.7\lib\net45\System.Web.Helpers.dll</HintPath>
+      <Private>True</Private>
     </Reference>
     <Reference Include="System.Web.Mvc, Version=5.2.7.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
       <HintPath>..\packages\Microsoft.AspNet.Mvc.5.2.7\lib\net45\System.Web.Mvc.dll</HintPath>
@@ -191,18 +144,23 @@
     </Reference>
     <Reference Include="System.Web.Optimization, Version=1.1.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
       <HintPath>..\packages\Microsoft.AspNet.Web.Optimization.1.1.3\lib\net40\System.Web.Optimization.dll</HintPath>
+      <Private>True</Private>
     </Reference>
     <Reference Include="System.Web.Razor, Version=3.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
       <HintPath>..\packages\Microsoft.AspNet.Razor.3.2.7\lib\net45\System.Web.Razor.dll</HintPath>
+      <Private>True</Private>
     </Reference>
     <Reference Include="System.Web.WebPages, Version=3.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
       <HintPath>..\packages\Microsoft.AspNet.WebPages.3.2.7\lib\net45\System.Web.WebPages.dll</HintPath>
+      <Private>True</Private>
     </Reference>
     <Reference Include="System.Web.WebPages.Deployment, Version=3.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
       <HintPath>..\packages\Microsoft.AspNet.WebPages.3.2.7\lib\net45\System.Web.WebPages.Deployment.dll</HintPath>
+      <Private>True</Private>
     </Reference>
     <Reference Include="System.Web.WebPages.Razor, Version=3.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
       <HintPath>..\packages\Microsoft.AspNet.WebPages.3.2.7\lib\net45\System.Web.WebPages.Razor.dll</HintPath>
+      <Private>True</Private>
     </Reference>
     <Reference Include="System.Xml.Linq" />
     <Reference Include="System.Web" />
@@ -213,6 +171,10 @@
     <Reference Include="System.Configuration" />
     <Reference Include="System.Web.Services" />
     <Reference Include="System.EnterpriseServices" />
+    <Reference Include="Microsoft.Web.Infrastructure, Version=1.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <Private>True</Private>
+      <HintPath>..\packages\Microsoft.Web.Infrastructure.1.0.0.0\lib\net40\Microsoft.Web.Infrastructure.dll</HintPath>
+    </Reference>
     <Reference Include="System.Net.Http">
     </Reference>
     <Reference Include="System.Net.Http.WebRequest">
@@ -223,143 +185,85 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
+    <Reference Include="Owin">
+      <HintPath>..\packages\Owin.1.0\lib\net40\Owin.dll</HintPath>
+    </Reference>
+  </ItemGroup>
+  <ItemGroup>
     <Compile Include="App_Start\BundleConfig.cs" />
     <Compile Include="App_Start\FilterConfig.cs" />
     <Compile Include="App_Start\RouteConfig.cs" />
     <Compile Include="App_Start\Startup.Auth.cs" />
     <Compile Include="Attribute\SessionManager.cs" />
-    <Compile Include="Controllers\Facturacion\Catalogos\ActividadEconomicaController.cs" />
-    <Compile Include="Controllers\Facturacion\Catalogos\BancoController.cs" />
-    <Compile Include="Controllers\Facturacion\Configuracion\CajaController.cs" />
-    <Compile Include="Controllers\Facturacion\Ventas\ClienteController.cs" />
-    <Compile Include="Controllers\Facturacion\Catalogos\CuentaBancoController.cs" />
-    <Compile Include="Controllers\Facturacion\Ventas\CuponDescuentoController.cs" />
-    <Compile Include="Controllers\Facturacion\Caja\DenominacionArqueoController.cs" />
-    <Compile Include="Controllers\Facturacion\Caja\DenominacionController.cs" />
-    <Compile Include="Controllers\Facturacion\Ventas\DevolucionController.cs" />
-    <Compile Include="Controllers\Facturacion\Catalogos\DocumentoFiscalController.cs" />
-    <Compile Include="Controllers\Facturacion\Catalogos\EstadoFacturaController.cs" />
-    <Compile Include="Controllers\Facturacion\Catalogos\EstadoPedidoController.cs" />
-    <Compile Include="Controllers\Facturacion\Catalogos\EstadoSolicitudCreditoController.cs" />
-    <Compile Include="Controllers\Facturacion\Ventas\ExoneracionController.cs" />
-    <Compile Include="Controllers\Facturacion\Ventas\FacturaController.cs" />
+    <Compile Include="Controllers\BodegaController.cs" />
+    <Compile Include="Controllers\BoxController.cs" />
+    <Compile Include="Controllers\ConsultarExistenciaProductosController.cs" />
+    <Compile Include="Controllers\DepartamentoController.cs" />
+    <Compile Include="Controllers\EmpleadoController.cs" />
+    <Compile Include="Controllers\EntradaController.cs" />
+    <Compile Include="Controllers\EstadoInventarioFisicoController.cs" />
+    <Compile Include="Controllers\EstadoMovimientoController.cs" />
     <Compile Include="Controllers\HomeController.cs" />
-    <Compile Include="Controllers\Facturacion\Ventas\ListaPreciosController.cs" />
+    <Compile Include="Controllers\InventarioFisicoController.cs" />
     <Compile Include="Controllers\LoginController.cs" />
-    <Compile Include="Controllers\Facturacion\Catalogos\MonedaController.cs" />
-    <Compile Include="Controllers\Facturacion\Caja\MovimientoCajaController.cs" />
-    <Compile Include="Controllers\Facturacion\Ventas\NotaCreditoController.cs" />
-    <Compile Include="Controllers\Facturacion\Ventas\PagoController.cs" />
-    <Compile Include="Controllers\Facturacion\Ventas\PagosArqueoController.cs" />
-    <Compile Include="Controllers\Facturacion\Ventas\PedidoController.cs" />
-    <Compile Include="Controllers\Facturacion\Configuracion\PuntoEmisionController.cs" />
-    <Compile Include="Controllers\ReportesController.cs" />
-    <Compile Include="Controllers\Facturacion\Ventas\SolicitudCreditoController.cs" />
-    <Compile Include="Controllers\Facturacion\Ventas\SolicitudEfectivoController.cs" />
-    <Compile Include="Controllers\Facturacion\Configuracion\SucursalController.cs" />
-    <Compile Include="Controllers\Facturacion\Catalogos\TipoIdentificacionController.cs" />
-    <Compile Include="Controllers\Facturacion\Catalogos\TipoPagoController.cs" />
-    <Compile Include="Dataset\ArqueoCaja.Designer.cs">
-      <AutoGen>True</AutoGen>
-      <DesignTime>True</DesignTime>
-      <DependentUpon>ArqueoCaja.xsd</DependentUpon>
-    </Compile>
-    <Compile Include="Dataset\DSCuponDescuento.Designer.cs">
-      <AutoGen>True</AutoGen>
-      <DesignTime>True</DesignTime>
-      <DependentUpon>DSCuponDescuento.xsd</DependentUpon>
-    </Compile>
-    <Compile Include="Dataset\DsFactura.Designer.cs">
-      <AutoGen>True</AutoGen>
-      <DesignTime>True</DesignTime>
-      <DependentUpon>DsFactura.xsd</DependentUpon>
-    </Compile>
-    <Compile Include="Dataset\DSNotaCredito.Designer.cs">
-      <AutoGen>True</AutoGen>
-      <DesignTime>True</DesignTime>
-      <DependentUpon>DSNotaCredito.xsd</DependentUpon>
-    </Compile>
-    <Compile Include="Dataset\dsPago.Designer.cs">
-      <AutoGen>True</AutoGen>
-      <DesignTime>True</DesignTime>
-      <DependentUpon>dsPago.xsd</DependentUpon>
-    </Compile>
-    <Compile Include="Dataset\PuntoEmision.Designer.cs">
-      <AutoGen>True</AutoGen>
-      <DesignTime>True</DesignTime>
-      <DependentUpon>PuntoEmision.xsd</DependentUpon>
-    </Compile>
-    <Compile Include="Dataset\Reportes.cs">
-      <DependentUpon>Reportes.xsd</DependentUpon>
-    </Compile>
+    <Compile Include="Controllers\ObjetoController.cs" />
+    <Compile Include="Controllers\ParametroController.cs" />
+    <Compile Include="Controllers\ProductoCategoriaController.cs" />
+    <Compile Include="Controllers\ProductoController.cs" />
+    <Compile Include="Controllers\ProveedorController.cs" />
+    <Compile Include="Controllers\RolController.cs" />
+    <Compile Include="Controllers\SalidaController.cs" />
+    <Compile Include="Controllers\TipoDevolucionController.cs" />
+    <Compile Include="Controllers\TipoEntradaController.cs" />
+    <Compile Include="Controllers\TipoSalidaController.cs" />
+    <Compile Include="Controllers\UnidadMedidaController.cs" />
+    <Compile Include="Controllers\UsuarioController.cs" />
     <Compile Include="Dataset\Reportes.Designer.cs">
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
       <DependentUpon>Reportes.xsd</DependentUpon>
     </Compile>
-    <Compile Include="Dataset\SolicitudEFectivo.Designer.cs">
-      <AutoGen>True</AutoGen>
-      <DesignTime>True</DesignTime>
-      <DependentUpon>SolicitudEFectivo.xsd</DependentUpon>
-    </Compile>
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
     <Compile Include="Helpers\HMTLHelperExtensions.cs" />
+    <Compile Include="Models\accesorol.cs" />
     <Compile Include="Models\AccountViewModels.cs" />
-    <Compile Include="Models\UDP_Vent_tbFactura_EstadoImpreso_Result.cs">
+    <Compile Include="Models\Bodega.cs" />
+    <Compile Include="Models\BodegaDetalle.cs" />
+    <Compile Include="Models\Box.cs" />
+    <Compile Include="Models\BoxDetalle.cs" />
+    <Compile Include="Models\ConsultarExistenciaProductos.cs" />
+    <Compile Include="Models\ConteoParametro_Result.cs">
       <DependentUpon>ModelERP.tt</DependentUpon>
     </Compile>
-    <Compile Include="Models\Facturacion\Catalogos\ActividadEconomica.cs" />
-    <Compile Include="Models\Facturacion\Caja\ArqueoCaja.cs" />
-    <Compile Include="Models\Facturacion\Catalogos\Banco.cs" />
-    <Compile Include="Models\cActivo.cs" />
-    <Compile Include="Models\Facturacion\Configuracion\Caja.cs" />
-    <Compile Include="Models\Facturacion\Ventas\CuponDescuento.cs" />
-    <Compile Include="Models\Facturacion\Catalogos\DenominacionList.cs" />
-    <Compile Include="Models\cDepartamento.cs" />
-    <Compile Include="Models\Facturacion\Ventas\DetalleDevolucion.cs" />
-    <Compile Include="Models\Facturacion\Ventas\Devolucion.cs" />
-    <Compile Include="Models\Facturacion\Catalogos\DocumentoFiscal.cs" />
-    <Compile Include="Models\Facturacion\Ventas\Exoneracion.cs" />
-    <Compile Include="Models\General\Catalogos\Genero.cs" />
-    <Compile Include="Models\Facturacion\Ventas\Cliente.cs" />
-    <Compile Include="Models\cMinorista.cs" />
-    <Compile Include="Models\General\Catalogos\Nacionalidad.cs" />
-    <Compile Include="Models\Facturacion\Ventas\NotaCredito.cs" />
     <Compile Include="Models\crud_tbProductoSelect_Result.cs">
       <DependentUpon>ModelERP.tt</DependentUpon>
     </Compile>
-    <Compile Include="Models\Facturacion\Catalogos\TipoCuenta.cs" />
-    <Compile Include="Models\Facturacion\Catalogos\TipoPagos.cs" />
-    <Compile Include="Models\Facturacion\Catalogos\CuentaBanco.cs" />
-    <Compile Include="Models\Facturacion\Ventas\VistaCliente.cs" />
-    <Compile Include="Models\Facturacion\Ventas\VistaFactura.cs" />
     <Compile Include="Models\DatosConsumidorFinal.cs">
       <DependentUpon>ModelERP.tt</DependentUpon>
     </Compile>
-    <Compile Include="Models\Facturacion\Catalogos\Denominacion.cs" />
-    <Compile Include="Models\Facturacion\Caja\DenominacionArqueo.cs" />
-    <Compile Include="Models\Facturacion\Catalogos\EstadoFactura.cs" />
-    <Compile Include="Models\Facturacion\Catalogos\EstadoPedido.cs" />
-    <Compile Include="Models\Facturacion\Catalogos\EstadosSolicitudCredito.cs" />
-    <Compile Include="Models\Facturacion\Ventas\Factura.cs" />
-    <Compile Include="Models\Facturacion\Ventas\FacturaDetalle.cs" />
-    <Compile Include="Models\Facturacion\Ventas\FacturaHistorica.cs" />
+    <Compile Include="Models\departamento.cs" />
+    <Compile Include="Models\DetalleEntrada.cs" />
+    <Compile Include="Models\Empleado.cs" />
+    <Compile Include="Models\Entrada.cs" />
+    <Compile Include="Models\EstadoBodega.cs" />
+    <Compile Include="Models\EstadoCategoria.cs" />
+    <Compile Include="Models\EstadoInventariosFisico.cs" />
+    <Compile Include="Models\estadomovimientos.cs" />
+    <Compile Include="Models\Estados.cs" />
+    <Compile Include="Models\EstadoSubCategoria.cs" />
     <Compile Include="Models\fn_GetFacturaPago_Result.cs">
       <DependentUpon>ModelERP.tt</DependentUpon>
     </Compile>
-    <Compile Include="Models\GetPrecioUnitario_Result.cs">
-      <DependentUpon>ModelERP.tt</DependentUpon>
-    </Compile>
+    <Compile Include="Models\FuctionIndexP.cs" />
     <Compile Include="Models\Helpers.cs" />
     <Compile Include="Models\IdentityModels.cs" />
-    <Compile Include="Models\Facturacion\Ventas\ListadoPrecioDetalle.cs" />
+    <Compile Include="Models\InventariosFisicos.cs" />
+    <Compile Include="Models\InventariosFisicosDetalle.cs" />
     <Compile Include="Models\Listado_CAI_Result.cs">
       <DependentUpon>ModelERP.tt</DependentUpon>
     </Compile>
-    <Compile Include="Models\Facturacion\Ventas\ListaPrecioDetalle.cs" />
-    <Compile Include="Models\Facturacion\Ventas\ListaPrecio.cs" />
     <Compile Include="Models\ModelERP.Context.cs">
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
@@ -375,23 +279,23 @@
       <DesignTime>True</DesignTime>
       <DependentUpon>ModelERP.edmx</DependentUpon>
     </Compile>
-    <Compile Include="Models\Facturacion\Catalogos\Moneda.cs" />
-    <Compile Include="Models\Facturacion\Caja\MovimientoCaja.cs" />
+    <Compile Include="Models\municipios.cs" />
+    <Compile Include="Models\Objeto.cs" />
     <Compile Include="Models\ObtenerRol_Result.cs">
       <DependentUpon>ModelERP.tt</DependentUpon>
     </Compile>
-    <Compile Include="Models\Facturacion\Ventas\Pago.cs" />
-    <Compile Include="Models\Facturacion\Caja\PagosArqueo.cs" />
-    <Compile Include="Models\Facturacion\Ventas\PedidoDetalle.cs" />
-    <Compile Include="Models\Facturacion\Ventas\Pedido.cs" />
-    <Compile Include="Models\Prueba1_Result.cs">
-      <DependentUpon>ModelERP.tt</DependentUpon>
-    </Compile>
+    <Compile Include="Models\Parametros.cs" />
+    <Compile Include="Models\Productos.cs" />
+    <Compile Include="Models\ProductosCategorias.cs" />
+    <Compile Include="Models\ProductosSubCategorias.cs" />
+    <Compile Include="Models\proveedor.cs" />
     <Compile Include="Models\Prueba_Result.cs">
       <DependentUpon>ModelERP.tt</DependentUpon>
     </Compile>
-    <Compile Include="Models\Facturacion\Configuracion\PuntoEmision.cs" />
-    <Compile Include="Models\Facturacion\Configuracion\PuntoEmisionDetalle.cs" />
+    <Compile Include="Models\rol.cs" />
+    <Compile Include="Models\RolesUsuario.cs" />
+    <Compile Include="Models\Salida.cs" />
+    <Compile Include="Models\SalidaDetalle.cs" />
     <Compile Include="Models\SDP_Acce_GetObjetosAsignados_Result.cs">
       <DependentUpon>ModelERP.tt</DependentUpon>
     </Compile>
@@ -440,6 +344,9 @@
     <Compile Include="Models\SDP_Inv_tbBodegaDetalle_Select_Producto_Result.cs">
       <DependentUpon>ModelERP.tt</DependentUpon>
     </Compile>
+    <Compile Include="Models\SDP_Inv_tbBodegaDetalle_Select_Producto_Result1.cs">
+      <DependentUpon>ModelERP.tt</DependentUpon>
+    </Compile>
     <Compile Include="Models\SDP_Inv_tbBoxDetalle_Select_Result.cs">
       <DependentUpon>ModelERP.tt</DependentUpon>
     </Compile>
@@ -452,7 +359,13 @@
     <Compile Include="Models\SDP_Inv_tbProducto_Select_Result.cs">
       <DependentUpon>ModelERP.tt</DependentUpon>
     </Compile>
+    <Compile Include="Models\SDP_Inv_tbSalidaDetalle_Edit_Select_Result.cs">
+      <DependentUpon>ModelERP.tt</DependentUpon>
+    </Compile>
     <Compile Include="Models\SDP_Inv_tbSalidaDetalle_Select_Result.cs">
+      <DependentUpon>ModelERP.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\SDP_Inv_tbSalidaDetalle_Select_Result1.cs">
       <DependentUpon>ModelERP.tt</DependentUpon>
     </Compile>
     <Compile Include="Models\SDP_tbBodega_Listado_Result.cs">
@@ -491,7 +404,7 @@
     <Compile Include="Models\SDP_tbProductoSubcategoria_Select_Result.cs">
       <DependentUpon>ModelERP.tt</DependentUpon>
     </Compile>
-    <Compile Include="Models\SDP_Vent_tbCuponDescuentoSelectGet1_Result.cs">
+    <Compile Include="Models\SDP_tbSalidaDetalle_Select_Result.cs">
       <DependentUpon>ModelERP.tt</DependentUpon>
     </Compile>
     <Compile Include="Models\SDP_Vent_tbCuponDescuentoSelectGet_Result.cs">
@@ -500,19 +413,10 @@
     <Compile Include="Models\SDP_Vent_tbPedidoDetalle_tbPedido_Select_Result.cs">
       <DependentUpon>ModelERP.tt</DependentUpon>
     </Compile>
-    <Compile Include="Models\Facturacion\Ventas\SolicitudCredito.cs" />
-    <Compile Include="Models\Facturacion\Caja\SolicitudEfectivo.cs" />
-    <Compile Include="Models\Facturacion\Caja\SolicitudEfectivoDetalle.cs" />
     <Compile Include="Models\spGetActividadEconomica_Result.cs">
       <DependentUpon>ModelERP.tt</DependentUpon>
     </Compile>
-    <Compile Include="Models\spGetBusquedaCliente_Result.cs">
-      <DependentUpon>ModelERP.tt</DependentUpon>
-    </Compile>
     <Compile Include="Models\spGetCaja_Result.cs">
-      <DependentUpon>ModelERP.tt</DependentUpon>
-    </Compile>
-    <Compile Include="Models\spGetCategoriaProducto_Result.cs">
       <DependentUpon>ModelERP.tt</DependentUpon>
     </Compile>
     <Compile Include="Models\spGetCategoria_Result.cs">
@@ -527,6 +431,15 @@
     <Compile Include="Models\spGetMunicipios1_Result.cs">
       <DependentUpon>ModelERP.tt</DependentUpon>
     </Compile>
+    <Compile Include="Models\spGetMunicipios1_Result1.cs">
+      <DependentUpon>ModelERP.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\spGetMunicipios1_Result2.cs">
+      <DependentUpon>ModelERP.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\spGetMunicipios_Result.cs">
+      <DependentUpon>ModelERP.tt</DependentUpon>
+    </Compile>
     <Compile Include="Models\spGetParametro_Result.cs">
       <DependentUpon>ModelERP.tt</DependentUpon>
     </Compile>
@@ -536,10 +449,13 @@
     <Compile Include="Models\spGetProducto_BodegaDetalle_Result.cs">
       <DependentUpon>ModelERP.tt</DependentUpon>
     </Compile>
-    <Compile Include="Models\SPGetResponsableBodega1_Result.cs">
+    <Compile Include="Models\spGetProducto_Result.cs">
       <DependentUpon>ModelERP.tt</DependentUpon>
     </Compile>
     <Compile Include="Models\SPGetResponsableBodega_Result.cs">
+      <DependentUpon>ModelERP.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\SPGetRTNproveedor_Result.cs">
       <DependentUpon>ModelERP.tt</DependentUpon>
     </Compile>
     <Compile Include="Models\spGetSubCategoriaProducto_Result.cs">
@@ -551,16 +467,7 @@
     <Compile Include="Models\spGetTipoIdentificacion_Result.cs">
       <DependentUpon>ModelERP.tt</DependentUpon>
     </Compile>
-    <Compile Include="Models\spGetValue_Result.cs">
-      <DependentUpon>ModelERP.tt</DependentUpon>
-    </Compile>
     <Compile Include="Models\sp_GetDetallePedido_Result.cs">
-      <DependentUpon>ModelERP.tt</DependentUpon>
-    </Compile>
-    <Compile Include="Models\sp_helpdiagramdefinition_Result.cs">
-      <DependentUpon>ModelERP.tt</DependentUpon>
-    </Compile>
-    <Compile Include="Models\sp_helpdiagrams_Result.cs">
       <DependentUpon>ModelERP.tt</DependentUpon>
     </Compile>
     <Compile Include="Models\SP_tbEntrada_ProductosRepetidos_Result.cs">
@@ -569,7 +476,9 @@
     <Compile Include="Models\SP_tbInventariofisico_ProductosRepetidos_Result.cs">
       <DependentUpon>ModelERP.tt</DependentUpon>
     </Compile>
-    <Compile Include="Models\Facturacion\Configuracion\Sucursal.cs" />
+    <Compile Include="Models\SP_tbInventariofisico_ProductosRepetidos_Result1.cs">
+      <DependentUpon>ModelERP.tt</DependentUpon>
+    </Compile>
     <Compile Include="Models\tbAccesoRol.cs">
       <DependentUpon>ModelERP.tt</DependentUpon>
     </Compile>
@@ -771,18 +680,46 @@
     <Compile Include="Models\tbUsuario.cs">
       <DependentUpon>ModelERP.tt</DependentUpon>
     </Compile>
-    <Compile Include="Models\Facturacion\Catalogos\TipoPago.cs" />
-    <Compile Include="Models\Facturacion\Catalogos\TiposIdenticacion.cs" />
+    <Compile Include="Models\TipoDevolucion.cs" />
+    <Compile Include="Models\TipoEntrada.cs" />
+    <Compile Include="Models\TipoSalida.cs" />
     <Compile Include="Models\UDP_Acce_Login_Result.cs">
+      <DependentUpon>ModelERP.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\UDP_Acce_tbAccesoRol_Insert_Result.cs">
+      <DependentUpon>ModelERP.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\UDP_Acce_tbAccesoRol_Update_Result.cs">
       <DependentUpon>ModelERP.tt</DependentUpon>
     </Compile>
     <Compile Include="Models\UDP_Acce_tbBitacoraErrores_Insert_Result.cs">
       <DependentUpon>ModelERP.tt</DependentUpon>
     </Compile>
+    <Compile Include="Models\UDP_Acce_tbObjeto_Insert_Result.cs">
+      <DependentUpon>ModelERP.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\UDP_Acce_tbObjeto_Update_Estado_Result.cs">
+      <DependentUpon>ModelERP.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\UDP_Acce_tbObjeto_Update_Result.cs">
+      <DependentUpon>ModelERP.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\UDP_Acce_tbRolEstado_Update_Result.cs">
+      <DependentUpon>ModelERP.tt</DependentUpon>
+    </Compile>
     <Compile Include="Models\UDP_Acce_tbRolesUsuario_Insert_Result.cs">
       <DependentUpon>ModelERP.tt</DependentUpon>
     </Compile>
+    <Compile Include="Models\UDP_Acce_tbRolesUsuario_Update_Result.cs">
+      <DependentUpon>ModelERP.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\UDP_Acce_tbRol_Inactivar_Result.cs">
+      <DependentUpon>ModelERP.tt</DependentUpon>
+    </Compile>
     <Compile Include="Models\UDP_Acce_tbRol_Insert_Result.cs">
+      <DependentUpon>ModelERP.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\UDP_Acce_tbRol_Update_Result.cs">
       <DependentUpon>ModelERP.tt</DependentUpon>
     </Compile>
     <Compile Include="Models\UDP_Acce_tbUsuario_Estado_Result.cs">
@@ -803,49 +740,49 @@
     <Compile Include="Models\UDP_Acce_tbUsuario_Update_Result.cs">
       <DependentUpon>ModelERP.tt</DependentUpon>
     </Compile>
-    <Compile Include="Models\UDP_Gral_tbActividadEconomica_Insert_Result.cs">
-      <DependentUpon>ModelERP.tt</DependentUpon>
-    </Compile>
-    <Compile Include="Models\UDP_Gral_tbActividadEconomica_Update_Result.cs">
-      <DependentUpon>ModelERP.tt</DependentUpon>
-    </Compile>
-    <Compile Include="Models\UDP_Gral_tbBanco_Insert_Result.cs">
-      <DependentUpon>ModelERP.tt</DependentUpon>
-    </Compile>
-    <Compile Include="Models\UDP_Gral_tbBanco_Update_Result.cs">
-      <DependentUpon>ModelERP.tt</DependentUpon>
-    </Compile>
-    <Compile Include="Models\UDP_Gral_tbCuentasBanco_Insert_Result.cs">
-      <DependentUpon>ModelERP.tt</DependentUpon>
-    </Compile>
-    <Compile Include="Models\UDP_Gral_tbCuentasBanco_Update_Result.cs">
-      <DependentUpon>ModelERP.tt</DependentUpon>
-    </Compile>
-    <Compile Include="Models\UDP_Gral_tbDenominacion_Insert_Result.cs">
-      <DependentUpon>ModelERP.tt</DependentUpon>
-    </Compile>
     <Compile Include="Models\UDP_Gral_tbDenominacion_Select_Result.cs">
       <DependentUpon>ModelERP.tt</DependentUpon>
     </Compile>
-    <Compile Include="Models\UDP_Gral_tbDenominacion_Update_Result.cs">
+    <Compile Include="Models\UDP_Gral_tbDepartamento_Insert_Result.cs">
       <DependentUpon>ModelERP.tt</DependentUpon>
     </Compile>
-    <Compile Include="Models\UDP_Gral_tbDenominacion_using_Result.cs">
+    <Compile Include="Models\UDP_Gral_tbDepartamento_Update_Result.cs">
       <DependentUpon>ModelERP.tt</DependentUpon>
     </Compile>
-    <Compile Include="Models\UDP_Gral_tbMoneda_Insert_Result.cs">
+    <Compile Include="Models\UDP_Gral_tbEmpleados_Insert_Result.cs">
       <DependentUpon>ModelERP.tt</DependentUpon>
     </Compile>
-    <Compile Include="Models\UDP_Gral_tbMoneda_Update_Result.cs">
+    <Compile Include="Models\UDP_Gral_tbEmpleados_Update_Result.cs">
       <DependentUpon>ModelERP.tt</DependentUpon>
     </Compile>
-    <Compile Include="Models\UDP_Gral_tbTipoIdentificacion_Insert_Result.cs">
+    <Compile Include="Models\UDP_Gral_tbEmpleado_Update_Estado_Result.cs">
       <DependentUpon>ModelERP.tt</DependentUpon>
     </Compile>
-    <Compile Include="Models\UDP_Gral_tbTipoIdentificacion_Update_Result.cs">
+    <Compile Include="Models\UDP_Gral_tbEmpleado_Update_RazonInactivacion_Result.cs">
       <DependentUpon>ModelERP.tt</DependentUpon>
     </Compile>
-    <Compile Include="Models\UDP_Inv_CantidadExistente1_Result.cs">
+    <Compile Include="Models\UDP_Gral_tbEmpleado_Update_RazonSalida_Result.cs">
+      <DependentUpon>ModelERP.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\UDP_Gral_tbMunicipio_Delete_Result.cs">
+      <DependentUpon>ModelERP.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\UDP_Gral_tbMunicipio_Insert_Result.cs">
+      <DependentUpon>ModelERP.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\UDP_Gral_tbMunicipio_Update_Result.cs">
+      <DependentUpon>ModelERP.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\UDP_Gral_tbParametro_Insert_Result.cs">
+      <DependentUpon>ModelERP.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\UDP_Gral_tbParametro_Update_Result.cs">
+      <DependentUpon>ModelERP.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\UDP_Gral_tbUnidadMedida_Insert_Result.cs">
+      <DependentUpon>ModelERP.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\UDP_Gral_tbUnidadMedida_Update_Result.cs">
       <DependentUpon>ModelERP.tt</DependentUpon>
     </Compile>
     <Compile Include="Models\UDP_Inv_CantidadExistente_Result.cs">
@@ -854,7 +791,91 @@
     <Compile Include="Models\UDP_Inv_Consultar_Existencias_Productos_Result.cs">
       <DependentUpon>ModelERP.tt</DependentUpon>
     </Compile>
+    <Compile Include="Models\UDP_Inv_SolicitarProducto_ValidacionPorBodega_Result.cs">
+      <DependentUpon>ModelERP.tt</DependentUpon>
+    </Compile>
     <Compile Include="Models\UDP_Inv_tbBodegaDetalle_CantidadExistente_Result.cs">
+      <DependentUpon>ModelERP.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\UDP_Inv_tbBodegaDetalle_Delete_Result.cs">
+      <DependentUpon>ModelERP.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\UDP_Inv_tbBodegaDetalle_Insert_Result.cs">
+      <DependentUpon>ModelERP.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\UDP_Inv_tbBodegaDetalle_Update_Result.cs">
+      <DependentUpon>ModelERP.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\UDP_Inv_tbBodega_Insert_Result.cs">
+      <DependentUpon>ModelERP.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\UDP_Inv_tbBodega_Update_Estado_Result.cs">
+      <DependentUpon>ModelERP.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\UDP_Inv_tbBodega_Update_Estado_Validacion_Result.cs">
+      <DependentUpon>ModelERP.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\UDP_Inv_tbBodega_Update_Result.cs">
+      <DependentUpon>ModelERP.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\UDP_Inv_tbBoxDetalle_Delete_Result.cs">
+      <DependentUpon>ModelERP.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\UDP_Inv_tbBoxDetalle_Insert_Result.cs">
+      <DependentUpon>ModelERP.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\UDP_Inv_tbBoxDetalle_Update_Result.cs">
+      <DependentUpon>ModelERP.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\UDP_Inv_tbBox_Delete_Result.cs">
+      <DependentUpon>ModelERP.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\UDP_Inv_tbBox_Insert_Result.cs">
+      <DependentUpon>ModelERP.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\UDP_Inv_tbBox_Update_Result.cs">
+      <DependentUpon>ModelERP.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\UDP_Inv_tbEntradaDetalle_Insert_Result.cs">
+      <DependentUpon>ModelERP.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\UDP_Inv_tbEntradaDetalle_Update_Result.cs">
+      <DependentUpon>ModelERP.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\UDP_Inv_tbEntrada_Insert_Result.cs">
+      <DependentUpon>ModelERP.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\UDP_Inv_tbEntrada_Update_Anular_Result.cs">
+      <DependentUpon>ModelERP.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\UDP_Inv_tbEntrada_Update_Estado_Result.cs">
+      <DependentUpon>ModelERP.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\UDP_Inv_tbEntrada_Update_Result.cs">
+      <DependentUpon>ModelERP.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\UDP_Inv_tbEstadoInventarioFisico_Insert_Result.cs">
+      <DependentUpon>ModelERP.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\UDP_Inv_tbEstadoInventarioFisico_Update_Result.cs">
+      <DependentUpon>ModelERP.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\UDP_Inv_tbEstadoMovimiento_Delete_Result.cs">
+      <DependentUpon>ModelERP.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\UDP_Inv_tbEstadoMovimiento_Insert_Result.cs">
+      <DependentUpon>ModelERP.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\UDP_Inv_tbEstadoMovimiento_Update_Result.cs">
+      <DependentUpon>ModelERP.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\UDP_Inv_tbInventarioFisicoDetalle_Insert_Result.cs">
+      <DependentUpon>ModelERP.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\UDP_Inv_tbInventarioFisicoDetalle_Update_Result.cs">
+      <DependentUpon>ModelERP.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\UDP_Inv_tbInventarioFisico_Insert_Result.cs">
       <DependentUpon>ModelERP.tt</DependentUpon>
     </Compile>
     <Compile Include="Models\UDP_Inv_tbInventarioFisico_ListaProductos_Result.cs">
@@ -863,7 +884,55 @@
     <Compile Include="Models\UDP_Inv_tbInventarioFisico_ReporteFaltantes_Result.cs">
       <DependentUpon>ModelERP.tt</DependentUpon>
     </Compile>
+    <Compile Include="Models\UDP_Inv_tbInventarioFisico_Update_Estado_Result.cs">
+      <DependentUpon>ModelERP.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\UDP_Inv_tbInventarioFisico_Update_Result.cs">
+      <DependentUpon>ModelERP.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\UDP_Inv_tbProductoCategoriaSubCate_Delete_Result.cs">
+      <DependentUpon>ModelERP.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\UDP_Inv_tbProductoCategoria_Delete_Result.cs">
+      <DependentUpon>ModelERP.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\UDP_Inv_tbProductoCategoria_Insert_Result.cs">
+      <DependentUpon>ModelERP.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\UDP_Inv_tbProductoCategoria_Update_Estado_Result.cs">
+      <DependentUpon>ModelERP.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\UDP_Inv_tbProductoCategoria_Update_Estado_Validacion_Result.cs">
+      <DependentUpon>ModelERP.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\UDP_Inv_tbProductoCategoria_Update_Result.cs">
+      <DependentUpon>ModelERP.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\UDP_Inv_tbProductoSubCategoria_Delete_Result.cs">
+      <DependentUpon>ModelERP.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\UDP_Inv_tbProductoSubCategoria_Delete_test_Result.cs">
+      <DependentUpon>ModelERP.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\UDP_Inv_tbProductoSubcategoria_Insert_Result.cs">
+      <DependentUpon>ModelERP.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\UDP_Inv_tbProductoSubCategoria_Update_Estado_Result.cs">
+      <DependentUpon>ModelERP.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\UDP_Inv_tbProductoSubCategoria_Update_Estado_Validacion_Result.cs">
+      <DependentUpon>ModelERP.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\UDP_Inv_tbProductoSubcategoria_Update_Result.cs">
+      <DependentUpon>ModelERP.tt</DependentUpon>
+    </Compile>
     <Compile Include="Models\UDP_Inv_tbProducto_Consulta_Result.cs">
+      <DependentUpon>ModelERP.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\UDP_Inv_tbProducto_Estado_Prueba_Result.cs">
+      <DependentUpon>ModelERP.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\UDP_Inv_tbProducto_Estado_Result.cs">
       <DependentUpon>ModelERP.tt</DependentUpon>
     </Compile>
     <Compile Include="Models\UDP_Inv_tbProducto_Existencia_Result.cs">
@@ -878,19 +947,68 @@
     <Compile Include="Models\UDP_Inv_tbProducto_GetSubCategoria_Result.cs">
       <DependentUpon>ModelERP.tt</DependentUpon>
     </Compile>
-    <Compile Include="Models\UDP_ListadoDeProveedores.cs">
+    <Compile Include="Models\UDP_Inv_tbProducto_Insert_Result.cs">
       <DependentUpon>ModelERP.tt</DependentUpon>
     </Compile>
-    <Compile Include="Models\UDP_Login_Result.cs">
+    <Compile Include="Models\UDP_Inv_tbProducto_Update_RazonInactivacion_Result.cs">
+      <DependentUpon>ModelERP.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\UDP_Inv_tbProducto_Update_Result.cs">
+      <DependentUpon>ModelERP.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\UDP_Inv_tbProducto_ValorCodigo_Result.cs">
+      <DependentUpon>ModelERP.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\UDP_Inv_tbProveedor_Insert_Result.cs">
+      <DependentUpon>ModelERP.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\UDP_Inv_tbProveedor_Update_Result.cs">
+      <DependentUpon>ModelERP.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\UDP_Inv_tbSalidaDetalleD_Delete_Result.cs" />
+    <Compile Include="Models\UDP_Inv_tbSalidaDetalle_Delete_Result.cs">
+      <DependentUpon>ModelERP.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\UDP_Inv_tbSalidaDetalle_Insert_Result.cs">
+      <DependentUpon>ModelERP.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\UDP_Inv_tbSalidaDetalle_Update_Result.cs">
+      <DependentUpon>ModelERP.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\UDP_Inv_tbSalida_Insert_Result.cs">
+      <DependentUpon>ModelERP.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\UDP_Inv_tbSalida_Update_Result.cs">
+      <DependentUpon>ModelERP.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\UDP_Inv_tbTipoDevolucion_Insert_Result.cs">
+      <DependentUpon>ModelERP.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\UDP_Inv_tbTipoDevolucion_Update_Result.cs">
+      <DependentUpon>ModelERP.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\UDP_Inv_tbTipoEntrada_Insert_Result.cs">
+      <DependentUpon>ModelERP.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\UDP_Inv_tbTipoEntrada_Update_Result.cs">
+      <DependentUpon>ModelERP.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\UDP_Inv_tbTipoSalida_Insert_Result.cs">
+      <DependentUpon>ModelERP.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\UDP_Inv_tbTipoSalida_Update_Result.cs">
+      <DependentUpon>ModelERP.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\UDP_Inv_ValidacionCantidadExistente_Result.cs">
+      <DependentUpon>ModelERP.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\UDP_ListadoDeProveedores.cs">
       <DependentUpon>ModelERP.tt</DependentUpon>
     </Compile>
     <Compile Include="Models\UDP_tbPedidoDetalle_Select_Edit_Result.cs">
       <DependentUpon>ModelERP.tt</DependentUpon>
     </Compile>
     <Compile Include="Models\UDP_tbPedidoDetalle_Select_Result.cs">
-      <DependentUpon>ModelERP.tt</DependentUpon>
-    </Compile>
-    <Compile Include="Models\UDP_Vent_DatosConsumidorFinal_Insert_Result.cs">
       <DependentUpon>ModelERP.tt</DependentUpon>
     </Compile>
     <Compile Include="Models\UDP_Vent_DescuentosporFecha_Reportes_Result.cs">
@@ -917,6 +1035,9 @@
     <Compile Include="Models\UDP_Vent_PagosPorFechas1.cs">
       <DependentUpon>ModelERP.tt</DependentUpon>
     </Compile>
+    <Compile Include="Models\UDP_Vent_Pedido_EntreFechas_Result.cs">
+      <DependentUpon>ModelERP.tt</DependentUpon>
+    </Compile>
     <Compile Include="Models\UDP_Vent_ReporteConsumidorFinal_Result.cs">
       <DependentUpon>ModelERP.tt</DependentUpon>
     </Compile>
@@ -926,70 +1047,22 @@
     <Compile Include="Models\UDP_Vent_SolicituEfectivo_Select.cs">
       <DependentUpon>ModelERP.tt</DependentUpon>
     </Compile>
-    <Compile Include="Models\UDP_Vent_tbCaja_Insert_Result.cs">
-      <DependentUpon>ModelERP.tt</DependentUpon>
-    </Compile>
-    <Compile Include="Models\UDP_Vent_tbCaja_Update_Result.cs">
-      <DependentUpon>ModelERP.tt</DependentUpon>
-    </Compile>
-    <Compile Include="Models\UDP_Vent_tbCliente_Estado_Result.cs">
-      <DependentUpon>ModelERP.tt</DependentUpon>
-    </Compile>
-    <Compile Include="Models\UDP_Vent_tbCliente_Insert_Result.cs">
-      <DependentUpon>ModelERP.tt</DependentUpon>
-    </Compile>
-    <Compile Include="Models\UDP_Vent_tbCliente_Update_Result.cs">
-      <DependentUpon>ModelERP.tt</DependentUpon>
-    </Compile>
     <Compile Include="Models\UDP_Vent_tbCuponDescuentoSelectGet_Result.cs">
       <DependentUpon>ModelERP.tt</DependentUpon>
     </Compile>
     <Compile Include="Models\UDP_Vent_tbCuponDescuentoSelect_Result.cs">
       <DependentUpon>ModelERP.tt</DependentUpon>
     </Compile>
-    <Compile Include="Models\UDP_Vent_tbCuponDescuento_Anulado_Result.cs">
-      <DependentUpon>ModelERP.tt</DependentUpon>
-    </Compile>
-    <Compile Include="Models\UDP_Vent_tbCuponDescuento_EsImpreso_Result.cs">
-      <DependentUpon>ModelERP.tt</DependentUpon>
-    </Compile>
     <Compile Include="Models\UDP_Vent_tbCuponDescuento_Imprimir_Result.cs">
-      <DependentUpon>ModelERP.tt</DependentUpon>
-    </Compile>
-    <Compile Include="Models\UDP_Vent_tbCuponDescuento_Insert_Result.cs">
-      <DependentUpon>ModelERP.tt</DependentUpon>
-    </Compile>
-    <Compile Include="Models\UDP_Vent_tbCuponDescuento_Redimido_Result.cs">
       <DependentUpon>ModelERP.tt</DependentUpon>
     </Compile>
     <Compile Include="Models\UDP_Vent_tbCuponDescuento_Reporte_Result.cs">
       <DependentUpon>ModelERP.tt</DependentUpon>
     </Compile>
-    <Compile Include="Models\UDP_Vent_tbCuponDescuento_Update_Result.cs">
-      <DependentUpon>ModelERP.tt</DependentUpon>
-    </Compile>
     <Compile Include="Models\UDP_Vent_tbDenominacionArqueo_Edit_Result.cs">
       <DependentUpon>ModelERP.tt</DependentUpon>
     </Compile>
-    <Compile Include="Models\UDP_Vent_tbDenominacionArqueo_Insert_Result.cs">
-      <DependentUpon>ModelERP.tt</DependentUpon>
-    </Compile>
     <Compile Include="Models\UDP_Vent_tbDenominacionArqueo_Select_Result.cs">
-      <DependentUpon>ModelERP.tt</DependentUpon>
-    </Compile>
-    <Compile Include="Models\UDP_Vent_tbDenominacionArqueo_Update_Result.cs">
-      <DependentUpon>ModelERP.tt</DependentUpon>
-    </Compile>
-    <Compile Include="Models\UDP_Vent_tbDevolucionDetalle_Insert_Result.cs">
-      <DependentUpon>ModelERP.tt</DependentUpon>
-    </Compile>
-    <Compile Include="Models\UDP_Vent_tbDevolucionDetalle_Update_Result.cs">
-      <DependentUpon>ModelERP.tt</DependentUpon>
-    </Compile>
-    <Compile Include="Models\UDP_Vent_tbDevolucion_Caja_Result.cs">
-      <DependentUpon>ModelERP.tt</DependentUpon>
-    </Compile>
-    <Compile Include="Models\UDP_Vent_tbDevolucion_Filtrado_CodProducto_Result.cs">
       <DependentUpon>ModelERP.tt</DependentUpon>
     </Compile>
     <Compile Include="Models\UDP_Vent_tbDevolucion_GetDetalle_Editar_Result.cs">
@@ -998,67 +1071,10 @@
     <Compile Include="Models\UDP_Vent_tbDevolucion_GetDetalle_Result.cs">
       <DependentUpon>ModelERP.tt</DependentUpon>
     </Compile>
-    <Compile Include="Models\UDP_Vent_tbDevolucion_Insert_Result.cs">
-      <DependentUpon>ModelERP.tt</DependentUpon>
-    </Compile>
-    <Compile Include="Models\UDP_Vent_tbDevolucion_NotaCredito_Result.cs">
-      <DependentUpon>ModelERP.tt</DependentUpon>
-    </Compile>
-    <Compile Include="Models\UDP_Vent_tbDevolucion_Update_Result.cs">
-      <DependentUpon>ModelERP.tt</DependentUpon>
-    </Compile>
-    <Compile Include="Models\UDP_Vent_tbDocumentoFiscal_Insert_Result.cs">
-      <DependentUpon>ModelERP.tt</DependentUpon>
-    </Compile>
-    <Compile Include="Models\UDP_Vent_tbDocumentoFiscal_Update_Result.cs">
-      <DependentUpon>ModelERP.tt</DependentUpon>
-    </Compile>
-    <Compile Include="Models\UDP_Vent_tbEstadoFactura_Insert_Result.cs">
-      <DependentUpon>ModelERP.tt</DependentUpon>
-    </Compile>
-    <Compile Include="Models\UDP_Vent_tbEstadoFactura_Update_Result.cs">
-      <DependentUpon>ModelERP.tt</DependentUpon>
-    </Compile>
-    <Compile Include="Models\UDP_Vent_tbEstadoPedido_Insert_Result.cs">
-      <DependentUpon>ModelERP.tt</DependentUpon>
-    </Compile>
-    <Compile Include="Models\UDP_Vent_tbEstadoPedido_Update_Result.cs">
-      <DependentUpon>ModelERP.tt</DependentUpon>
-    </Compile>
-    <Compile Include="Models\UDP_Vent_tbEstadoSolicitudCredito_Insert_Result.cs">
-      <DependentUpon>ModelERP.tt</DependentUpon>
-    </Compile>
-    <Compile Include="Models\UDP_Vent_tbEstadoSolicitudCredito_Update_Result.cs">
-      <DependentUpon>ModelERP.tt</DependentUpon>
-    </Compile>
-    <Compile Include="Models\UDP_Vent_tbExoneracion_Estado_Result.cs">
-      <DependentUpon>ModelERP.tt</DependentUpon>
-    </Compile>
-    <Compile Include="Models\UDP_Vent_tbExoneracion_Estado_Result1.cs">
-      <DependentUpon>ModelERP.tt</DependentUpon>
-    </Compile>
-    <Compile Include="Models\UDP_Vent_tbExoneracion_Insert_Result.cs">
-      <DependentUpon>ModelERP.tt</DependentUpon>
-    </Compile>
     <Compile Include="Models\UDP_Vent_tbExoneracion_Select_Result.cs">
       <DependentUpon>ModelERP.tt</DependentUpon>
     </Compile>
-    <Compile Include="Models\UDP_Vent_tbExoneracion_Update_Result.cs">
-      <DependentUpon>ModelERP.tt</DependentUpon>
-    </Compile>
-    <Compile Include="Models\UDP_Vent_tbFacturaDetalle_Insert_Result.cs">
-      <DependentUpon>ModelERP.tt</DependentUpon>
-    </Compile>
-    <Compile Include="Models\UDP_Vent_tbFacturaDetalle_Update_Result.cs">
-      <DependentUpon>ModelERP.tt</DependentUpon>
-    </Compile>
-    <Compile Include="Models\UDP_Vent_tbFactura_BuscarListaPrecio_Result.cs">
-      <DependentUpon>ModelERP.tt</DependentUpon>
-    </Compile>
     <Compile Include="Models\UDP_Vent_tbFactura_ConsultaBodega_Result.cs">
-      <DependentUpon>ModelERP.tt</DependentUpon>
-    </Compile>
-    <Compile Include="Models\UDP_Vent_tbFactura_Estado_Result.cs">
       <DependentUpon>ModelERP.tt</DependentUpon>
     </Compile>
     <Compile Include="Models\UDP_Vent_tbFactura_Filtrado_CodBarra_Sucursal_Cliente_Result.cs">
@@ -1073,46 +1089,13 @@
     <Compile Include="Models\UDP_Vent_tbFactura_Imprimir_Result.cs">
       <DependentUpon>ModelERP.tt</DependentUpon>
     </Compile>
-    <Compile Include="Models\UDP_Vent_tbFactura_Imprimir_Result1.cs">
-      <DependentUpon>ModelERP.tt</DependentUpon>
-    </Compile>
-    <Compile Include="Models\UDP_Vent_tbFactura_Insert_Result.cs">
-      <DependentUpon>ModelERP.tt</DependentUpon>
-    </Compile>
     <Compile Include="Models\UDP_Vent_tbFactura_ObtenerCai_CodigoFactura_Result.cs">
-      <DependentUpon>ModelERP.tt</DependentUpon>
-    </Compile>
-    <Compile Include="Models\UDP_Vent_tbFactura_Update_Result.cs">
-      <DependentUpon>ModelERP.tt</DependentUpon>
-    </Compile>
-    <Compile Include="Models\UDP_Vent_tbListadoPrecioDetalle_Insert_Result.cs">
       <DependentUpon>ModelERP.tt</DependentUpon>
     </Compile>
     <Compile Include="Models\UDP_Vent_tbListadoPrecioDetalle_Select_Result.cs">
       <DependentUpon>ModelERP.tt</DependentUpon>
     </Compile>
-    <Compile Include="Models\UDP_Vent_tbListadoPrecioDetalle_Select_Result1.cs">
-      <DependentUpon>ModelERP.tt</DependentUpon>
-    </Compile>
-    <Compile Include="Models\UDP_Vent_tbListadoPrecioDetalle_Update_Result.cs">
-      <DependentUpon>ModelERP.tt</DependentUpon>
-    </Compile>
-    <Compile Include="Models\UDP_Vent_tbListaPrecio_Estado_Result.cs">
-      <DependentUpon>ModelERP.tt</DependentUpon>
-    </Compile>
-    <Compile Include="Models\UDP_Vent_tbListaPrecio_Insert_Result.cs">
-      <DependentUpon>ModelERP.tt</DependentUpon>
-    </Compile>
-    <Compile Include="Models\UDP_Vent_tbListaPrecio_UltimaFechaVigente_Result.cs">
-      <DependentUpon>ModelERP.tt</DependentUpon>
-    </Compile>
-    <Compile Include="Models\UDP_Vent_tbListaPrecio_Update_Result.cs">
-      <DependentUpon>ModelERP.tt</DependentUpon>
-    </Compile>
     <Compile Include="Models\UDP_Vent_tbMovimientoCaja_Apertura_Details_Result.cs">
-      <DependentUpon>ModelERP.tt</DependentUpon>
-    </Compile>
-    <Compile Include="Models\UDP_Vent_tbMovimientoCaja_Apertura_Insert_Result.cs">
       <DependentUpon>ModelERP.tt</DependentUpon>
     </Compile>
     <Compile Include="Models\UDP_Vent_tbMovimientoCaja_GetUsuarioApertura_Result.cs">
@@ -1121,16 +1104,7 @@
     <Compile Include="Models\UDP_Vent_tbMovimientoCaja_Imprimir_Result.cs">
       <DependentUpon>ModelERP.tt</DependentUpon>
     </Compile>
-    <Compile Include="Models\UDP_Vent_tbMovimientoCaja_Insert_Result.cs">
-      <DependentUpon>ModelERP.tt</DependentUpon>
-    </Compile>
-    <Compile Include="Models\UDP_Vent_tbMovimientoCaja_Update_Result.cs">
-      <DependentUpon>ModelERP.tt</DependentUpon>
-    </Compile>
     <Compile Include="Models\UDP_Vent_tbNotaCreditoSelect_Result.cs">
-      <DependentUpon>ModelERP.tt</DependentUpon>
-    </Compile>
-    <Compile Include="Models\UDP_Vent_tbNotaCredito_Anulado_Result.cs">
       <DependentUpon>ModelERP.tt</DependentUpon>
     </Compile>
     <Compile Include="Models\UDP_Vent_tbNotaCredito_Caja_Result.cs">
@@ -1139,19 +1113,7 @@
     <Compile Include="Models\UDP_Vent_tbNotaCredito_CodigoNotaCredito_Result.cs">
       <DependentUpon>ModelERP.tt</DependentUpon>
     </Compile>
-    <Compile Include="Models\UDP_Vent_tbNotaCredito_EsImpreso_Result.cs">
-      <DependentUpon>ModelERP.tt</DependentUpon>
-    </Compile>
     <Compile Include="Models\UDP_Vent_tbNotaCredito_Imprimir_Result.cs">
-      <DependentUpon>ModelERP.tt</DependentUpon>
-    </Compile>
-    <Compile Include="Models\UDP_Vent_tbNotaCredito_Imprimir_Result1.cs">
-      <DependentUpon>ModelERP.tt</DependentUpon>
-    </Compile>
-    <Compile Include="Models\UDP_Vent_tbNotaCredito_Insert_Result.cs">
-      <DependentUpon>ModelERP.tt</DependentUpon>
-    </Compile>
-    <Compile Include="Models\UDP_Vent_tbNotaCredito_Redimido_Result.cs">
       <DependentUpon>ModelERP.tt</DependentUpon>
     </Compile>
     <Compile Include="Models\UDP_Vent_tbNotaCredito_Reporte_Result.cs">
@@ -1160,145 +1122,31 @@
     <Compile Include="Models\UDP_Vent_tbNotaCredito_Select_Result.cs">
       <DependentUpon>ModelERP.tt</DependentUpon>
     </Compile>
-    <Compile Include="Models\UDP_Vent_tbNotaCredito_Update_Result.cs">
-      <DependentUpon>ModelERP.tt</DependentUpon>
-    </Compile>
-    <Compile Include="Models\UDP_Vent_tbPagosArqueo_Insert_Result.cs">
-      <DependentUpon>ModelERP.tt</DependentUpon>
-    </Compile>
-    <Compile Include="Models\UDP_Vent_tbPago_Anulado_Result.cs">
-      <DependentUpon>ModelERP.tt</DependentUpon>
-    </Compile>
-    <Compile Include="Models\UDP_Vent_tbPago_Impreso_Result.cs">
-      <DependentUpon>ModelERP.tt</DependentUpon>
-    </Compile>
     <Compile Include="Models\UDP_Vent_tbPago_Imprimir_Result.cs">
-      <DependentUpon>ModelERP.tt</DependentUpon>
-    </Compile>
-    <Compile Include="Models\UDP_Vent_tbPago_Insert_Result.cs">
-      <DependentUpon>ModelERP.tt</DependentUpon>
-    </Compile>
-    <Compile Include="Models\UDP_Vent_tbPago_Update_Result.cs">
-      <DependentUpon>ModelERP.tt</DependentUpon>
-    </Compile>
-    <Compile Include="Models\UDP_Vent_tbPedidoDetalle_Insert_Result.cs">
-      <DependentUpon>ModelERP.tt</DependentUpon>
-    </Compile>
-    <Compile Include="Models\UDP_Vent_tbPedidoDetalle_Update_Result.cs">
-      <DependentUpon>ModelERP.tt</DependentUpon>
-    </Compile>
-    <Compile Include="Models\UDP_Vent_tbPedido_Estado_Result.cs">
-      <DependentUpon>ModelERP.tt</DependentUpon>
-    </Compile>
-    <Compile Include="Models\UDP_Vent_tbPedido_Insert_Result.cs">
       <DependentUpon>ModelERP.tt</DependentUpon>
     </Compile>
     <Compile Include="Models\UDP_Vent_tbPedido_Select_Result.cs">
       <DependentUpon>ModelERP.tt</DependentUpon>
     </Compile>
-    <Compile Include="Models\UDP_Vent_tbPedido_Update_Result.cs">
-      <DependentUpon>ModelERP.tt</DependentUpon>
-    </Compile>
-    <Compile Include="Models\UDP_Vent_tbPuntoEmisionDetalle_Insert_Result.cs">
-      <DependentUpon>ModelERP.tt</DependentUpon>
-    </Compile>
-    <Compile Include="Models\UDP_Vent_tbPuntoEmisionDetalle_Update_Result.cs">
-      <DependentUpon>ModelERP.tt</DependentUpon>
-    </Compile>
-    <Compile Include="Models\UDP_Vent_tbPuntoEmision_Insert_Result.cs">
-      <DependentUpon>ModelERP.tt</DependentUpon>
-    </Compile>
-    <Compile Include="Models\UDP_Vent_tbPuntoEmision_Update_Result.cs">
-      <DependentUpon>ModelERP.tt</DependentUpon>
-    </Compile>
-    <Compile Include="Models\UDP_Vent_tbSolicitudCredito_Aprobar_Result.cs">
-      <DependentUpon>ModelERP.tt</DependentUpon>
-    </Compile>
-    <Compile Include="Models\UDP_Vent_tbSolicitudCredito_Denegar_Result.cs">
-      <DependentUpon>ModelERP.tt</DependentUpon>
-    </Compile>
-    <Compile Include="Models\UDP_Vent_tbSolicitudCredito_Estado_Result.cs">
-      <DependentUpon>ModelERP.tt</DependentUpon>
-    </Compile>
-    <Compile Include="Models\UDP_Vent_tbSolicitudCredito_Insert_Result.cs">
-      <DependentUpon>ModelERP.tt</DependentUpon>
-    </Compile>
-    <Compile Include="Models\UDP_Vent_tbSolicitudCredito_Update_Result.cs">
-      <DependentUpon>ModelERP.tt</DependentUpon>
-    </Compile>
-    <Compile Include="Models\UDP_Vent_tbSolicitudEfectivoDetalle_Apertura_Insert_Result.cs">
-      <DependentUpon>ModelERP.tt</DependentUpon>
-    </Compile>
-    <Compile Include="Models\UDP_Vent_tbSolicitudEfectivoDetalle_CantidadSolicitada_Update_Result.cs">
-      <DependentUpon>ModelERP.tt</DependentUpon>
-    </Compile>
     <Compile Include="Models\UDP_Vent_tbSolicitudEfectivoDetalle_Detalle_Result.cs">
-      <DependentUpon>ModelERP.tt</DependentUpon>
-    </Compile>
-    <Compile Include="Models\UDP_Vent_tbSolicitudEfectivoDetalle_Detalle_Result1.cs">
-      <DependentUpon>ModelERP.tt</DependentUpon>
-    </Compile>
-    <Compile Include="Models\UDP_Vent_tbSolicitudEfectivoDetalle_Insert_Result.cs">
       <DependentUpon>ModelERP.tt</DependentUpon>
     </Compile>
     <Compile Include="Models\UDP_Vent_tbSolicitudEfectivoDetalle_Select_Result.cs">
       <DependentUpon>ModelERP.tt</DependentUpon>
     </Compile>
-    <Compile Include="Models\UDP_Vent_tbSolicitudEfectivoDetalle_Update_Insert_Result.cs">
-      <DependentUpon>ModelERP.tt</DependentUpon>
-    </Compile>
-    <Compile Include="Models\UDP_Vent_tbSolicitudEfectivoDetalle_Update_Result.cs">
-      <DependentUpon>ModelERP.tt</DependentUpon>
-    </Compile>
-    <Compile Include="Models\UDP_Vent_tbSolicitudEfectivo_Apertura_Insert_Result.cs">
-      <DependentUpon>ModelERP.tt</DependentUpon>
-    </Compile>
     <Compile Include="Models\UDP_Vent_tbSolicitudEfectivo_DatosEncabezado_Result.cs">
-      <DependentUpon>ModelERP.tt</DependentUpon>
-    </Compile>
-    <Compile Include="Models\UDP_Vent_tbSolicitudEfectivo_DatosEncabezado_Result1.cs">
       <DependentUpon>ModelERP.tt</DependentUpon>
     </Compile>
     <Compile Include="Models\UDP_Vent_tbSolicitudEfectivo_Details_Result.cs">
       <DependentUpon>ModelERP.tt</DependentUpon>
     </Compile>
-    <Compile Include="Models\UDP_Vent_tbSolicitudEfectivo_Details_Result1.cs">
-      <DependentUpon>ModelERP.tt</DependentUpon>
-    </Compile>
-    <Compile Include="Models\UDP_Vent_tbSolicitudEfectivo_EsAnulada_Result.cs">
-      <DependentUpon>ModelERP.tt</DependentUpon>
-    </Compile>
     <Compile Include="Models\UDP_Vent_tbSolicitudEfectivo_Imprimir_Result.cs">
-      <DependentUpon>ModelERP.tt</DependentUpon>
-    </Compile>
-    <Compile Include="Models\UDP_Vent_tbSolicitudEfectivo_Insert_Result.cs">
       <DependentUpon>ModelERP.tt</DependentUpon>
     </Compile>
     <Compile Include="Models\UDP_Vent_tbSolicitudEfectivo_Recargo_Result.cs">
       <DependentUpon>ModelERP.tt</DependentUpon>
     </Compile>
-    <Compile Include="Models\UDP_Vent_tbSolicitudEfectivo_Update_Entrega_Result.cs">
-      <DependentUpon>ModelERP.tt</DependentUpon>
-    </Compile>
-    <Compile Include="Models\UDP_Vent_tbSolicitudEfectivo_Update_Result.cs">
-      <DependentUpon>ModelERP.tt</DependentUpon>
-    </Compile>
-    <Compile Include="Models\UDP_Vent_tbSucursal_Insert_Result.cs">
-      <DependentUpon>ModelERP.tt</DependentUpon>
-    </Compile>
-    <Compile Include="Models\UDP_Vent_tbSucursal_Update_Result.cs">
-      <DependentUpon>ModelERP.tt</DependentUpon>
-    </Compile>
-    <Compile Include="Models\UDP_Vent_tbTipoPago_Insert_Result.cs">
-      <DependentUpon>ModelERP.tt</DependentUpon>
-    </Compile>
-    <Compile Include="Models\UDP_Vent_tbTipoPago_Update_Result.cs">
-      <DependentUpon>ModelERP.tt</DependentUpon>
-    </Compile>
     <Compile Include="Models\UDP_Vent_tbUsuario_Rol_Apertura_Result.cs">
-      <DependentUpon>ModelERP.tt</DependentUpon>
-    </Compile>
-    <Compile Include="Models\UDP_Vent_VentasExoneradas1_Result.cs">
       <DependentUpon>ModelERP.tt</DependentUpon>
     </Compile>
     <Compile Include="Models\UDP_Vent_VentasExoneradas_Result.cs">
@@ -1439,6 +1287,8 @@
     <Compile Include="Models\UDV_Vent_VentasPorCaja_EntreFechas.cs">
       <DependentUpon>ModelERP.tt</DependentUpon>
     </Compile>
+    <Compile Include="Models\UnidadMedida.cs" />
+    <Compile Include="Models\Usuario.cs" />
     <Compile Include="Models\VistaInventarioHistorico.cs">
       <DependentUpon>ModelERP.tt</DependentUpon>
     </Compile>
@@ -1446,200 +1296,127 @@
       <DependentUpon>ModelERP.tt</DependentUpon>
     </Compile>
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <Compile Include="Reports\AnalisisDeMora.cs">
+    <Compile Include="Properties\Settings.Designer.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTimeSharedInput>True</DesignTimeSharedInput>
+      <DependentUpon>Settings.settings</DependentUpon>
+    </Compile>
+    <Compile Include="Reports\CatalogoProducto.cs">
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
-      <DependentUpon>AnalisisDeMora.rpt</DependentUpon>
-      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+      <DependentUpon>CatalogoProducto.rpt</DependentUpon>
       <SubType>Component</SubType>
     </Compile>
-    <Compile Include="Reports\ArqueoCaja.cs">
+    <Compile Include="Reports\ImprimirConciliacion2.cs">
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
-      <DependentUpon>ArqueoCaja.rpt</DependentUpon>
-      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+      <DependentUpon>ImprimirConciliacion.rpt</DependentUpon>
       <SubType>Component</SubType>
     </Compile>
-    <Compile Include="Reports\DescuentosPorFecha.cs">
+    <Compile Include="Reports\ImprimirEntradaPorId.cs">
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
-      <DependentUpon>DescuentosPorFecha.rpt</DependentUpon>
+      <DependentUpon>ImprimirEntradaPorId.rpt</DependentUpon>
       <SubType>Component</SubType>
     </Compile>
-    <Compile Include="Reports\DevolucionesPorFecha.cs">
+    <Compile Include="Reports\ImprimirPackingList.cs">
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
-      <DependentUpon>DevolucionesPorFecha.rpt</DependentUpon>
-      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+      <DependentUpon>ImprimirPackingList.rpt</DependentUpon>
       <SubType>Component</SubType>
     </Compile>
-    <Compile Include="Reports\EstadoCuenta.cs">
+    <Compile Include="Reports\ImprimirPackingListPorCaja.cs">
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
-      <DependentUpon>EstadoCuenta.rpt</DependentUpon>
-      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+      <DependentUpon>ImprimirPackingListPorCaja.rpt</DependentUpon>
       <SubType>Component</SubType>
     </Compile>
-    <Compile Include="Reports\Factura.cs">
+    <Compile Include="Reports\InventarioActual.cs">
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
-      <DependentUpon>Factura.rpt</DependentUpon>
-      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+      <DependentUpon>InventarioActual.rpt</DependentUpon>
       <SubType>Component</SubType>
     </Compile>
-    <Compile Include="Reports\FacturasPendienteDePago.cs">
+    <Compile Include="Reports\InventarioHistorico.cs">
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
-      <DependentUpon>FacturasPendienteDePago.rpt</DependentUpon>
-      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+      <DependentUpon>InventarioHistorico.rpt</DependentUpon>
       <SubType>Component</SubType>
     </Compile>
-    <Compile Include="Reports\ImprimirCuponDescuento.cs">
+    <Compile Include="Reports\ListadoProveedores1.cs">
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
-      <DependentUpon>ImprimirCuponDescuento.rpt</DependentUpon>
-      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+      <DependentUpon>ListadoProveedores.rpt</DependentUpon>
       <SubType>Component</SubType>
     </Compile>
-    <Compile Include="Reports\ImprimirNotaCreditoclteJuridicoxDEV.cs">
+    <Compile Include="Reports\Movimiento_Entre_Fechas.cs">
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
-      <DependentUpon>ImprimirNotaCreditoclteJuridicoxDEV.rpt</DependentUpon>
-      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+      <DependentUpon>Movimiento_Entre_Fechas.rpt</DependentUpon>
       <SubType>Component</SubType>
     </Compile>
-    <Compile Include="Reports\ImprimirNotaCreditoclteJuridicoxOtros.cs">
+    <Compile Include="Reports\ProductoSolicitadosPorEntregar.cs">
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
-      <DependentUpon>ImprimirNotaCreditoclteJuridicoxOtros.rpt</DependentUpon>
-      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+      <DependentUpon>ProductoSolicitadosPorEntregar.rpt</DependentUpon>
       <SubType>Component</SubType>
     </Compile>
-    <Compile Include="Reports\ImprimirNotaCreditoclteNaturalxDEV.cs">
+    <Compile Include="Reports\ProyeccionMovimientoProducto.cs">
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
-      <DependentUpon>ImprimirNotaCreditoclteNaturalxDEV.rpt</DependentUpon>
-      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+      <DependentUpon>ProyeccionMovimientoProducto.rpt</DependentUpon>
       <SubType>Component</SubType>
     </Compile>
-    <Compile Include="Reports\ImprimirNotaCreditoclteNaturalxOtros.cs">
+    <Compile Include="Reports\ReportedesSobrantesInventarioFisico.cs">
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
-      <DependentUpon>ImprimirNotaCreditoclteNaturalxOtros.rpt</DependentUpon>
-      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+      <DependentUpon>ReportedesSobrantesInventarioFisico.rpt</DependentUpon>
       <SubType>Component</SubType>
     </Compile>
-    <Compile Include="Reports\CuponDescuento.cs">
-      <DependentUpon>CuponDescuento.rpt</DependentUpon>
+    <Compile Include="Reports\ReporteFaltantes.cs">
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
-      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+      <DependentUpon>ReporteFaltantes.rpt</DependentUpon>
       <SubType>Component</SubType>
     </Compile>
-    <Compile Include="Reports\ListadoPrecio2.cs">
+    <Compile Include="Reports\ReporteFrecuenciaMovimientoPro.cs">
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
-      <DependentUpon>ListadoPrecio.rpt</DependentUpon>
-      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+      <DependentUpon>ReporteFrecuenciaMovimientoPro.rpt</DependentUpon>
       <SubType>Component</SubType>
     </Compile>
-    <Compile Include="Reports\rptInventarioNumeraciones.cs">
+    <Compile Include="Reports\ReporteTipoEntrada.cs">
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
-      <DependentUpon>rptInventarioNumeraciones.rpt</DependentUpon>
-      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+      <DependentUpon>ReporteTipoEntrada.rpt</DependentUpon>
       <SubType>Component</SubType>
     </Compile>
-    <Compile Include="Reports\NotaCredito.cs">
+    <Compile Include="Reports\Salida.cs">
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
-      <DependentUpon>NotaCredito.rpt</DependentUpon>
-      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+      <DependentUpon>Salida.rpt</DependentUpon>
       <SubType>Component</SubType>
     </Compile>
-    <Compile Include="Reports\PagoImprimir1.cs">
-      <AutoGen>True</AutoGen>
-      <DesignTime>True</DesignTime>
-      <DependentUpon>PagoImprimir.rpt</DependentUpon>
-      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-      <SubType>Component</SubType>
+    <Compile Include="ReportViewer\ImprimirEntrada.aspx.cs">
+      <DependentUpon>ImprimirEntrada.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
     </Compile>
-    <Compile Include="Reports\PagosPorFecha.cs">
-      <AutoGen>True</AutoGen>
-      <DesignTime>True</DesignTime>
-      <DependentUpon>PagosPorFecha.rpt</DependentUpon>
-      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-      <SubType>Component</SubType>
+    <Compile Include="ReportViewer\ImprimirEntrada.aspx.designer.cs">
+      <DependentUpon>ImprimirEntrada.aspx</DependentUpon>
     </Compile>
-    <Compile Include="Reports\Pedidos.cs">
-      <AutoGen>True</AutoGen>
-      <DesignTime>True</DesignTime>
-      <DependentUpon>Pedidos.rpt</DependentUpon>
-      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-      <SubType>Component</SubType>
+    <Compile Include="ReportViewer\ImprimirEntradaDevolucion.aspx.cs">
+      <DependentUpon>ImprimirEntradaDevolucion.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
     </Compile>
-    <Compile Include="Reports\rptPedidoEntreFechas.cs">
-      <AutoGen>True</AutoGen>
-      <DesignTime>True</DesignTime>
-      <DependentUpon>rptPedidoEntreFechas.rpt</DependentUpon>
-      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-      <SubType>Component</SubType>
+    <Compile Include="ReportViewer\ImprimirEntradaDevolucion.aspx.designer.cs">
+      <DependentUpon>ImprimirEntradaDevolucion.aspx</DependentUpon>
     </Compile>
-    <Compile Include="Reports\rptSolicitudEfectivoEntreFechasCajaCajero.cs">
-      <AutoGen>True</AutoGen>
-      <DesignTime>True</DesignTime>
-      <DependentUpon>rptSolicitudEfectivoEntreFechasCajaCajero.rpt</DependentUpon>
-      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-      <SubType>Component</SubType>
+    <Compile Include="ReportViewer\ImprimirEntradaTraslado.aspx.cs">
+      <DependentUpon>ImprimirEntradaTraslado.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
     </Compile>
-    <Compile Include="Reports\rptSolicitudEfectivoEntrefechasGeneral.cs">
-      <AutoGen>True</AutoGen>
-      <DesignTime>True</DesignTime>
-      <DependentUpon>rptSolicitudEfectivoEntrefechasGeneral.rpt</DependentUpon>
-      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-      <SubType>Component</SubType>
-    </Compile>
-    <Compile Include="Reports\rptVentasPorCajaEntreFecha.cs">
-      <AutoGen>True</AutoGen>
-      <DesignTime>True</DesignTime>
-      <DependentUpon>rptVentasPorCajaEntreFecha.rpt</DependentUpon>
-      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-      <SubType>Component</SubType>
-    </Compile>
-    <Compile Include="Reports\SolicitudEfectivo.cs">
-      <AutoGen>True</AutoGen>
-      <DesignTime>True</DesignTime>
-      <DependentUpon>SolicitudEfectivo.rpt</DependentUpon>
-      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-      <SubType>Component</SubType>
-    </Compile>
-    <Compile Include="Reports\SolicitudesCreditosPorAprobar.cs">
-      <AutoGen>True</AutoGen>
-      <DesignTime>True</DesignTime>
-      <DependentUpon>SolicitudesCreditosPorAprobar.rpt</DependentUpon>
-      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-      <SubType>Component</SubType>
-    </Compile>
-    <Compile Include="Reports\VentasConsumidorFinal.cs">
-      <AutoGen>True</AutoGen>
-      <DesignTime>True</DesignTime>
-      <DependentUpon>VentasConsumidorFinal.rpt</DependentUpon>
-      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-      <SubType>Component</SubType>
-    </Compile>
-    <Compile Include="Reports\rptVentasExoneradas.cs">
-      <AutoGen>True</AutoGen>
-      <DesignTime>True</DesignTime>
-      <DependentUpon>rptVentasExoneradas.rpt</DependentUpon>
-      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-      <SubType>Component</SubType>
-    </Compile>
-    <Compile Include="Reports\Ventas_entre_Fechas.cs">
-      <AutoGen>True</AutoGen>
-      <DesignTime>True</DesignTime>
-      <DependentUpon>Ventas_entre_Fechas.rpt</DependentUpon>
-      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-      <SubType>Component</SubType>
+    <Compile Include="ReportViewer\ImprimirEntradaTraslado.aspx.designer.cs">
+      <DependentUpon>ImprimirEntradaTraslado.aspx</DependentUpon>
     </Compile>
     <Compile Include="Startup.cs" />
   </ItemGroup>
@@ -1649,6 +1426,7 @@
     <Content Include="Content\bootstrap.min.css" />
     <Content Include="Content\css\Auditoria.css" />
     <Content Include="Content\css\master.css" />
+    <Content Include="Content\css\tables.css" />
     <Content Include="Content\DataTables\css\autoFill.bootstrap.css" />
     <Content Include="Content\DataTables\css\autoFill.bootstrap.min.css" />
     <Content Include="Content\DataTables\css\autoFill.bootstrap4.css" />
@@ -1806,6 +1584,7 @@
     <Content Include="Content\DataTables\images\sort_desc.png" />
     <Content Include="Content\DataTables\images\sort_desc_disabled.png" />
     <Content Include="Content\DataTables\swf\flashExport.swf" />
+    <Content Include="Content\img\404.png" />
     <Content Include="Content\img\Business_and_Commerce_Career_Prospects_and_Trends_Report_final_for_web2-1[1].jpg" />
     <Content Include="Content\img\Logo_GM.png" />
     <Content Include="Content\img\MicrosoftTeams-image.png" />
@@ -1869,6 +1648,8 @@
     <Content Include="fonts\glyphicons-halflings-regular.woff" />
     <Content Include="fonts\glyphicons-halflings-regular.ttf" />
     <Content Include="fonts\glyphicons-halflings-regular.eot" />
+    <Content Include="Logo\1.jpg" />
+    <Content Include="Logo\1.png" />
     <Content Include="Models\ModelERP.Context.tt">
       <Generator>TextTemplatingFileGenerator</Generator>
       <DependentUpon>ModelERP.edmx</DependentUpon>
@@ -1879,94 +1660,65 @@
       <DependentUpon>ModelERP.edmx</DependentUpon>
       <LastGenOutput>ModelERP.cs</LastGenOutput>
     </Content>
-    <Content Include="Scripts\app\AceptarSolicitudCre.js" />
+    <Content Include="ReportViewer\ImprimirEntrada.aspx" />
+    <Content Include="ReportViewer\ImprimirEntradaDevolucion.aspx" />
+    <Content Include="ReportViewer\ImprimirEntradaTraslado.aspx" />
     <Content Include="Scripts\app\Activo.js" />
-    <Content Include="Scripts\app\ActivoExoneracion.js" />
-    <Content Include="Scripts\app\ActualizarListaPrecioDetalle.js" />
-    <Content Include="Scripts\app\AnularDevolucion.js" />
-    <Content Include="Scripts\app\AnularPedido.js" />
-    <Content Include="Scripts\app\Apertura.js" />
-    <Content Include="Scripts\app\AperturaDetalle.js" />
-    <Content Include="Scripts\app\AperturaSolicitudEfectivo.js" />
-    <Content Include="Scripts\app\AperturaSolicitudEfectivoDetalle.js" />
-    <Content Include="Scripts\app\ArqueoCaja.js" />
-    <Content Include="Scripts\app\Banco.js" />
-    <Content Include="Scripts\app\BCliente.js" />
-    <Content Include="Scripts\app\General\CaracteresEspeciales.js" />
-    <Content Include="Scripts\app\ClienteDevolucion.js" />
-    <Content Include="Scripts\app\ClienteExoneracion.js" />
-    <Content Include="Scripts\app\ClientePago.js" />
-    <Content Include="Scripts\app\Clientes-Pedido-Credito.js" />
-    <Content Include="Scripts\app\ComandoGuardar.js" />
-    <Content Include="Scripts\app\CreateListaPrecioDetails.js" />
-    <Content Include="Scripts\app\CreateNumeracionDetails.js" />
-    <Content Include="Scripts\app\CreditoCambio.js" />
-    <Content Include="Scripts\app\CuentaBanco.js" />
-    <Content Include="Scripts\app\CuponDescuentoEsImpreso.js" />
-    <Content Include="Scripts\app\CuponDescuentoAnulado.js" />
+    <Content Include="Scripts\app\ActivoP.js" />
+    <Content Include="Scripts\app\AgregarMunicipio.js" />
+    <Content Include="Scripts\app\BodegaDetalle.js" />
+    <Content Include="Scripts\app\BusquedaGenerica.js" />
+    <Content Include="Scripts\app\Categoria.js" />
+    <Content Include="Scripts\app\Comparar.js" />
+    <Content Include="Scripts\app\CrearActualizarEliminar.js" />
     <Content Include="Scripts\app\DataTable.js" />
-    <Content Include="Scripts\app\DataTableBusquedaGenerica.js" />
     <Content Include="Scripts\app\Datepicker.js" />
-    <Content Include="Scripts\app\Denominacion.js" />
-    <Content Include="Scripts\app\DenominacionArqueo.js" />
+    <Content Include="Scripts\app\DatepickerEmpleado.js" />
     <Content Include="Scripts\app\Departamento.js" />
-    <Content Include="Scripts\app\DevolucionCalculos.js" />
-    <Content Include="Scripts\app\DevolucionDetalle.js" />
-    <Content Include="Scripts\app\EditNumeracion.js" />
-    <Content Include="Scripts\app\EmitirNotaCredito.js" />
-    <Content Include="Scripts\app\EntregaEfectivo.js" />
-    <Content Include="Scripts\app\EntregaEfectivoDetalle.js" />
-    <Content Include="Scripts\app\Factura.js" />
-    <Content Include="Scripts\app\FacturaDetalleEdit.js" />
-    <Content Include="Scripts\app\FacturaDevolucion.js" />
-    <Content Include="Scripts\app\FacturaPagar.js" />
-    <Content Include="Scripts\app\FacturaPedido.js" />
-    <Content Include="Scripts\app\fechaExoneracion.js" />
-    <Content Include="Scripts\app\FuncionResta.js" />
-    <Content Include="Scripts\app\GetCodigoNotaCredito.js" />
-    <Content Include="Scripts\app\GetListadoDetalleEdit.js" />
-    <Content Include="Scripts\app\GuardarDetalleEdit.js" />
-    <Content Include="Scripts\app\GuardarListadoPrecioDetalle.js" />
-    <Content Include="Scripts\app\Identificacion.js" />
-    <Content Include="Scripts\app\InActivarCliente.js" />
-    <Content Include="Scripts\app\InactivarExoneracion.js" />
-    <Content Include="Scripts\app\InactivarListaP.js" />
-    <Content Include="Scripts\app\IndexNumeracion.js" />
+    <Content Include="Scripts\app\DetalleBox.js" />
+    <Content Include="Scripts\app\disableSubmits.js" />
+    <Content Include="Scripts\app\EditBodegaDetalle.js" />
+    <Content Include="Scripts\app\emailvalidation.js" />
+    <Content Include="Scripts\app\EntradaDetalle.js" />
+    <Content Include="Scripts\app\InActivarProducto.js" />
+    <Content Include="Scripts\app\InActivarUsuario.js" />
     <Content Include="Scripts\app\inspinia.js" />
-    <Content Include="Scripts\app\ListaPrecioDetalle.js" />
-    <Content Include="Scripts\app\ListaPrecioDetalleEdit.js" />
-    <Content Include="Scripts\app\ListaPrecioFechaFinal.js" />
-    <Content Include="Scripts\app\MessageError.js" />
-    <Content Include="Scripts\app\MovientoCaja.js" />
-    <Content Include="Scripts\app\NotaCredito.js" />
-    <Content Include="Scripts\app\NotaCreditoAnulado.js" />
-    <Content Include="Scripts\app\PagoCampoNumerico.js" />
-    <Content Include="Scripts\app\PagoClienteFacturas.js" />
-    <Content Include="Scripts\app\PagosArqueo.js" />
-    <Content Include="Scripts\app\PagoTransacciones.js" />
-    <Content Include="Scripts\app\PedidosFacturar.js" />
+    <Content Include="Scripts\app\InvFisicoDetalle.js" />
+    <Content Include="Scripts\app\letras.js" />
+    <Content Include="Scripts\app\MostrarCamposEditar.js" />
+    <Content Include="Scripts\app\MostrarCamposEntradajs.js" />
+    <Content Include="Scripts\app\MostrarCamposSalida.js" />
+    <Content Include="Scripts\app\MostrarOcultar.js" />
+    <Content Include="Scripts\app\Municipio.js" />
+    <Content Include="Scripts\app\Objeto.js" />
+    <Content Include="Scripts\app\Parametro.js" />
+    <Content Include="Scripts\app\PartialViewGetObjectos.js" />
     <Content Include="Scripts\app\PersonaNatural.js" />
-    <Content Include="Scripts\app\ProductoDevolucion.js" />
-    <Content Include="Scripts\app\ProductoFactura.js" />
-    <Content Include="Scripts\app\ProductoListaPrecios.js" />
-    <Content Include="Scripts\app\PuntoEmision.js" />
-    <Content Include="Scripts\app\PuntoEmisionDetalle.js" />
-    <Content Include="Scripts\app\Reportes.js" />
-    <Content Include="Scripts\app\SaveDetallePedido.js" />
-    <Content Include="Scripts\app\SavePedidoDetalle.js" />
-    <Content Include="Scripts\app\SolicituCreditoDenegar.js" />
-    <Content Include="Scripts\app\SolicitudCredito.js" />
-    <Content Include="Scripts\app\SolicitudEfectipoDetalless.js" />
-    <Content Include="Scripts\app\SolicitudEfectivo.js" />
-    <Content Include="Scripts\app\SolicitudEfectivoDetalles.js" />
-    <Content Include="Scripts\app\SolicitudEfectivoEsAnulada.js" />
-    <Content Include="Scripts\app\Sucursal.js" />
-    <Content Include="Scripts\app\TableDetalleDevolucion.js" />
-    <Content Include="Scripts\app\TipoPago.js" />
-    <Content Include="Scripts\app\TipoPagoDescripcionSoloLetras.js" />
-    <Content Include="Scripts\app\ValidarPedido.js" />
+    <Content Include="Scripts\app\ProductoCodigo.js" />
+    <Content Include="Scripts\app\RolesUsuario.js" />
+    <Content Include="Scripts\app\RolesUsuarioEdit.js" />
+    <Content Include="Scripts\app\RolObjetosEdit.js" />
+    <Content Include="Scripts\app\RolObjetos.js" />
+    <Content Include="Scripts\app\Salida.js" />
+    <Content Include="Scripts\app\SalidaDetalle.js" />
+    <Content Include="Scripts\app\SalidaEdit.js" />
+    <Content Include="Scripts\app\search.js" />
+    <Content Include="Scripts\app\SolicitarProducto.js" />
+    <Content Include="Scripts\app\SubCategoriaProducto.js" />
+    <Content Include="Scripts\app\SubCategoriaProductoEdit.js" />
+    <Content Include="Scripts\app\TeclasEspeciales.js" />
+    <Content Include="Scripts\app\TipoDevolucion.js" />
+    <Content Include="Scripts\app\Tipo_Salida.js" />
+    <Content Include="Scripts\app\Unidad_Medida.js" />
+    <Content Include="Scripts\app\ValidacionProveedor.js" />
+    <Content Include="Scripts\app\ValidationEmail.js" />
+    <Content Include="Scripts\app\ValidationErrorsBodega.js" />
+    <Content Include="Scripts\app\ValidationEstadoInventarioFisico.js" />
+    <Content Include="Scripts\app\ValidationEstadoMovimientojs.js" />
+    <Content Include="Scripts\app\ValidationNumber.js" />
     <Content Include="Scripts\bootstrap.js" />
     <Content Include="Scripts\bootstrap.min.js" />
+    <Content Include="Content\bootstrap.css.map" />
     <Content Include="fonts\font-awesome\fonts\fontawesome-webfont.eot" />
     <Content Include="fonts\font-awesome\fonts\fontawesome-webfont.ttf" />
     <Content Include="fonts\font-awesome\fonts\fontawesome-webfont.woff" />
@@ -1998,6 +1750,7 @@
     <Content Include="fonts\font-awesome\scss\_rotated-flipped.scss" />
     <Content Include="fonts\font-awesome\scss\_stacked.scss" />
     <Content Include="fonts\font-awesome\scss\_variables.scss" />
+    <Content Include="Content\bootstrap.min.css.map" />
     <Content Include="fonts\glyphicons-halflings-regular.woff2" />
     <EntityDeploy Include="Models\ModelERP.edmx">
       <Generator>EntityModelCodeGenerator</Generator>
@@ -2009,75 +1762,7 @@
     <Content Include="Content\DataTables\css\semanticui.scss" />
     <Content Include="Content\DataTables\css\mixins.scss" />
     <Content Include="Content\DataTables\css\common.scss" />
-    <Content Include="Dataset\PuntoEmision.xsc">
-      <DependentUpon>PuntoEmision.xsd</DependentUpon>
-    </Content>
-    <Content Include="Dataset\DSCuponDescuento.xsc">
-      <DependentUpon>DSCuponDescuento.xsd</DependentUpon>
-    </Content>
-    <Content Include="Dataset\ArqueoCaja.xsc">
-      <DependentUpon>ArqueoCaja.xsd</DependentUpon>
-    </Content>
-    <None Include="Dataset\ArqueoCaja.xsd">
-      <SubType>Designer</SubType>
-      <Generator>MSDataSetGenerator</Generator>
-      <LastGenOutput>ArqueoCaja.Designer.cs</LastGenOutput>
-    </None>
-    <Content Include="Dataset\ArqueoCaja.xss">
-      <DependentUpon>ArqueoCaja.xsd</DependentUpon>
-    </Content>
-    <None Include="Dataset\DSCuponDescuento.xsd">
-      <Generator>MSDataSetGenerator</Generator>
-      <LastGenOutput>DSCuponDescuento.Designer.cs</LastGenOutput>
-      <SubType>Designer</SubType>
-    </None>
-    <Content Include="Dataset\DSCuponDescuento.xss">
-      <DependentUpon>DSCuponDescuento.xsd</DependentUpon>
-    </Content>
-    <Content Include="Dataset\DSNotaCredito.xsc">
-      <DependentUpon>DSNotaCredito.xsd</DependentUpon>
-    </Content>
-    <Content Include="Dataset\DsFactura.xsc">
-      <DependentUpon>DsFactura.xsd</DependentUpon>
-    </Content>
-    <None Include="Dataset\DsFactura.xsd">
-      <SubType>Designer</SubType>
-      <Generator>MSDataSetGenerator</Generator>
-      <LastGenOutput>DsFactura.Designer.cs</LastGenOutput>
-    </None>
-    <Content Include="Dataset\DsFactura.xss">
-      <DependentUpon>DsFactura.xsd</DependentUpon>
-    </Content>
-    <None Include="Dataset\DSNotaCredito.xsd">
-      <Generator>MSDataSetGenerator</Generator>
-      <LastGenOutput>DSNotaCredito.Designer.cs</LastGenOutput>
-      <SubType>Designer</SubType>
-    </None>
-    <Content Include="Dataset\DSNotaCredito.xss">
-      <DependentUpon>DSNotaCredito.xsd</DependentUpon>
-    </Content>
-    <Content Include="Dataset\dsPago.xsc">
-      <DependentUpon>dsPago.xsd</DependentUpon>
-    </Content>
-    <None Include="Dataset\dsPago.xsd">
-      <Generator>MSDataSetGenerator</Generator>
-      <LastGenOutput>dsPago.Designer.cs</LastGenOutput>
-      <SubType>Designer</SubType>
-    </None>
-    <Content Include="Dataset\dsPago.xss">
-      <DependentUpon>dsPago.xsd</DependentUpon>
-    </Content>
-    <None Include="Dataset\PuntoEmision.xsd">
-      <SubType>Designer</SubType>
-      <Generator>MSDataSetGenerator</Generator>
-      <LastGenOutput>PuntoEmision.Designer.cs</LastGenOutput>
-    </None>
-    <Content Include="Dataset\PuntoEmision.xss">
-      <DependentUpon>PuntoEmision.xsd</DependentUpon>
-    </Content>
-    <Content Include="Dataset\SolicitudEFectivo.xsc">
-      <DependentUpon>SolicitudEFectivo.xsd</DependentUpon>
-    </Content>
+    <Fakes Include="Fakes\SimpleCrypto.fakes" />
     <Content Include="Dataset\Reportes.xsc">
       <DependentUpon>Reportes.xsd</DependentUpon>
     </Content>
@@ -2088,14 +1773,6 @@
     </None>
     <Content Include="Dataset\Reportes.xss">
       <DependentUpon>Reportes.xsd</DependentUpon>
-    </Content>
-    <None Include="Dataset\SolicitudEFectivo.xsd">
-      <Generator>MSDataSetGenerator</Generator>
-      <LastGenOutput>SolicitudEFectivo.Designer.cs</LastGenOutput>
-      <SubType>Designer</SubType>
-    </None>
-    <Content Include="Dataset\SolicitudEFectivo.xss">
-      <DependentUpon>SolicitudEFectivo.xsd</DependentUpon>
     </Content>
     <None Include="Properties\PublishProfiles\HostDemo.pubxml" />
     <Content Include="Scripts\DataTables\autoFill.bootstrap.js" />
@@ -2175,16 +1852,22 @@
     <Content Include="Scripts\DataTables\responsive.semanticui.js" />
     <Content Include="Scripts\DataTables\responsive.semanticui.min.js" />
     <Content Include="Scripts\jquery-3.1.1.min.js" />
-    <None Include="Scripts\jquery-3.6.0.intellisense.js" />
-    <Content Include="Scripts\jquery-3.6.0.js" />
-    <Content Include="Scripts\jquery-3.6.0.min.js" />
-    <Content Include="Scripts\jquery-3.6.0.slim.js" />
-    <Content Include="Scripts\jquery-3.6.0.slim.min.js" />
+    <None Include="Properties\Settings.settings">
+      <Generator>SettingsSingleFileGenerator</Generator>
+      <LastGenOutput>Settings.Designer.cs</LastGenOutput>
+    </None>
+    <None Include="Scripts\jquery-3.3.1.intellisense.js" />
+    <Content Include="Scripts\jquery-3.3.1.js" />
+    <Content Include="Scripts\jquery-3.3.1.min.js" />
+    <Content Include="Scripts\jquery-3.3.1.slim.js" />
+    <Content Include="Scripts\jquery-3.3.1.slim.min.js" />
+    <None Include="Scripts\jquery.validate-vsdoc.js" />
     <Content Include="Scripts\jquery-ui-1.12.1.js" />
     <Content Include="Scripts\jquery-ui-1.12.1.min.js" />
-    <Content Include="Scripts\jquery.mask.js" />
-    <Content Include="Scripts\jquery.mask.min.js" />
-    <None Include="Scripts\jquery.validate-vsdoc.js" />
+    <Content Include="Scripts\jquery.inputmask.bundle.js" />
+    <Content Include="Scripts\jquery.maskedinput.min.js" />
+    <Content Include="Scripts\jquery.unobtrusive-ajax.js" />
+    <Content Include="Scripts\jquery.unobtrusive-ajax.min.js" />
     <Content Include="Scripts\jquery.validate.js" />
     <Content Include="Scripts\jquery.validate.min.js" />
     <Content Include="Scripts\jquery.validate.unobtrusive.js" />
@@ -2192,6 +1875,9 @@
     <Content Include="Scripts\plugins\metisMenu\metisMenu.min.js" />
     <Content Include="Scripts\plugins\pace\pace.min.js" />
     <Content Include="Scripts\plugins\slimscroll\jquery.slimscroll.min.js" />
+    <Content Include="Scripts\Salida.js" />
+    <Content Include="Scripts\SalidaDetalle.js" />
+    <Content Include="Scripts\wp-embed.min.js" />
     <Content Include="Web.config">
       <SubType>Designer</SubType>
     </Content>
@@ -2203,203 +1889,196 @@
     </Content>
     <Content Include="Views\Web.config" />
     <Content Include="Views\_ViewStart.cshtml" />
-    <Content Include="Views\Shared\_LayoutFacturacion.cshtml" />
+    <Content Include="Views\Shared\_Layout.cshtml" />
+    <Content Include="Views\Home\Index.cshtml" />
     <Content Include="Views\Shared\_LoginPartial.cshtml" />
     <Content Include="Views\Home\Minor.cshtml" />
     <Content Include="Views\Shared\_Footer.cshtml" />
     <Content Include="Views\Shared\_Navigation.cshtml" />
     <Content Include="Views\Shared\_TopNavbar.cshtml" />
     <Content Include="Views\Login\Index.cshtml" />
-    <Content Include="Views\EstadoFactura\Create.cshtml" />
-    <Content Include="Views\EstadoFactura\Details.cshtml" />
-    <Content Include="Views\EstadoFactura\Edit.cshtml" />
-    <Content Include="Views\EstadoFactura\Index.cshtml" />
-    <Content Include="Views\ActividadEconomica\Create.cshtml" />
-    <Content Include="Views\ActividadEconomica\Details.cshtml" />
-    <Content Include="Views\ActividadEconomica\Edit.cshtml" />
-    <Content Include="Views\ActividadEconomica\Index.cshtml" />
-    <Content Include="Views\TipoIdentificacion\Create.cshtml" />
-    <Content Include="Views\TipoIdentificacion\Details.cshtml" />
-    <Content Include="Views\TipoIdentificacion\Edit.cshtml" />
-    <Content Include="Views\TipoIdentificacion\Index.cshtml" />
-    <Content Include="Views\Banco\Create.cshtml" />
-    <Content Include="Views\Banco\Details.cshtml" />
-    <Content Include="Views\Banco\Edit.cshtml" />
-    <Content Include="Views\Banco\Index.cshtml" />
-    <Content Include="Views\CuentaBanco\Create.cshtml" />
-    <Content Include="Views\CuentaBanco\Details.cshtml" />
-    <Content Include="Views\CuentaBanco\Edit.cshtml" />
-    <Content Include="Views\CuentaBanco\Index.cshtml" />
-    <Content Include="Views\Devolucion\Create.cshtml" />
-    <Content Include="Views\Devolucion\Details.cshtml" />
-    <Content Include="Views\Devolucion\Edit.cshtml" />
-    <Content Include="Views\Devolucion\Index.cshtml" />
-    <Content Include="Views\Devolucion\_CreateDevolucionDetalle.cshtml" />
-    <Content Include="Views\DocumentoFiscal\Create.cshtml" />
-    <Content Include="Views\DocumentoFiscal\Details.cshtml" />
-    <Content Include="Views\DocumentoFiscal\Edit.cshtml" />
-    <Content Include="Views\DocumentoFiscal\Index.cshtml" />
-    <Content Include="Views\CuponDescuento\Create.cshtml" />
-    <Content Include="Views\CuponDescuento\Details.cshtml" />
-    <Content Include="Views\CuponDescuento\Edit.cshtml" />
-    <Content Include="Views\CuponDescuento\Index.cshtml" />
-    <Content Include="Views\NotaCredito\Create.cshtml" />
-    <Content Include="Views\NotaCredito\Details.cshtml" />
-    <Content Include="Views\NotaCredito\Edit.cshtml" />
-    <Content Include="Views\NotaCredito\Index.cshtml" />
-    <Content Include="Views\Moneda\Create.cshtml" />
-    <Content Include="Views\Moneda\Details.cshtml" />
-    <Content Include="Views\Moneda\Edit.cshtml" />
-    <Content Include="Views\Moneda\Index.cshtml" />
-    <Content Include="Views\EstadoSolicitudCredito\Create.cshtml" />
-    <Content Include="Views\EstadoSolicitudCredito\Details.cshtml" />
-    <Content Include="Views\EstadoSolicitudCredito\Edit.cshtml" />
-    <Content Include="Views\EstadoSolicitudCredito\Index.cshtml" />
-    <Content Include="Views\SolicitudCredito\Create.cshtml" />
-    <Content Include="Views\SolicitudCredito\Details.cshtml" />
-    <Content Include="Views\SolicitudCredito\Edit.cshtml" />
-    <Content Include="Views\SolicitudCredito\Index.cshtml" />
-    <Content Include="Views\Cliente\Create.cshtml" />
-    <Content Include="Views\Cliente\Details.cshtml" />
-    <Content Include="Views\Cliente\Edit.cshtml" />
-    <Content Include="Views\Cliente\Index.cshtml" />
-    <Content Include="Views\PuntoEmision\Create.cshtml" />
-    <Content Include="Views\PuntoEmision\Details.cshtml" />
-    <Content Include="Views\PuntoEmision\Edit.cshtml" />
-    <Content Include="Views\PuntoEmision\Index.cshtml" />
-    <Content Include="Views\PuntoEmision\_CreateNumeracion.cshtml" />
-    <Content Include="Views\PuntoEmision\_IndexNumeracion.cshtml" />
-    <Content Include="Views\PuntoEmision\_IndexSucursal.cshtml" />
-    <Content Include="Views\PuntoEmision\_EditNumeracion.cshtml" />
-    <Content Include="Views\Caja\Create.cshtml" />
-    <Content Include="Views\Caja\Details.cshtml" />
-    <Content Include="Views\Caja\Edit.cshtml" />
-    <Content Include="Views\Caja\Index.cshtml" />
-    <Content Include="Views\Denominacion\Create.cshtml" />
-    <Content Include="Views\Denominacion\Details.cshtml" />
-    <Content Include="Views\Denominacion\Edit.cshtml" />
-    <Content Include="Views\Denominacion\Index.cshtml" />
-    <Content Include="Views\SolicitudEfectivo\Create.cshtml" />
-    <Content Include="Views\SolicitudEfectivo\Details.cshtml" />
-    <Content Include="Views\SolicitudEfectivo\Edit.cshtml" />
-    <Content Include="Views\SolicitudEfectivo\Index.cshtml" />
-    <Content Include="Views\PuntoEmision\_DetailsNumeracion.cshtml" />
-    <Content Include="Views\NotaCredito\_IndexCliente.cshtml" />
-    <Content Include="Views\SolicitudCredito\_IndexCliente.cshtml" />
-    <Content Include="Views\SolicitudCredito\IndexSolicitud.cshtml" />
-    <Content Include="Views\Pedido\Create.cshtml" />
-    <Content Include="Views\Pedido\Details.cshtml" />
-    <Content Include="Views\Pedido\Edit.cshtml" />
-    <Content Include="Views\Pedido\Index.cshtml" />
-    <Content Include="Views\Pedido\_IndexCliente.cshtml" />
-    <Content Include="Views\Pedido\_ListPedidoDetalle.cshtml" />
-    <Content Include="Views\MovimientoCaja\Create.cshtml" />
-    <Content Include="Views\MovimientoCaja\CreateApertura.cshtml" />
-    <Content Include="Views\MovimientoCaja\Details.cshtml" />
-    <Content Include="Views\MovimientoCaja\Edit.cshtml" />
-    <Content Include="Views\MovimientoCaja\Index.cshtml" />
-    <Content Include="Views\MovimientoCaja\IndexApertura.cshtml" />
-    <Content Include="Views\MovimientoCaja\_CreateAperturaDetalle.cshtml" />
-    <Content Include="Views\Devolucion\_CreateDevolucionDetalle1.cshtml" />
-    <Content Include="Views\Devolucion\_IndexCliente.cshtml" />
-    <Content Include="Views\Devolucion\_IndexDetalleDevolucion.cshtml" />
-    <Content Include="Views\Devolucion\_IndexProductoDDevolucion.cshtml" />
-    <Content Include="Views\Devolucion\_ProductoDevolucionFactura.cshtml" />
-    <Content Include="Views\Pago\Create.cshtml" />
-    <Content Include="Views\Pago\Details.cshtml" />
-    <Content Include="Views\Pago\Edit.cshtml" />
-    <Content Include="Views\Pago\Index.cshtml" />
-    <Content Include="Views\TipoPago\Delete.cshtml" />
-    <Content Include="Views\TipoPago\Details.cshtml" />
-    <Content Include="Views\TipoPago\Edit.cshtml" />
-    <Content Include="Views\TipoPago\Index.cshtml" />
-    <Content Include="Views\Pago\_IndexCliente.cshtml" />
-    <Content Include="Views\MovimientoCaja\_CreateDenominacion.cshtml" />
-    <Content Include="Views\Pago\_BuscarFacturaDevolucion.cshtml" />
-    <Content Include="Views\Pedido\_IndexProducto.cshtml" />
-    <Content Include="Views\Pago\IndexPagoFactura.cshtml" />
-    <Content Include="Views\Sucursal\Create.cshtml" />
-    <Content Include="Views\Sucursal\Details.cshtml" />
-    <Content Include="Views\Sucursal\Edit.cshtml" />
-    <Content Include="Views\Sucursal\Index.cshtml" />
-    <Content Include="Views\Exoneracion\Create.cshtml" />
-    <Content Include="Views\Exoneracion\Details.cshtml" />
-    <Content Include="Views\Exoneracion\Edit.cshtml" />
-    <Content Include="Views\Exoneracion\Index.cshtml" />
-    <Content Include="Views\Exoneracion\_IndexCliente.cshtml" />
-    <Content Include="Views\Factura\Create.cshtml" />
-    <Content Include="Views\Factura\Details.cshtml" />
-    <Content Include="Views\Factura\Edit.cshtml" />
-    <Content Include="Views\Factura\Index.cshtml" />
-    <Content Include="Views\Factura\_IndexCliente.cshtml" />
-    <Content Include="Views\Factura\_CreateFacturaDetalle.cshtml" />
-    <Content Include="Views\Factura\_IndexProducto.cshtml" />
-    <Content Include="Views\Factura\_CreateFacturaDetalleModal.cshtml" />
-    <Content Include="Views\NotaCredito\_IndexDevolucion.cshtml" />
-    <Content Include="Views\DenominacionArqueo\Create.cshtml" />
-    <Content Include="Views\DenominacionArqueo\Details.cshtml" />
-    <Content Include="Views\DenominacionArqueo\Edit.cshtml" />
-    <Content Include="Views\DenominacionArqueo\Index.cshtml" />
-    <Content Include="Views\Pedido\_DetailsPedidoDetalle.cshtml" />
-    <Content Include="Views\Pedido\_EditPedidoDetalle.cshtml" />
-    <Content Include="Views\PuntoEmision\_CreateNumeracionDetails.cshtml" />
-    <Content Include="Views\PuntoEmision\_IndexNumeracionEdit.cshtml" />
-    <Content Include="Views\Pedido\EditPedido.cshtml" />
-    <Content Include="Views\Pedido\IndexPedido.cshtml" />
-    <Content Include="Views\ListaPrecios\Create.cshtml" />
-    <Content Include="Views\ListaPrecios\Details.cshtml" />
-    <Content Include="Views\ListaPrecios\Edit.cshtml" />
-    <Content Include="Views\ListaPrecios\Index.cshtml" />
-    <Content Include="Views\ListaPrecios\_CreateListaPrecioDetalle.cshtml" />
-    <Content Include="Views\ListaPrecios\_DetailsListaPrecioDetalle.cshtml" />
-    <Content Include="Views\ListaPrecios\_EditListaPrecioDetalle.cshtml" />
-    <Content Include="Views\ListaPrecios\_IndexProducto.cshtml" />
-    <Content Include="Views\SolicitudCredito\_AprobarSolicitudCredito.cshtml" />
-    <Content Include="Views\Pedido\_PedidoDetalleEditar.cshtml" />
-    <Content Include="Views\Pedido\_IndexPedidoDetalle.cshtml" />
-    <Content Include="Views\PagosArqueo\Create.cshtml" />
-    <Content Include="Views\PagosArqueo\Details.cshtml" />
-    <Content Include="Views\PagosArqueo\Edit.cshtml" />
-    <Content Include="Views\PagosArqueo\Index.cshtml" />
-    <Content Include="Views\SolicitudEfectivo\EditEntregaEfectivo.cshtml" />
-    <Content Include="Views\ListaPrecios\_IndexListaPrecioDetalle.cshtml" />
-    <Content Include="Views\SolicitudEfectivo\_EntregaEfectivoDetalle.cshtml" />
-    <Content Include="Views\SolicitudEfectivo\_ListaDenominaciones.cshtml" />
-    <Content Include="Views\Devolucion\CreateNotaCredito.cshtml" />
-    <Content Include="Views\Pago\_IndexFacturaPago.cshtml" />
-    <Content Include="Views\Pago\_IndexPagoFactura.cshtml" />
-    <Content Include="Views\Pedido\_EditPedido.cshtml" />
-    <Content Include="Views\Factura\_CreateCliente.cshtml" />
+    <Content Include="Views\Departamento\Create.cshtml" />
+    <Content Include="Views\Departamento\Delete.cshtml" />
+    <Content Include="Views\Departamento\Details.cshtml" />
+    <Content Include="Views\Departamento\Edit.cshtml" />
+    <Content Include="Views\Departamento\Index.cshtml" />
+    <Content Include="Views\EstadoMovimiento\Create.cshtml" />
+    <Content Include="Views\EstadoMovimiento\Delete.cshtml" />
+    <Content Include="Views\EstadoMovimiento\Details.cshtml" />
+    <Content Include="Views\EstadoMovimiento\Edit.cshtml" />
+    <Content Include="Views\EstadoMovimiento\Index.cshtml" />
+    <Content Include="Views\InventarioFisico\Create.cshtml" />
+    <Content Include="Views\InventarioFisico\Delete.cshtml" />
+    <Content Include="Views\InventarioFisico\Details.cshtml" />
+    <Content Include="Views\InventarioFisico\Edit.cshtml" />
+    <Content Include="Views\InventarioFisico\Index.cshtml" />
+    <Content Include="Views\UnidadMedida\Create.cshtml" />
+    <Content Include="Views\UnidadMedida\Delete.cshtml" />
+    <Content Include="Views\UnidadMedida\Details.cshtml" />
+    <Content Include="Views\UnidadMedida\Edit.cshtml" />
+    <Content Include="Views\UnidadMedida\Index.cshtml" />
+    <Content Include="Views\InventarioFisico\_IndexInvFisicoDetalle.cshtml" />
+    <Content Include="Views\Rol\Create.cshtml" />
+    <Content Include="Views\Rol\Delete.cshtml" />
+    <Content Include="Views\Rol\Details.cshtml" />
+    <Content Include="Views\Rol\Edit.cshtml" />
+    <Content Include="Views\Rol\Index.cshtml" />
+    <Content Include="Views\Box\Create.cshtml" />
+    <Content Include="Views\Box\Delete.cshtml" />
+    <Content Include="Views\Box\Details.cshtml" />
+    <Content Include="Views\Box\Edit.cshtml" />
+    <Content Include="Views\Box\Index.cshtml" />
+    <Content Include="Views\RolesUsuario\Create.cshtml" />
+    <Content Include="Views\RolesUsuario\Delete.cshtml" />
+    <Content Include="Views\RolesUsuario\Details.cshtml" />
+    <Content Include="Views\RolesUsuario\Edit.cshtml" />
+    <Content Include="Views\RolesUsuario\Index.cshtml" />
+    <Content Include="Views\TipoSalida\Create.cshtml" />
+    <Content Include="Views\TipoSalida\Delete.cshtml" />
+    <Content Include="Views\TipoSalida\Details.cshtml" />
+    <Content Include="Views\TipoSalida\Edit.cshtml" />
+    <Content Include="Views\TipoSalida\Index.cshtml" />
+    <Content Include="Views\Usuario\Delete.cshtml" />
+    <Content Include="Views\Usuario\Index.cshtml" />
+    <Content Include="Views\Departamento\_CreateMunicipio.cshtml" />
+    <Content Include="Views\Departamento\_DetailsMunicipio.cshtml" />
+    <Content Include="Views\Departamento\_EditMunicipio.cshtml" />
+    <Content Include="Views\Departamento\_IndexMunicipio.cshtml" />
+    <Content Include="Views\Departamento\_IndexMunicipio_Botones.cshtml" />
+    <Content Include="Views\InventarioFisico\_CreateInvFisicoDetalle.cshtml" />
+    <Content Include="Views\InventarioFisico\_DetailsInvFisicoDetalle.cshtml" />
+    <Content Include="Views\Proveedor\Create.cshtml" />
+    <Content Include="Views\Proveedor\Details.cshtml" />
+    <Content Include="Views\Proveedor\Edit.cshtml" />
+    <Content Include="Views\Proveedor\Index.cshtml" />
+    <Content Include="Views\Bodega\Create.cshtml" />
+    <Content Include="Views\Bodega\Delete.cshtml" />
+    <Content Include="Views\Bodega\Details.cshtml" />
+    <Content Include="Views\Bodega\Edit.cshtml" />
+    <Content Include="Views\Bodega\Index.cshtml" />
+    <Content Include="Views\Bodega\_BuscarProducto.cshtml" />
+    <Content Include="Views\Bodega\_CreateBodegaDetalle.cshtml" />
+    <Content Include="Views\Bodega\_DetailsBodegaDetalle.cshtml" />
+    <Content Include="Views\Bodega\_DetailsProductoModal.cshtml" />
+    <Content Include="Views\Bodega\_EditBodegaDetalle.cshtml" />
+    <Content Include="Views\Bodega\_EditBodegaDetalleModal.cshtml" />
+    <Content Include="Views\Bodega\_IndexBodegaDetalle.cshtml" />
+    <Content Include="Views\Bodega\_ListBodegaDetalles.cshtml" />
+    <Content Include="Views\Entrada\Create.cshtml" />
+    <Content Include="Views\Entrada\Delete.cshtml" />
+    <Content Include="Views\Entrada\Details.cshtml" />
+    <Content Include="Views\Entrada\Edit.cshtml" />
+    <Content Include="Views\Entrada\Index.cshtml" />
+    <Content Include="Views\Entrada\_BuscarProducto.cshtml" />
+    <Content Include="Views\Entrada\_CrearDetalleEntrada.cshtml" />
+    <Content Include="Views\Entrada\_EditarDetalleEntrada.cshtml" />
+    <Content Include="Views\Entrada\_IndexEditar.cshtml" />
+    <Content Include="Views\TipoEntrada\Create.cshtml" />
+    <Content Include="Views\TipoEntrada\Delete.cshtml" />
+    <Content Include="Views\TipoEntrada\Details.cshtml" />
+    <Content Include="Views\TipoEntrada\Edit.cshtml" />
+    <Content Include="Views\TipoEntrada\Index.cshtml" />
+    <Content Include="Views\Usuario\ModificarPass.cshtml" />
+    <Content Include="Views\Box\_Producto.cshtml" />
+    <Content Include="Views\Producto\Create.cshtml" />
+    <Content Include="Views\Producto\Delete.cshtml" />
+    <Content Include="Views\Producto\Details.cshtml" />
+    <Content Include="Views\Producto\Edit.cshtml" />
+    <Content Include="Views\Producto\Index.cshtml" />
+    <Content Include="Views\Usuario\Create.cshtml" />
+    <Content Include="Views\Usuario\Details.cshtml" />
+    <Content Include="Views\ProductoCategoria\Create.cshtml" />
+    <Content Include="Views\ProductoCategoria\Delete.cshtml" />
+    <Content Include="Views\ProductoCategoria\Details.cshtml" />
+    <Content Include="Views\ProductoCategoria\Edit.cshtml" />
+    <Content Include="Views\ProductoCategoria\Index.cshtml" />
+    <Content Include="Views\ProductoCategoria\_CreateSubCategoria.cshtml" />
+    <Content Include="Views\ProductoCategoria\_CreateSubCategoriaModal.cshtml" />
+    <Content Include="Views\ProductoCategoria\_DetailsSubCategoria.cshtml" />
+    <Content Include="Views\ProductoCategoria\_EditarSubCategoria.cshtml" />
+    <Content Include="Views\ProductoCategoria\_EditSubCategoriaModal.cshtml" />
+    <Content Include="Views\ProductoCategoria\_IndexSubCategoria.cshtml" />
+    <Content Include="Views\ProductoCategoria\_ListSubCategoria.cshtml" />
+    <Content Include="Views\Objeto\Create.cshtml" />
+    <Content Include="Views\Objeto\Delete.cshtml" />
+    <Content Include="Views\Objeto\Details.cshtml" />
+    <Content Include="Views\Objeto\Edit.cshtml" />
+    <Content Include="Views\Objeto\Index.cshtml" />
+    <Content Include="Views\Empleado\Create.cshtml" />
+    <Content Include="Views\Empleado\Delete.cshtml" />
+    <Content Include="Views\Empleado\Details.cshtml" />
+    <Content Include="Views\Empleado\Edit.cshtml" />
+    <Content Include="Views\Empleado\Index.cshtml" />
+    <Content Include="Views\InventarioFisico\_IndexProductos.cshtml" />
+    <Content Include="Views\Bodega\_CreateNuevoBodegaDetalle_Modal.cshtml" />
+    <Content Include="Views\Bodega\_DetallesProductos.cshtml" />
+    <Content Include="Views\ProductoCategoria\_ListSubCategoriaDetalle.cshtml" />
+    <Content Include="Views\ProductoCategoria\_ListSubCategoriaEditar.cshtml" />
+    <Content Include="Views\Entrada\_IndexDetalleEntrada.cshtml" />
+    <Content Include="Views\Entrada\_DetallesDeEntrada.cshtml" />
+    <Content Include="Views\Bodega\_BuscarProductoAutocomplete.cshtml" />
+    <Content Include="Views\ConsultarExistenciaProductos\Index.cshtml" />
+    <Content Include="Views\Parametro\Create.cshtml" />
+    <Content Include="Views\Parametro\Delete.cshtml" />
+    <Content Include="Views\Parametro\Details.cshtml" />
+    <Content Include="Views\Parametro\Edit.cshtml" />
+    <Content Include="Views\Parametro\Index.cshtml" />
+    <Content Include="Views\Rol\_IndexAccesoRol.cshtml" />
+    <Content Include="Views\InventarioFisico\_ListadoInventarioFisicoDetalle.cshtml" />
+    <Content Include="Views\Usuario\_IndexRolesUsuario.cshtml" />
+    <Content Include="Views\Entrada\_CrearDetalleEntradaEditar.cshtml" />
+    <Content Include="Views\Box\_DetailsSalidaDetalle.cshtml" />
+    <Content Include="Views\Box\_EditarModal.cshtml" />
+    <Content Include="Views\Box\_EditProducto.cshtml" />
+    <Content Include="Views\Box\_IndexSalidaDetalle.cshtml" />
+    <Content Include="Views\Salida\Create.cshtml" />
+    <Content Include="Views\Salida\Delete.cshtml" />
+    <Content Include="Views\Salida\Details.cshtml" />
+    <Content Include="Views\Salida\Edit.cshtml" />
+    <Content Include="Views\Salida\Index.cshtml" />
+    <Content Include="Views\Salida\_BuscarProducto.cshtml" />
+    <Content Include="Views\Salida\_CreateSalidaDetalle.cshtml" />
+    <Content Include="Views\Salida\_DetailsSalidaDetalle.cshtml" />
+    <Content Include="Views\Salida\_EditSalidaDetalle.cshtml" />
+    <Content Include="Views\Box\_BoxDetalle.cshtml" />
+    <Content Include="Views\Box\_IndexBoxDetalle.cshtml" />
+    <Content Include="Views\Usuario\RestaurarPassword.cshtml" />
+    <Content Include="Views\Box\_EditarSalidaDetalle.cshtml" />
+    <Content Include="Views\Box\_ListSalidaDetalle.cshtml" />
     <Content Include="Views\Login\SinAcceso.cshtml" />
-    <Content Include="Views\ListaPrecios\_CreateListaPrecioDetalleEdit.cshtml" />
-    <Content Include="Views\ListaPrecios\_CreateListaPrecioEdit.cshtml" />
-    <Content Include="Views\Exoneracion\ClientesnoExonerado.cshtml" />
-    <Content Include="Views\SolicitudEfectivo\IndexOriginal.cshtml" />
-    <Content Include="Views\Pago\_IndexNotaCredito.cshtml" />
-    <Content Include="Views\ListaPrecios\_PrecioDetalle.cshtml" />
-    <Content Include="Views\Factura\_CreateConsumidorFinal.cshtml" />
+    <Content Include="Views\Usuario\ModificarCuenta.cshtml" />
+    <Content Include="Views\Usuario\_BuscarEmpleado.cshtml" />
+    <Content Include="Views\Login\NotFound.cshtml" />
+    <Content Include="Views\Departamento\_DeleteMunicipio.cshtml" />
+    <Content Include="Views\InventarioFisico\_CreateInvFisicoDetalle_nuevo.cshtml" />
+    <Content Include="Views\InventarioFisico\_ListadoInventarioFisicoDetalleConciliado.cshtml" />
+    <Content Include="Views\Salida\_Modales.cshtml" />
+    <Content Include="Views\TipoDevolucion\Create.cshtml" />
+    <Content Include="Views\TipoDevolucion\Delete.cshtml" />
+    <Content Include="Views\TipoDevolucion\Details.cshtml" />
+    <Content Include="Views\TipoDevolucion\Edit.cshtml" />
+    <Content Include="Views\TipoDevolucion\Index.cshtml" />
+    <Content Include="Views\Box\_CreateSalidaDetalle.cshtml" />
+    <Content Include="Views\Salida\_EditCreateSalidaDetalle.cshtml" />
+    <Content Include="Views\Box\_BuscarProducto.cshtml" />
+    <Content Include="Views\Box\_CreateEditSalidaDetalle.cshtml" />
+    <Content Include="Views\Box\_EditProductoSalidaDetalle.cshtml" />
+    <Content Include="Views\Box\_EditSalidaDetalle.cshtml" />
+    <Content Include="Views\Box\_SalidaDetalle.cshtml" />
+    <Content Include="Views\Usuario\Edit.cshtml" />
     <Content Include="Views\Login\SinRol.cshtml" />
-    <Content Include="Views\Pedido\_CreateDetallePedido.cshtml" />
-    <Content Include="Views\Pago\_IndexCuponDescuento.cshtml" />
-    <Content Include="Views\TipoPago\Create.cshtml" />
-    <Content Include="Views\Reportes\Index.cshtml" />
-    <Content Include="Views\EstadoPedido\Create.cshtml" />
-    <Content Include="Views\EstadoPedido\Delete.cshtml" />
-    <Content Include="Views\EstadoPedido\Details.cshtml" />
-    <Content Include="Views\EstadoPedido\Edit.cshtml" />
-    <Content Include="Views\EstadoPedido\Index.cshtml" />
-    <Content Include="Views\MovimientoCaja\DetailsApertura.cshtml" />
-    <Content Include="Views\Home\Main.cshtml" />
-    <Content Include="Views\Home\Index.cshtml" />
-    <Content Include="Views\Home\Facturacion.cshtml" />
-    <Content Include="Views\Shared\View.cshtml" />
-    <Content Include="Scripts\jquery-3.6.0.slim.min.map" />
-    <Content Include="Scripts\jquery-3.6.0.min.map" />
+    <Content Include="Views\Entrada\_GenerarReportes.cshtml" />
+    <Content Include="Views\Salida\_GenReporte.cshtml" />
+    <Content Include="Views\EstadoInventarioFisico\Create.cshtml" />
+    <Content Include="Views\EstadoInventarioFisico\Details.cshtml" />
+    <Content Include="Views\EstadoInventarioFisico\Edit.cshtml" />
+    <Content Include="Views\EstadoInventarioFisico\Index.cshtml" />
+    <Content Include="Views\Producto\_CatalogoProducto.cshtml" />
+    <Content Include="Views\Salida\_SeleccionarFactura.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
-    <Folder Include="Controllers\Inventario\" />
-    <Folder Include="Scripts\app\Facturacion\Catalogos\" />
+    <Folder Include="Views\Box\Box\" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="packages.config" />
@@ -2409,144 +2088,69 @@
     <Service Include="{C0C07587-41A7-46C8-8FBD-3F9C8EBE2DDC}" />
   </ItemGroup>
   <ItemGroup>
-    <EmbeddedResource Include="Reports\AnalisisDeMora.rpt">
+    <EmbeddedResource Include="Reports\CatalogoProducto.rpt">
       <Generator>CrystalDecisions.VSDesigner.CodeGen.ReportCodeGenerator</Generator>
-      <LastGenOutput>AnalisisDeMora.cs</LastGenOutput>
-      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+      <LastGenOutput>CatalogoProducto.cs</LastGenOutput>
     </EmbeddedResource>
-    <EmbeddedResource Include="Reports\ArqueoCaja.rpt">
+    <EmbeddedResource Include="Reports\ImprimirConciliacion.rpt">
       <Generator>CrystalDecisions.VSDesigner.CodeGen.ReportCodeGenerator</Generator>
-      <LastGenOutput>ArqueoCaja.cs</LastGenOutput>
-      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+      <LastGenOutput>ImprimirConciliacion2.cs</LastGenOutput>
     </EmbeddedResource>
-    <EmbeddedResource Include="Reports\DescuentosPorFecha.rpt">
+    <EmbeddedResource Include="Reports\ImprimirEntradaPorId.rpt">
       <Generator>CrystalDecisions.VSDesigner.CodeGen.ReportCodeGenerator</Generator>
-      <LastGenOutput>DescuentosPorFecha.cs</LastGenOutput>
+      <LastGenOutput>ImprimirEntradaPorId.cs</LastGenOutput>
     </EmbeddedResource>
-    <EmbeddedResource Include="Reports\DevolucionesPorFecha.rpt">
+    <EmbeddedResource Include="Reports\ImprimirPackingList.rpt">
       <Generator>CrystalDecisions.VSDesigner.CodeGen.ReportCodeGenerator</Generator>
-      <LastGenOutput>DevolucionesPorFecha.cs</LastGenOutput>
-      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+      <LastGenOutput>ImprimirPackingList.cs</LastGenOutput>
     </EmbeddedResource>
-    <EmbeddedResource Include="Reports\EstadoCuenta.rpt">
+    <EmbeddedResource Include="Reports\ImprimirPackingListPorCaja.rpt">
       <Generator>CrystalDecisions.VSDesigner.CodeGen.ReportCodeGenerator</Generator>
-      <LastGenOutput>EstadoCuenta.cs</LastGenOutput>
-      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+      <LastGenOutput>ImprimirPackingListPorCaja.cs</LastGenOutput>
     </EmbeddedResource>
-    <Content Include="Reports\Factura.rpt">
+    <EmbeddedResource Include="Reports\InventarioActual.rpt">
       <Generator>CrystalDecisions.VSDesigner.CodeGen.ReportCodeGenerator</Generator>
-      <LastGenOutput>Factura.cs</LastGenOutput>
-      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-    </Content>
-    <EmbeddedResource Include="Reports\FacturasPendienteDePago.rpt">
-      <Generator>CrystalDecisions.VSDesigner.CodeGen.ReportCodeGenerator</Generator>
-      <LastGenOutput>FacturasPendienteDePago.cs</LastGenOutput>
-      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+      <LastGenOutput>InventarioActual.cs</LastGenOutput>
     </EmbeddedResource>
-    <EmbeddedResource Include="Reports\ImprimirCuponDescuento.rpt">
+    <EmbeddedResource Include="Reports\InventarioHistorico.rpt">
       <Generator>CrystalDecisions.VSDesigner.CodeGen.ReportCodeGenerator</Generator>
-      <LastGenOutput>ImprimirCuponDescuento.cs</LastGenOutput>
-      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+      <LastGenOutput>InventarioHistorico.cs</LastGenOutput>
     </EmbeddedResource>
-    <EmbeddedResource Include="Reports\ImprimirNotaCreditoclteJuridicoxDEV.rpt">
+    <EmbeddedResource Include="Reports\ListadoProveedores.rpt">
       <Generator>CrystalDecisions.VSDesigner.CodeGen.ReportCodeGenerator</Generator>
-      <LastGenOutput>ImprimirNotaCreditoclteJuridicoxDEV.cs</LastGenOutput>
-      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+      <LastGenOutput>ListadoProveedores1.cs</LastGenOutput>
     </EmbeddedResource>
-    <EmbeddedResource Include="Reports\ImprimirNotaCreditoclteJuridicoxOtros.rpt">
+    <EmbeddedResource Include="Reports\Movimiento_Entre_Fechas.rpt">
       <Generator>CrystalDecisions.VSDesigner.CodeGen.ReportCodeGenerator</Generator>
-      <LastGenOutput>ImprimirNotaCreditoclteJuridicoxOtros.cs</LastGenOutput>
-      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+      <LastGenOutput>Movimiento_Entre_Fechas.cs</LastGenOutput>
     </EmbeddedResource>
-    <EmbeddedResource Include="Reports\ImprimirNotaCreditoclteNaturalxDEV.rpt">
+    <EmbeddedResource Include="Reports\ProductoSolicitadosPorEntregar.rpt">
       <Generator>CrystalDecisions.VSDesigner.CodeGen.ReportCodeGenerator</Generator>
-      <LastGenOutput>ImprimirNotaCreditoclteNaturalxDEV.cs</LastGenOutput>
-      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+      <LastGenOutput>ProductoSolicitadosPorEntregar.cs</LastGenOutput>
     </EmbeddedResource>
-    <EmbeddedResource Include="Reports\ImprimirNotaCreditoclteNaturalxOtros.rpt">
+    <EmbeddedResource Include="Reports\ProyeccionMovimientoProducto.rpt">
       <Generator>CrystalDecisions.VSDesigner.CodeGen.ReportCodeGenerator</Generator>
-      <LastGenOutput>ImprimirNotaCreditoclteNaturalxOtros.cs</LastGenOutput>
-      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+      <LastGenOutput>ProyeccionMovimientoProducto.cs</LastGenOutput>
     </EmbeddedResource>
-    <EmbeddedResource Include="Reports\CuponDescuento.rpt">
+    <EmbeddedResource Include="Reports\ReportedesSobrantesInventarioFisico.rpt">
       <Generator>CrystalDecisions.VSDesigner.CodeGen.ReportCodeGenerator</Generator>
-      <LastGenOutput>CuponDescuento.cs</LastGenOutput>
-      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+      <LastGenOutput>ReportedesSobrantesInventarioFisico.cs</LastGenOutput>
     </EmbeddedResource>
-    <EmbeddedResource Include="Reports\ListadoPrecio.rpt">
+    <EmbeddedResource Include="Reports\ReporteFaltantes.rpt">
       <Generator>CrystalDecisions.VSDesigner.CodeGen.ReportCodeGenerator</Generator>
-      <LastGenOutput>ListadoPrecio2.cs</LastGenOutput>
-      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+      <LastGenOutput>ReporteFaltantes.cs</LastGenOutput>
     </EmbeddedResource>
-    <EmbeddedResource Include="Reports\rptInventarioNumeraciones.rpt">
+    <EmbeddedResource Include="Reports\ReporteFrecuenciaMovimientoPro.rpt">
       <Generator>CrystalDecisions.VSDesigner.CodeGen.ReportCodeGenerator</Generator>
-      <LastGenOutput>rptInventarioNumeraciones.cs</LastGenOutput>
-      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+      <LastGenOutput>ReporteFrecuenciaMovimientoPro.cs</LastGenOutput>
     </EmbeddedResource>
-    <EmbeddedResource Include="Reports\NotaCredito.rpt">
+    <EmbeddedResource Include="Reports\ReporteTipoEntrada.rpt">
       <Generator>CrystalDecisions.VSDesigner.CodeGen.ReportCodeGenerator</Generator>
-      <LastGenOutput>NotaCredito.cs</LastGenOutput>
-      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+      <LastGenOutput>ReporteTipoEntrada.cs</LastGenOutput>
     </EmbeddedResource>
-    <EmbeddedResource Include="Reports\PagoImprimir.rpt">
+    <EmbeddedResource Include="Reports\Salida.rpt">
       <Generator>CrystalDecisions.VSDesigner.CodeGen.ReportCodeGenerator</Generator>
-      <LastGenOutput>PagoImprimir1.cs</LastGenOutput>
-      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-    </EmbeddedResource>
-    <EmbeddedResource Include="Reports\PagosPorFecha.rpt">
-      <Generator>CrystalDecisions.VSDesigner.CodeGen.ReportCodeGenerator</Generator>
-      <LastGenOutput>PagosPorFecha.cs</LastGenOutput>
-      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-    </EmbeddedResource>
-    <EmbeddedResource Include="Reports\Pedidos.rpt">
-      <Generator>CrystalDecisions.VSDesigner.CodeGen.ReportCodeGenerator</Generator>
-      <LastGenOutput>Pedidos.cs</LastGenOutput>
-      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-    </EmbeddedResource>
-    <EmbeddedResource Include="Reports\rptPedidoEntreFechas.rpt">
-      <Generator>CrystalDecisions.VSDesigner.CodeGen.ReportCodeGenerator</Generator>
-      <LastGenOutput>rptPedidoEntreFechas.cs</LastGenOutput>
-      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-    </EmbeddedResource>
-    <EmbeddedResource Include="Reports\rptSolicitudEfectivoEntreFechasCajaCajero.rpt">
-      <Generator>CrystalDecisions.VSDesigner.CodeGen.ReportCodeGenerator</Generator>
-      <LastGenOutput>rptSolicitudEfectivoEntreFechasCajaCajero.cs</LastGenOutput>
-      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-    </EmbeddedResource>
-    <EmbeddedResource Include="Reports\rptSolicitudEfectivoEntrefechasGeneral.rpt">
-      <Generator>CrystalDecisions.VSDesigner.CodeGen.ReportCodeGenerator</Generator>
-      <LastGenOutput>rptSolicitudEfectivoEntrefechasGeneral.cs</LastGenOutput>
-      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-    </EmbeddedResource>
-    <EmbeddedResource Include="Reports\rptVentasPorCajaEntreFecha.rpt">
-      <Generator>CrystalDecisions.VSDesigner.CodeGen.ReportCodeGenerator</Generator>
-      <LastGenOutput>rptVentasPorCajaEntreFecha.cs</LastGenOutput>
-      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-    </EmbeddedResource>
-    <EmbeddedResource Include="Reports\SolicitudEfectivo.rpt">
-      <Generator>CrystalDecisions.VSDesigner.CodeGen.ReportCodeGenerator</Generator>
-      <LastGenOutput>SolicitudEfectivo.cs</LastGenOutput>
-      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-    </EmbeddedResource>
-    <EmbeddedResource Include="Reports\SolicitudesCreditosPorAprobar.rpt">
-      <Generator>CrystalDecisions.VSDesigner.CodeGen.ReportCodeGenerator</Generator>
-      <LastGenOutput>SolicitudesCreditosPorAprobar.cs</LastGenOutput>
-      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-    </EmbeddedResource>
-    <EmbeddedResource Include="Reports\VentasConsumidorFinal.rpt">
-      <Generator>CrystalDecisions.VSDesigner.CodeGen.ReportCodeGenerator</Generator>
-      <LastGenOutput>VentasConsumidorFinal.cs</LastGenOutput>
-      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-    </EmbeddedResource>
-    <EmbeddedResource Include="Reports\rptVentasExoneradas.rpt">
-      <Generator>CrystalDecisions.VSDesigner.CodeGen.ReportCodeGenerator</Generator>
-      <LastGenOutput>rptVentasExoneradas.cs</LastGenOutput>
-      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-    </EmbeddedResource>
-    <EmbeddedResource Include="Reports\Ventas_entre_Fechas.rpt">
-      <Generator>CrystalDecisions.VSDesigner.CodeGen.ReportCodeGenerator</Generator>
-      <LastGenOutput>Ventas_entre_Fechas.cs</LastGenOutput>
-      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+      <LastGenOutput>Salida.cs</LastGenOutput>
     </EmbeddedResource>
   </ItemGroup>
   <PropertyGroup>
@@ -2563,11 +2167,11 @@
     <VisualStudio>
       <FlavorProperties GUID="{349c5851-65df-11da-9384-00065b846f21}">
         <WebProjectProperties>
-          <UseIIS>False</UseIIS>
+          <UseIIS>True</UseIIS>
           <AutoAssignPort>True</AutoAssignPort>
           <DevelopmentServerPort>59911</DevelopmentServerPort>
           <DevelopmentServerVPath>/</DevelopmentServerVPath>
-          <IISUrl>http://localhost:59328/</IISUrl>
+          <IISUrl>http://localhost:59912/</IISUrl>
           <NTLMAuthentication>False</NTLMAuthentication>
           <UseCustomServer>False</UseCustomServer>
           <CustomServerUrl>
@@ -2577,14 +2181,6 @@
       </FlavorProperties>
     </VisualStudio>
   </ProjectExtensions>
-  <Target Name="EnsureNuGetPackageBuildImports" BeforeTargets="PrepareForBuild">
-    <PropertyGroup>
-      <ErrorText>This project references NuGet package(s) that are missing on this computer. Use NuGet Package Restore to download them.  For more information, see http://go.microsoft.com/fwlink/?LinkID=322105. The missing file is {0}.</ErrorText>
-    </PropertyGroup>
-    <Error Condition="!Exists('..\packages\EntityFramework.6.4.4\build\EntityFramework.props')" Text="$([System.String]::Format('$(ErrorText)', '..\packages\EntityFramework.6.4.4\build\EntityFramework.props'))" />
-    <Error Condition="!Exists('..\packages\EntityFramework.6.4.4\build\EntityFramework.targets')" Text="$([System.String]::Format('$(ErrorText)', '..\packages\EntityFramework.6.4.4\build\EntityFramework.targets'))" />
-  </Target>
-  <Import Project="..\packages\EntityFramework.6.4.4\build\EntityFramework.targets" Condition="Exists('..\packages\EntityFramework.6.4.4\build\EntityFramework.targets')" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it.
        Other similar extension points exist, see Microsoft.Common.targets.
   <Target Name="BeforeBuild">

@@ -13,11 +13,6 @@ namespace ERP_GMEDINA.Models
     
     public partial class spGetProducto1_Result
     {
-        public string prod_CodigoBarras { get; set; }
-        public string prod_Codigo { get; set; }
         public string prod_Descripcion { get; set; }
-        public string pscat_Descripcion { get; set; }
-        public string uni_Descripcion { get; set; }
-        public string pcat_Nombre { get; set; }
     }
 }

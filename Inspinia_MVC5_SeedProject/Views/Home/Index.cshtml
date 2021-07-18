@@ -1,0 +1,127 @@
+﻿@{
+    Layout = null;
+}
+
+<!DOCTYPE html>
+<html>
+
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>ERP | GMEDINA</title>
+    @Styles.Render("~/Content/Style")
+    @Styles.Render("~/Content/font-Style")
+    @Styles.Render("~/Content/DataTabla")
+    @Styles.Render("~/Content/picker")
+</head>
+
+<body>
+    <div id="wrapper">
+        <div id="page-wrapper" class="gray-bg" style="margin:0 0 0 0; min-height:625px">
+            <div class="row wrapper border-bottom white-bg page-heading">
+                <div class="col-lg-9">
+                    <h2>ERP GMEDINA</h2>
+                </div>
+            </div>
+
+            <div class="wrapper wrapper-content animated fadeInRight">
+                <div class="row">
+                    <div class="ibox-content p-xl">
+                        <div class="row">
+                            <div class="col-lg-3">
+                                <h2 class="font-bold">Bienvenido</h2>
+                                <p>
+                                    El propósito de un software ERP es apoyar a los clientes de la empresa, dar tiempos rápidos de respuesta a sus problemas, así como un eficiente manejo de información que permita la toma de decisiones y minimizar los costes.
+                                    Los ERP-s funcionan en todo tipo de empresas y su selección depende de factores como el tamaño de la empresa, el tipo de empresa, procesos, recursos, etc...
+                                    Esta es una solucion de software para las necesidades de las empresas.
+                                </p>
+
+                            </div>
+                            <div class="col-lg-9">
+                                <div class="col-lg-4">
+                                    <a href="@Url.Action("Facturacion")">
+                                        <div class="widget style1 navy-bg">
+                                            <div class="row">
+                                                <div class="col-4 text-center">
+                                                    <i class="fa fa-shopping-cart fa-5x"></i>
+                                                </div>
+                                                <div class="col-8 text-center">
+                                                    <h2 class="font-bold">Facturación</h2>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </a>
+                                </div>
+
+                                <div class="col-lg-4">
+                                    <a href="#">
+                                        <div class="widget style1 navy-bg">
+                                            <div class="row">
+                                                <div class="col-4 text-center">
+                                                    <i class="fa fa-archive fa-5x"></i>
+                                                </div>
+                                                <div class="col-8 text-center">
+                                                    <h2 class="font-bold">Inventario</h2>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </a>
+                                </div>
+
+                                <div class="col-lg-4">
+                                    <a href="#">
+                                        <div class="widget style1 navy-bg">
+                                            <div class="row">
+                                                <div class="col-4 text-center">
+                                                    <i class="fa fa-users fa-5x"></i>
+                                                </div>
+                                                <div class="col-8 text-center">
+                                                    <h2 class="font-bold" style="font-size:28px">Recursos Humanos</h2>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </a>
+                                </div>
+                            </div>
+                            <div class="col-lg-9">
+                                <div class="col-lg-4">
+                                    <a href="#">
+                                        <div class="widget style1 navy-bg">
+                                            <div class="row">
+                                                <div class="col-4 text-center">
+                                                    <i class="fa fa-money fa-5x"></i>
+                                                </div>
+                                                <div class="col-8 text-center">
+                                                    <h2 class="font-bold">Planilla</h2>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </a>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="footer">
+                <div class="pull-right">
+                    10GB of <strong>250GB</strong> Free.
+                </div>
+                <div>
+                    <strong>Copyright</strong> Example Company &copy; 2014-2017
+                </div>
+            </div>
+        </div>
+    </div>
+    @Scripts.Render("~/bundles/jquery")
+    @Scripts.Render("~/bundles/bootstrap")
+    @Scripts.Render("~/plugins/Menu")
+    @Scripts.Render("~/plugins/pace")
+    @Scripts.Render("~/plugins/slimScroll")
+    @Scripts.Render("~/bundles/inspinia")
+    @Scripts.Render("~/Scripts/DataTabla")
+    @Scripts.Render("~/Scripts/picker")
+</body>
+</html>
+

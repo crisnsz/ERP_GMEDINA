@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="utf-8"?>
+<edmx:Edmx Version="3.0" xmlns:edmx="http://schemas.microsoft.com/ado/2009/11/edmx">
+ <!-- EF Designer content (DO NOT EDIT MANUALLY BELOW HERE) -->
+  <edmx:Designer xmlns="http://schemas.microsoft.com/ado/2009/11/edmx">
+    <!-- Diagram content (shape and connector positions) -->
+    <edmx:Diagrams>
+      <Diagram DiagramId="24551b7ea8a44028a84e62d293acc10d" Name="Diagram1">
+        <EntityTypeShape EntityType="ERP_GMEDINAModel.tbAccesoRol" Width="1.5" PointX="5.25" PointY="7.625" IsExpanded="true" />
+        <EntityTypeShape EntityType="ERP_GMEDINAModel.tbBitacoraErrore" Width="1.5" PointX="0.75" PointY="0.75" IsExpanded="true" />
+        <EntityTypeShape EntityType="ERP_GMEDINAModel.tbObjeto" Width="1.5" PointX="3" PointY="7.25" IsExpanded="true" />
+        <EntityTypeShape EntityType="ERP_GMEDINAModel.tbRol" Width="1.5" PointX="3" PointY="11.125" IsExpanded="true" />
+        <EntityTypeShape EntityType="ERP_GMEDINAModel.tbRolesUsuario" Width="1.5" PointX="8.25" PointY="7.625" IsExpanded="true" />
+        <EntityTypeShape EntityType="ERP_GMEDINAModel.tbUsuario" Width="1.5" PointX="0.75" PointY="4.25" IsExpanded="true" />
+        <AssociationConnector Association="ERP_GMEDINAModel.FK_Acce_tbAccesoRol_Acce_tbObjeto_obj_Id" ManuallyRouted="false" />
+        <AssociationConnector Association="ERP_GMEDINAModel.FK_Acce_tbAccesoRol_acrol_UsuarioModifica" ManuallyRouted="false" />
+        <AssociationConnector Association="ERP_GMEDINAModel.FK_Acce_tbAccesoRol_tbRoles_Rol_Id" ManuallyRouted="false" />
+        <AssociationConnector Association="ERP_GMEDINAModel.FK_Acce_tbAccesoRol_tbUsuario_acrol_UsuarioCrea" ManuallyRouted="false" />
+        <AssociationConnector Association="ERP_GMEDINAModel.FK_Acce_tbObjeto_obj_UsuarioModifica" ManuallyRouted="false" />
+        <AssociationConnector Association="ERP_GMEDINAModel.FK_Acce_tbObjeto_tbUsuario_obj_UsuarioCrea" ManuallyRouted="false" />
+        <AssociationConnector Association="ERP_GMEDINAModel.FK_Acce_tbRol_rol_UsuarioModifica" ManuallyRouted="false" />
+        <AssociationConnector Association="ERP_GMEDINAModel.FK_Acce_tbRol_tbUsuario_rol_UsuarioCrea" ManuallyRouted="false" />
+        <AssociationConnector Association="ERP_GMEDINAModel.FK_Acce_tbRolesUsuario_tbRol_rol_Id" ManuallyRouted="false" />
+        <AssociationConnector Association="ERP_GMEDINAModel.FK_Acce_tbRolesUsuario_tbUsuario_rolu_UsuarioCrea" ManuallyRouted="false" />
+        <AssociationConnector Association="ERP_GMEDINAModel.FK_Acce_tbRolesUsuario_tbUsuario_rolu_UsuarioModifica" ManuallyRouted="false" />
+        <AssociationConnector Association="ERP_GMEDINAModel.FK_Acce_tbRolesUsuario_tbUsuario_usu_Id" ManuallyRouted="false" />
+      </Diagram>
+    </edmx:Diagrams>
+  </edmx:Designer>
+</edmx:Edmx>

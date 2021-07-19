@@ -47,3 +47,5 @@ modules.order
 Module.symvers
 Mkfile.old
 dkms.conf
+/Inspinia_MVC5_SeedProject/bin
+/Inspinia_MVC5_SeedProject/obj/Debug

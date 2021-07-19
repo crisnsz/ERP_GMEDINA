@@ -248,22 +248,6 @@ namespace ERP_GMEDINA.Models
 
             return list;
         }
-        public static List<TipoPagos> TPList()
-        {
-            List<TipoPagos> list = new List<TipoPagos>();
-
-            list.Add(new TipoPagos()
-            {
-                ID_TP = 1,
-                DESCRIPCION_TP = "Efectivo"
-            });
-            list.Add(new TipoPagos()
-            {
-                ID_TP = 2,
-                DESCRIPCION_TP = "Tarjeta Crédito/Débito"
-            });
-            return list;
-        }
 
         //Seguridad
         public bool Sesiones(string sPantalla)
@@ -382,7 +366,7 @@ namespace ERP_GMEDINA.Models
         public void InsertBitacoraErrores(string sPantalla, string biteMensajeError, string biteAccion)
         {
             IEnumerable<object> List = null;
-            string UserName = (string)HttpContext.Current.Session["UserName"];
+            string UserName = (string)HttpContext.Current.Session["UserLogin"];
             try
             {
                 List = db.UDP_Acce_tbBitacoraErrores_Insert(sPantalla, UserName, DatetimeNow(), biteMensajeError, biteAccion);

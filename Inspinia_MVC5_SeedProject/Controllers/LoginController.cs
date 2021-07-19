@@ -5,7 +5,7 @@ using System.Web;
 using System.Web.Mvc;
 using ERP_GMEDINA.Models;
 using Microsoft.Owin.Security;
-using Microsoft.Owin;
+
 
 namespace ERP_GMEDINA.Controllers
 {
@@ -15,8 +15,8 @@ namespace ERP_GMEDINA.Controllers
         // GET: Login
         public ActionResult Index()
         {
-            Session["UserLogin"] = null;
-            return View();
+                Session["UserLogin"] = null;    
+                return View();
         }
 
         [HttpPost]
@@ -77,7 +77,6 @@ namespace ERP_GMEDINA.Controllers
             Response.CacheControl = "no-cache";
             Response.Cache.SetCacheability(HttpCacheability.NoCache);
             AuthenticationManager.SignOut();
-
             Session["UserLogin"] = null;
             Session["UserLoginRols"] = null;
             Session["UserLoginEsAdmin"] = null;
@@ -92,7 +91,6 @@ namespace ERP_GMEDINA.Controllers
                 return HttpContext.GetOwinContext().Authentication;
             }
         }
-
 
         public ActionResult SinAcceso()
         {

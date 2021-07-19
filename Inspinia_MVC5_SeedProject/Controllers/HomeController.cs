@@ -21,7 +21,7 @@ namespace ERP_GMEDINA.Controllers
             return View();
         }
 
-        public ActionResult Facturacion()
+        public ActionResult Main()
         {
             return View();
         }

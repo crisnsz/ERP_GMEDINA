@@ -10,12 +10,11 @@
 
 namespace ERP_GMEDINA.Reports {
     using System;
-    using System.ComponentModel;
+    using CrystalDecisions.CrystalReports.Engine;
     using CrystalDecisions.Shared;
     using CrystalDecisions.ReportSource;
-    using CrystalDecisions.CrystalReports.Engine;
-    
-    
+    using System.ComponentModel;
+
     public class VentasConsumidorFinal : ReportClass {
         
         public VentasConsumidorFinal() {

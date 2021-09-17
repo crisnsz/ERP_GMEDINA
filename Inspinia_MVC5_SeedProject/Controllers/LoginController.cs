@@ -93,7 +93,6 @@ namespace ERP_GMEDINA.Controllers
             }
         }
 
-
         public ActionResult SinAcceso()
         {
             //Validar Inicio de Sesión

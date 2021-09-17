@@ -11,8 +11,8 @@ using System.Transactions;
 using CrystalDecisions.CrystalReports.Engine;
 using ERP_GMEDINA.Dataset;
 using System.IO;
-using ERP_GMEDINA.Reports;
 using ERP_GMEDINA.Dataset.ReportesTableAdapters;
+using ERP_GMEDINA.Reports;
 
 namespace ERP_GMEDINA.Controllers
 {

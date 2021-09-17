@@ -15,7 +15,6 @@ using System.Data.Entity.Core.Objects;
 using System.IO;
 using System.Reflection;
 using CrystalDecisions.Shared;
-using ERP_GMEDINA.Dataset; using ERP_GMEDINA.Reports; using ERP_GMEDINA.Dataset.ReportesTableAdapters;
 namespace ERP_GMEDINA.Controllers
 {
     public class NotaCreditoController : Controller

@@ -9,7 +9,6 @@ using System.Web.Mvc;
 using ERP_GMEDINA.Models;
 using CrystalDecisions.CrystalReports.Engine;
 using System.IO;
-using ERP_GMEDINA.Reports;
 using ERP_GMEDINA.Dataset;
 using ERP_GMEDINA.Dataset.ReportesTableAdapters;
 using ERP_GMEDINA.Attribute;

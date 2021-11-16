@@ -2,9 +2,7 @@
 Sistema ERP para empresa llamada García Medina, en este proyecto formé parte del desarrollo del módulo de ventas e inventario, también realice reporteria con DevExpress.
 El proceso de desarrollo se realizo en el siguiente orden:
 
-## ERP Garcia Medina
-Sistema ERP para empresa llamada García Medina, en este proyecto formé parte del desarrollo del módulo de ventas e inventario, también realice reporteria con DevExpress.
-El proceso de desarrollo se realizo en el siguiente orden:
+![HomePage](https://user-images.githubusercontent.com/51567822/141970941-da620e5c-71ac-4d91-b5db-1b1ca07b7c71.png)
 
 
 ## 1. **Especificacion**

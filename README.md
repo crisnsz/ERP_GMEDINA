@@ -2,7 +2,7 @@
 ERP system for a company called García Medina, in this project I was part of the development of the sales and inventory module, I also did reporting with DevExpress.
 The development process was carried out in the following order:
 
-![Aqui puedes verlo en español](/README.es.md)
+[Aqui puedes verlo en español](/README.es.md)
 
 ![HomePage](https://user-images.githubusercontent.com/51567822/141970941-da620e5c-71ac-4d91-b5db-1b1ca07b7c71.png)
 

@@ -1,41 +1,41 @@
 # ERP Garcia Medina
-Sistema ERP para empresa llamada García Medina, en este proyecto formé parte del desarrollo del módulo de ventas e inventario, también realice reporteria con DevExpress.
-El proceso de desarrollo se realizo en el siguiente orden:
+ERP system for a company called García Medina, in this project I was part of the development of the sales and inventory module, I also did reporting with DevExpress.
+The development process was carried out in the following order:
 
 ![HomePage](https://user-images.githubusercontent.com/51567822/141970941-da620e5c-71ac-4d91-b5db-1b1ca07b7c71.png)
 
 
-## 1. **Especificacion**
-1. Caso de uso general: Este de acuerdo a que se dedica la empresa o persona.
-2. Analizar el caso de uso principal: Esto para generar preguntas que se le haran a los empleados de la empresa.
-3. Entrevistas con los empleados: Estas para sacar requisitos del sistema y de usuarios, que flujo de trabajo se lleva a cabo cuando se realiza alguna accion.
-4. Requisitos de sistema y de usuarios: Estos se generan de acuerdo a los datos dados por los empleados y analisis de los flujos de trabajo que se realiza cuando se lleva a cabo una accion.
-5. Casos de Uso: Transcripcion de los casos de uso de acuerdo a los requisitos de sistema y usuario.
-6. BPMN: Este para tener una imagen de que flujo se lleva a cabo cuando se realiza una accion.
-7. Diagrama de Actividades: Este para tener una perspetiva diferente del BPMN, este estaria enfocado mas para el area de IT.
-8. Documento SRS: Este documento es para dar una descripción completa del sistema a desarrollar, incluyendo su propósito, los principales procesos de negocio que serán soportados, características, parámetros clave de rendimiento y comportamiento.
-## 2. **Analisis y Diseño**
-1. Diagrama de Clases: Este para comunicar el diseño de un programa orientado a objetos, permitiendo modelar las relaciones entre las entidades. En UML, una **clase** es representada por un rectángulo que posee tres divisiones: Nombre de la **clase**, atributos que tiene y mensajes que entiende.
-2. Diagrama ER: Este para representar el diseño de la base de datos, para identificar que tablas y campos seran necesarios, y como estos se relacionan entre si.
-3. Prototipado o Maquetacion: Este para diseñar la interfaz de acuerdo a estandares de UI/UX
-4. Reunion de propuesta: Esta se hizo con las personas clave de la empresa, para presentar la idea general de como sera el sistema.
-5. Minuta de la Reunion de la propuesta: Esta se hizo para obtener feedback de acuerdo por las opiniones dadas por las personas en la reunion.
-6. Scripting de la Base de Datos: Ya aceptada la propuesta se comienzan a realizas los scripts para la creacion de Tablas, campos, stored Procedures, vistas, etc.
-## 3. **Codificacion**
-1. Desarrollo del sistema: Ya escribiendo codigo, se selecciono el patron de diseño MVC, y utilizando la metodologia Waterfall.
-## 4. **Capacitacion**
-1. Plan de Capacitación: Este para capacitar a los usuarios a usar el sistema.
-2. Reunion con los usuarios: Esta para que los usuarios testearan el sistema y nos dieran feedback.
-3. Minuta de la Reunion: Esta se realizo para obtener el feedback de acuerdo a las oponiones de los usuarios(Testers).
-## 5. **Pruebas**
-1. Prueba Unitarias: estas para testear el sistema y mejorarlo
-2. Integracion del Sistema: Integracion de los diferentes modulos para tener un solo sistema
-3. Minuta de la integracion: Esta para darle feedback o un log al Project Manager sobre como se hizo y lo que paso en la integracion.
-4. Casos Prueba: Este es un documento que describe los diferentes procesos y los resultados en caso de Exito o Error del proceso.
-5. Reporte de Incidencias: Este para tener un reporte de los resultados de los casos de prueba.
-6. Pruebas UAT: Este es un documento que describe los Casos Prueba pero desde la perspetiva del usuario.
-7. Incidencias y Oportunidades UAT: Este documento describe las incidencias que se dieron durante las Pruebas UAT y las oportunidades de mejora del sistema.
+## 1. **Specification**
+1. General use case: This is according to what the company or person is dedicated to.
+2. Analyze the main use case: This is to generate questions that will be asked of the company's employees.
+3. Interviews with employees: These are to get system and user requirements, what workflow is carried out when an action is performed.
+4. System and user requirements: These are generated according to the data given by the employees and analysis of the workflows that are carried out when an action is carried out.
+5. Use Cases: Transcription of the use cases according to the system and user requirements.
+6. BPMN: This to have an image of what flow is carried out when an action is performed.
+7. Activity Diagram: This to have a different perspective of BPMN, this would be focused more for the IT area.
+8. SRS Document: This document is to give a complete description of the system to be developed, including its purpose, the main business processes that will be supported, characteristics, key performance parameters and behavior.
+## 2. **Analysis and Design**
+1. Class Diagram: This to communicate the design of an object-oriented program, allowing to model the relationships between entities. In UML, a **class** is represented by a rectangle that has three divisions: Name of the **class**, attributes it has and messages it understands.
+2. ER Diagram: This to represent the design of the database, to identify which tables and fields will be needed, and how they relate to each other.
+3. Prototyping or Layout: This is to design the interface according to UI/UX standards
+4. Proposal meeting: This was done with the key people of the company, to present the general idea of ​​how the system will be.
+5. Minutes of the Meeting of the proposal: This was done to obtain feedback according to the opinions given by the people in the meeting.
+6. Database Scripting: Once the proposal has been accepted, the scripts for the creation of Tables, fields, stored Procedures, views, etc. are started.
+## 3. **Coding**
+1. System development: Already writing code, the MVC design pattern was selected, and using the Waterfall methodology.
+## 4. **Training**
+1. Training Plan: This to train users to use the system.
+2. Meeting with users: This is for users to test the system and give us feedback.
+3. Minutes of the Meeting: This was done to obtain feedback according to the opinions of the users (Testers).
+## 5. **Tests**
+1. Unit tests: these are to test the system and improve it
+2. System Integration: Integration of the different modules to have a single system
+3. Minutes of the integration: This is to give feedback or a log to the Project Manager about how it was done and what happened in the integration.
+4. Test Cases: This is a document that describes the different processes and the results in case of Success or Error of the process.
+5. Incident Report: This is to have a report of the results of the test cases.
+6. UAT Tests: This is a document that describes the Test Cases but from the user's perspective.
+7. UAT Incidents and Opportunities: This document describes the incidents that occurred during the UAT Tests and the opportunities to improve the system.
 ## 6. Release
-1. Manual de Usuario
-2. Manual de Sistema 
-3. Manual de Instalacion
+1.User Manual
+2. System Manual
+3. Installation Manual

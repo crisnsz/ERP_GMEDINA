@@ -38,6 +38,6 @@ The development process was carried out in the following order:
 6. UAT Tests: This is a document that describes the Test Cases but from the user's perspective.
 7. UAT Incidents and Opportunities: This document describes the incidents that occurred during the UAT Tests and the opportunities to improve the system.
 ## 6. Release
-1.User Manual.
+1. User Manual.
 2. System Manual.
-3. 3. Installation Manual.
+3. Installation Manual.

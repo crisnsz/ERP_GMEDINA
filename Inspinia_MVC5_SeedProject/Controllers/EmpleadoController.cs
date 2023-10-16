@@ -17,7 +17,7 @@ namespace ERP_GMEDINA.Controllers
         Helpers Function = new Helpers();
 
         // GET: /Empleado/
-        [SessionManager("Empleado/Index")]
+        [SessionManagerAttribute("Empleado/Index")]
         public ActionResult Index()
         {
             var tbempleado = db.tbEmpleado.Include(t => t.tbUsuario).Include(t => t.tbTipoIdentificacion);
@@ -25,7 +25,7 @@ namespace ERP_GMEDINA.Controllers
         }
 
         // GET: /Empleado/Details/5
-        [SessionManager("Empleado/Details")]
+        [SessionManagerAttribute("Empleado/Details")]
         public ActionResult Details(short? id)
         {
             if (id == null)
@@ -42,7 +42,7 @@ namespace ERP_GMEDINA.Controllers
 
 
         // GET: /Empleado/Create
-        [SessionManager("Empleado/Create")]
+        [SessionManagerAttribute("Empleado/Create")]
         public ActionResult Create()
         {
             ViewBag.tpi_Id = new SelectList(db.tbEmpleado, "emp_Id", "tpi_Id");
@@ -55,7 +55,7 @@ namespace ERP_GMEDINA.Controllers
         // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        [SessionManager("Empleado/Create")]
+        [SessionManagerAttribute("Empleado/Create")]
         public ActionResult Create([Bind(Include= "emp_Id,emp_Nombres,emp_Apellidos,emp_Sexo,emp_FechaNacimiento,tpi_Id,emp_Identificacion,emp_Telefono,emp_Correoelectronico,emp_TipoSangre,emp_Puesto,emp_FechaIngreso,emp_Direccion,emp_RazonInactivacion,emp_UsuarioCrea,emp_FechaCrea,emp_UsuarioModifica,emp_FechaModifica,emp_Estado,emp_RazonSalida,emp_FechaDeSalida")] tbEmpleado tbEmpleado)
         {
             if (ModelState.IsValid)
@@ -118,7 +118,7 @@ namespace ERP_GMEDINA.Controllers
         }
 
         // GET: /Empleado/Edit/5
-        [SessionManager("Empleado/Edit")]
+        [SessionManagerAttribute("Empleado/Edit")]
         public ActionResult Edit(short? id)
         {
             if (id == null)
@@ -139,7 +139,7 @@ namespace ERP_GMEDINA.Controllers
         // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        [SessionManager("Empleado/Edit")]
+        [SessionManagerAttribute("Empleado/Edit")]
         public ActionResult Edit([Bind(Include= "emp_Id,emp_Nombres,emp_Apellidos,emp_Sexo,emp_FechaNacimiento,tpi_Id,emp_Identificacion,emp_Telefono,emp_Correoelectronico,emp_TipoSangre,emp_Puesto,emp_FechaIngreso,emp_Direccion,emp_RazonInactivacion,emp_UsuarioCrea,emp_FechaCrea,emp_UsuarioModifica,emp_FechaModifica")] tbEmpleado tbEmpleado)
         {
             if (ModelState.IsValid)

@@ -16,14 +16,14 @@ namespace ERP_GMEDINA.Controllers
         private ERP_ZORZALEntities db = new ERP_ZORZALEntities();
         Helpers Function = new Helpers();
         // GET: /Objeto/
-        [SessionManager("Objeto/Index")]
+        [SessionManagerAttribute("Objeto/Index")]
         public ActionResult Index()
         {
             return View(db.tbObjeto.ToList());
         }
 
         // GET: /Objeto/Details/5
-        [SessionManager("Objeto/Details")]
+        [SessionManagerAttribute("Objeto/Details")]
         public ActionResult Details(int? id)
         {
             if (id == null)
@@ -39,7 +39,7 @@ namespace ERP_GMEDINA.Controllers
         }
 
         // GET: /Objeto/Create
-        [SessionManager("Objeto/Create")]
+        [SessionManagerAttribute("Objeto/Create")]
         public ActionResult Create()
         {
             return View();
@@ -50,7 +50,7 @@ namespace ERP_GMEDINA.Controllers
         // more details see https://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        [SessionManager("Objeto/Create")]
+        [SessionManagerAttribute("Objeto/Create")]
         public ActionResult Create([Bind(Include = "obj_Id,obj_Pantalla,obj_Referencia,obj_UsuarioCrea,obj_FechaCrea,obj_UsuarioModifica,obj_FechaModifica,obj_Estado")] tbObjeto tbObjeto)
         {
             if (db.tbObjeto.Any(a => a.obj_Pantalla == tbObjeto.obj_Pantalla ))
@@ -93,7 +93,7 @@ namespace ERP_GMEDINA.Controllers
 
 
         // GET: /Objeto/Edit/5
-        [SessionManager("Objeto/Edit")]
+        [SessionManagerAttribute("Objeto/Edit")]
         public ActionResult Edit(int? id)
         {
             if (id == null)
@@ -115,7 +115,7 @@ namespace ERP_GMEDINA.Controllers
         // more details see https://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        [SessionManager("Objeto/Edit")]
+        [SessionManagerAttribute("Objeto/Edit")]
         public ActionResult Edit(int? id, [Bind(Include = "obj_Id, obj_Pantalla,obj_Referencia,obj_UsuarioCrea,obj_FechaCrea,obj_UsuarioModifica,obj_FechaModifica,obj_Estado")] tbObjeto tbObjeto)
         {
             //if (db.tbObjeto.Any(a => a.obj_Pantalla == tbObjeto.obj_Pantalla))
@@ -172,7 +172,7 @@ namespace ERP_GMEDINA.Controllers
             return View(tbObjeto);
         }
         //para que cambie estado a activar
-        [SessionManager("Objeto/InactivarEstado")]
+        [SessionManagerAttribute("Objeto/InactivarEstado")]
         public ActionResult EstadoInactivar(int? id)
         {
             try
@@ -203,7 +203,7 @@ namespace ERP_GMEDINA.Controllers
             }
         }
         //para que cambie estado a inactivar
-        [SessionManager("Objeto/ActivarEstado")]
+        [SessionManagerAttribute("Objeto/ActivarEstado")]
         public ActionResult Estadoactivar(int? id)
         {
             try

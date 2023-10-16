@@ -18,7 +18,7 @@ namespace ERP_GMEDINA.Controllers
         private ERP_ZORZALEntities db = new ERP_ZORZALEntities();
         Helpers Function = new Helpers();
         // GET: /Parametro/
-        [SessionManager("Parametro/Index")]
+        [SessionManagerAttribute("Parametro/Index")]
         public ActionResult Index()
         {
             var conteo = db.ConteoParametro(1).ToList();
@@ -48,7 +48,7 @@ namespace ERP_GMEDINA.Controllers
         }
 
         // GET: /Parametro/Details/5
-        [SessionManager("Parametro/Details")]
+        [SessionManagerAttribute("Parametro/Details")]
         public ActionResult Details(byte? id)
         {
             if (id == null)
@@ -64,7 +64,7 @@ namespace ERP_GMEDINA.Controllers
         }
 
         // GET: /Parametro/Create
-        [SessionManager("Parametro/Create")]
+        [SessionManagerAttribute("Parametro/Create")]
         public ActionResult Create()
         {
             ViewBag.sucursal = new SelectList(db.tbSucursal, "suc_Id", "suc_Descripcion");
@@ -87,7 +87,7 @@ namespace ERP_GMEDINA.Controllers
         [HttpPost]
         [ValidateAntiForgeryToken]
         [HandleError]
-        [SessionManager("Parametro/Create")]
+        [SessionManagerAttribute("Parametro/Create")]
         public ActionResult Create([Bind(Include = "par_Id,par_NombreEmpresa,par_TelefonoEmpresa,par_CorreoEmpresa,par_PathLogo,mnda_Id,par_RolGerenteTienda,par_RolCreditoCobranza,par_RolSupervisorCaja,par_RolCajero,par_RolAuditor,par_SucursalPrincipal,par_UsuarioCrea,par_FechaCrea,par_UsuarioModifica,par_FechaModifica,par_PorcentajeDescuentoTE,par_IdConsumidorFinal")] tbParametro tbParametro,
             HttpPostedFileBase FotoPath)
         {
@@ -211,7 +211,7 @@ namespace ERP_GMEDINA.Controllers
             return View(tbParametro);
         }
         // GET: /Parametro/Edit/5
-        [SessionManager("Parametro/Edit")]
+        [SessionManagerAttribute("Parametro/Edit")]
         public ActionResult Edit(byte? id)
         {
             if (id == null)
@@ -241,7 +241,7 @@ namespace ERP_GMEDINA.Controllers
         // más información vea http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        [SessionManager("Parametro/Edit")]
+        [SessionManagerAttribute("Parametro/Edit")]
         public ActionResult Edit(byte? id,[Bind(Include="par_Id,par_NombreEmpresa,par_TelefonoEmpresa,par_CorreoEmpresa,par_PathLogo,mnda_Id,par_RolGerenteTienda,par_RolCreditoCobranza,par_RolSupervisorCaja,par_RolCajero,par_RolAuditor,par_SucursalPrincipal,par_UsuarioCrea,par_FechaCrea,par_UsuarioModifica,par_FechaModifica,par_PorcentajeDescuentoTE,par_IdConsumidorFinal")] tbParametro tbParametro,
              HttpPostedFileBase FotoPath)
         {

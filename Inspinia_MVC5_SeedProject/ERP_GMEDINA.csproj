@@ -197,7 +197,7 @@
     <Compile Include="App_Start\FilterConfig.cs" />
     <Compile Include="App_Start\RouteConfig.cs" />
     <Compile Include="App_Start\Startup.Auth.cs" />
-    <Compile Include="Attribute\SessionManager.cs" />
+    <Compile Include="Attribute\SessionManagerAttribute.cs" />
     <Compile Include="Controllers\EmpleadoController.cs" />
     <Compile Include="Controllers\HomeController.cs" />
     <Compile Include="Controllers\LoginController.cs" />
@@ -205,6 +205,7 @@
     <Compile Include="Controllers\ParametroController.cs" />
     <Compile Include="Controllers\RolController.cs" />
     <Compile Include="Controllers\SalidaController.cs" />
+    <Compile Include="Controllers\tbUsersController.cs" />
     <Compile Include="Dataset\Reportes.Designer.cs">
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
@@ -216,11 +217,6 @@
     <Compile Include="Helpers\HMTLHelperExtensions.cs" />
     <Compile Include="Models\accesorol.cs" />
     <Compile Include="Models\AccountViewModels.cs" />
-    <Compile Include="Models\Bodega.cs" />
-    <Compile Include="Models\BodegaDetalle.cs" />
-    <Compile Include="Models\Box.cs" />
-    <Compile Include="Models\BoxDetalle.cs" />
-    <Compile Include="Models\ConsultarExistenciaProductos.cs" />
     <Compile Include="Models\ConteoParametro_Result.cs">
       <DependentUpon>ModelERP.tt</DependentUpon>
     </Compile>
@@ -230,24 +226,28 @@
     <Compile Include="Models\DatosConsumidorFinal.cs">
       <DependentUpon>ModelERP.tt</DependentUpon>
     </Compile>
-    <Compile Include="Models\departamento.cs" />
-    <Compile Include="Models\DetalleEntrada.cs" />
     <Compile Include="Models\Empleado.cs" />
-    <Compile Include="Models\Entrada.cs" />
-    <Compile Include="Models\EstadoBodega.cs" />
-    <Compile Include="Models\EstadoCategoria.cs" />
-    <Compile Include="Models\EstadoInventariosFisico.cs" />
-    <Compile Include="Models\estadomovimientos.cs" />
-    <Compile Include="Models\Estados.cs" />
-    <Compile Include="Models\EstadoSubCategoria.cs" />
+    <Compile Include="Models\FARSIMAN.Context.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>FARSIMAN.Context.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\FARSIMAN.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>FARSIMAN.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\FARSIMAN.Designer.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>FARSIMAN.edmx</DependentUpon>
+    </Compile>
     <Compile Include="Models\fn_GetFacturaPago_Result.cs">
       <DependentUpon>ModelERP.tt</DependentUpon>
     </Compile>
     <Compile Include="Models\FuctionIndexP.cs" />
     <Compile Include="Models\Helpers.cs" />
     <Compile Include="Models\IdentityModels.cs" />
-    <Compile Include="Models\InventariosFisicos.cs" />
-    <Compile Include="Models\InventariosFisicosDetalle.cs" />
     <Compile Include="Models\Listado_CAI_Result.cs">
       <DependentUpon>ModelERP.tt</DependentUpon>
     </Compile>
@@ -266,23 +266,16 @@
       <DesignTime>True</DesignTime>
       <DependentUpon>ModelERP.edmx</DependentUpon>
     </Compile>
-    <Compile Include="Models\municipios.cs" />
     <Compile Include="Models\Objeto.cs" />
     <Compile Include="Models\ObtenerRol_Result.cs">
       <DependentUpon>ModelERP.tt</DependentUpon>
     </Compile>
     <Compile Include="Models\Parametros.cs" />
-    <Compile Include="Models\Productos.cs" />
-    <Compile Include="Models\ProductosCategorias.cs" />
-    <Compile Include="Models\ProductosSubCategorias.cs" />
-    <Compile Include="Models\proveedor.cs" />
     <Compile Include="Models\Prueba_Result.cs">
       <DependentUpon>ModelERP.tt</DependentUpon>
     </Compile>
     <Compile Include="Models\rol.cs" />
     <Compile Include="Models\RolesUsuario.cs" />
-    <Compile Include="Models\Salida.cs" />
-    <Compile Include="Models\SalidaDetalle.cs" />
     <Compile Include="Models\SDP_Acce_GetObjetosAsignados_Result.cs">
       <DependentUpon>ModelERP.tt</DependentUpon>
     </Compile>
@@ -469,6 +462,9 @@
     <Compile Include="Models\tbAccesoRol.cs">
       <DependentUpon>ModelERP.tt</DependentUpon>
     </Compile>
+    <Compile Include="Models\tbAccess.cs">
+      <DependentUpon>FARSIMAN.tt</DependentUpon>
+    </Compile>
     <Compile Include="Models\tbActividadEconomica.cs">
       <DependentUpon>ModelERP.tt</DependentUpon>
     </Compile>
@@ -522,6 +518,12 @@
     </Compile>
     <Compile Include="Models\tbEmpleado.cs">
       <DependentUpon>ModelERP.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\tbEmployee.cs">
+      <DependentUpon>FARSIMAN.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\tbEmployeesSubsidiary.cs">
+      <DependentUpon>FARSIMAN.tt</DependentUpon>
     </Compile>
     <Compile Include="Models\tbEntrada.cs">
       <DependentUpon>ModelERP.tt</DependentUpon>
@@ -586,6 +588,9 @@
     <Compile Include="Models\tbNotaCredito.cs">
       <DependentUpon>ModelERP.tt</DependentUpon>
     </Compile>
+    <Compile Include="Models\tbObject.cs">
+      <DependentUpon>FARSIMAN.tt</DependentUpon>
+    </Compile>
     <Compile Include="Models\tbObjeto.cs">
       <DependentUpon>ModelERP.tt</DependentUpon>
     </Compile>
@@ -603,6 +608,9 @@
     </Compile>
     <Compile Include="Models\tbPedidoDetalle.cs">
       <DependentUpon>ModelERP.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\tbPosition.cs">
+      <DependentUpon>FARSIMAN.tt</DependentUpon>
     </Compile>
     <Compile Include="Models\tbProducto.cs">
       <DependentUpon>ModelERP.tt</DependentUpon>
@@ -643,6 +651,9 @@
     <Compile Include="Models\tbSolicitudEfectivoDetalle.cs">
       <DependentUpon>ModelERP.tt</DependentUpon>
     </Compile>
+    <Compile Include="Models\tbSubsidiary.cs">
+      <DependentUpon>FARSIMAN.tt</DependentUpon>
+    </Compile>
     <Compile Include="Models\tbSucursal.cs">
       <DependentUpon>ModelERP.tt</DependentUpon>
     </Compile>
@@ -661,15 +672,24 @@
     <Compile Include="Models\tbTipoSalida.cs">
       <DependentUpon>ModelERP.tt</DependentUpon>
     </Compile>
+    <Compile Include="Models\tbTransporter.cs">
+      <DependentUpon>FARSIMAN.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\tbTravelHistory.cs">
+      <DependentUpon>FARSIMAN.tt</DependentUpon>
+    </Compile>
     <Compile Include="Models\tbUnidadMedida.cs">
       <DependentUpon>ModelERP.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\tbUser.cs">
+      <DependentUpon>FARSIMAN.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\tbUsersPosition.cs">
+      <DependentUpon>FARSIMAN.tt</DependentUpon>
     </Compile>
     <Compile Include="Models\tbUsuario.cs">
       <DependentUpon>ModelERP.tt</DependentUpon>
     </Compile>
-    <Compile Include="Models\TipoDevolucion.cs" />
-    <Compile Include="Models\TipoEntrada.cs" />
-    <Compile Include="Models\TipoSalida.cs" />
     <Compile Include="Models\UDP_Acce_Login_Result.cs">
       <DependentUpon>ModelERP.tt</DependentUpon>
     </Compile>
@@ -952,7 +972,6 @@
     <Compile Include="Models\UDP_Inv_tbProveedor_Update_Result.cs">
       <DependentUpon>ModelERP.tt</DependentUpon>
     </Compile>
-    <Compile Include="Models\UDP_Inv_tbSalidaDetalleD_Delete_Result.cs" />
     <Compile Include="Models\UDP_Inv_tbSalidaDetalle_Delete_Result.cs">
       <DependentUpon>ModelERP.tt</DependentUpon>
     </Compile>
@@ -1274,7 +1293,6 @@
     <Compile Include="Models\UDV_Vent_VentasPorCaja_EntreFechas.cs">
       <DependentUpon>ModelERP.tt</DependentUpon>
     </Compile>
-    <Compile Include="Models\UnidadMedida.cs" />
     <Compile Include="Models\Usuario.cs" />
     <Compile Include="Models\VistaInventarioHistorico.cs">
       <DependentUpon>ModelERP.tt</DependentUpon>
@@ -1637,6 +1655,16 @@
     <Content Include="fonts\glyphicons-halflings-regular.eot" />
     <Content Include="Logo\1.jpg" />
     <Content Include="Logo\1.png" />
+    <Content Include="Models\FARSIMAN.Context.tt">
+      <Generator>TextTemplatingFileGenerator</Generator>
+      <DependentUpon>FARSIMAN.edmx</DependentUpon>
+      <LastGenOutput>FARSIMAN.Context.cs</LastGenOutput>
+    </Content>
+    <Content Include="Models\FARSIMAN.tt">
+      <Generator>TextTemplatingFileGenerator</Generator>
+      <DependentUpon>FARSIMAN.edmx</DependentUpon>
+      <LastGenOutput>FARSIMAN.cs</LastGenOutput>
+    </Content>
     <Content Include="Models\ModelERP.Context.tt">
       <Generator>TextTemplatingFileGenerator</Generator>
       <DependentUpon>ModelERP.edmx</DependentUpon>
@@ -1760,6 +1788,13 @@
     </None>
     <Content Include="Dataset\Reportes.xss">
       <DependentUpon>Reportes.xsd</DependentUpon>
+    </Content>
+    <EntityDeploy Include="Models\FARSIMAN.edmx">
+      <Generator>EntityModelCodeGenerator</Generator>
+      <LastGenOutput>FARSIMAN.Designer.cs</LastGenOutput>
+    </EntityDeploy>
+    <Content Include="Models\FARSIMAN.edmx.diagram">
+      <DependentUpon>FARSIMAN.edmx</DependentUpon>
     </Content>
     <None Include="Properties\PublishProfiles\HostDemo.pubxml" />
     <Content Include="Scripts\DataTables\autoFill.bootstrap.js" />
@@ -1928,6 +1963,20 @@
     <Content Include="Views\Salida\Details.cshtml" />
     <Content Include="Views\Salida\Edit.cshtml" />
     <Content Include="Views\Salida\Index.cshtml" />
+    <Content Include="Views\Salida\_BuscarProducto.cshtml" />
+    <Content Include="Views\Salida\_CreateSalidaDetalle.cshtml" />
+    <Content Include="Views\Salida\_DetailsSalidaDetalle.cshtml" />
+    <Content Include="Views\Salida\_EditCreateSalidaDetalle.cshtml" />
+    <Content Include="Views\Salida\_EditSalidaDetalle.cshtml" />
+    <Content Include="Views\Salida\_GenReporte.cshtml" />
+    <Content Include="Views\Salida\_Modales.cshtml" />
+    <Content Include="Views\Salida\_SeleccionaBox.cshtml" />
+    <Content Include="Views\Salida\_SeleccionarFactura.cshtml" />
+    <Content Include="Views\tbUsers\Create.cshtml" />
+    <Content Include="Views\tbUsers\Delete.cshtml" />
+    <Content Include="Views\tbUsers\Details.cshtml" />
+    <Content Include="Views\tbUsers\Edit.cshtml" />
+    <Content Include="Views\tbUsers\Index.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

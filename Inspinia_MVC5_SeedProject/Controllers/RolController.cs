@@ -22,7 +22,7 @@ namespace ERP_GMEDINA.Controllers
         private ERP_ZORZALEntities db = new ERP_ZORZALEntities();
         Helpers Function = new Helpers();
         // GET: /Rol/
-        [SessionManager("Rol/Index")]
+        [SessionManagerAttribute("Rol/Index")]
         public ActionResult Index()
         {
             return View(db.tbRol.ToList());
@@ -32,7 +32,7 @@ namespace ERP_GMEDINA.Controllers
             return View();
         }
         // GET: /Rol/Details/5
-        [SessionManager("Rol/Details")]
+        [SessionManagerAttribute("Rol/Details")]
         public ActionResult Details(int? id)
         {
             if (id == null)
@@ -47,7 +47,7 @@ namespace ERP_GMEDINA.Controllers
             return View(tbRol);
         }
         // GET: /Rol/Create
-        [SessionManager("Rol/Create")]
+        [SessionManagerAttribute("Rol/Create")]
         public ActionResult Create()
         {
             ViewBag.obj_Id = new SelectList(db.tbObjeto, "obj_Id", "obj_Pantalla");
@@ -55,7 +55,7 @@ namespace ERP_GMEDINA.Controllers
         }
 
         // GET: /Rol/Edit/5
-        [SessionManager("Rol/Edit")]
+        [SessionManagerAttribute("Rol/Edit")]
         public ActionResult Edit(int? id)
         {
             try
@@ -181,7 +181,7 @@ namespace ERP_GMEDINA.Controllers
             }
         }
         [HttpPost]
-        [SessionManager("Rol/Create")]
+        [SessionManagerAttribute("Rol/Create")]
         public JsonResult InsertRol(string DescripcionRol, ICollection<tbAccesoRol> AccesoRol)
         {
             int idUser = 0;
@@ -268,7 +268,7 @@ namespace ERP_GMEDINA.Controllers
             return Json(list, JsonRequestBehavior.AllowGet);
         }
         [HttpPost]
-        [SessionManager("Rol/Edit")]
+        [SessionManagerAttribute("Rol/Edit")]
         public JsonResult UpdateRol(int rolId, string Descripcion)
         {
             string Msj = "-1";

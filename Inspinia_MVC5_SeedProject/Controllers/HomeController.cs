@@ -10,7 +10,7 @@ namespace ERP_GMEDINA.Controllers
 {
     public class HomeController : Controller
     {
-        [SessionManager("Home/Index")]
+        [SessionManagerAttribute("Home/Index")]
         public ActionResult Index()
         {
             ViewData["SubTitle"] = "Welcome in ASP.NET MVC 5 INSPINIA SeedProject ";

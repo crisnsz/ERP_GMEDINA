@@ -4,13 +4,8 @@
     int Sesiones = 0;
 
 
-    List<tbUsuario> User = Login.getUserInformation();
+    List<tbUser> User = Login.getUserInformation();
 
-    foreach (tbUsuario Usuario in User)
-    {
-
-        Sesiones = Usuario.usu_SesionesValidas;
-    }
 }  
 
 <nav class="navbar-default navbar-static-side" role="navigation">
@@ -30,66 +25,16 @@
                     </a>
                 </div>
             </li>
-            @if (Sesiones > 1)
-            {
-                <li>
-                    <a href="#"><i class="fa fa-tag"></i><span class="nav-label">Inventario</span><span class="fa arrow"></span></a>
-                    <ul class="nav nav-second-level collapse">
-                        @if (Login.GetUserAccesoRol("Salida/Index"))
-                        {
-                            <li class="@Html.IsSelected(action: "Index")">
-                                <a href="@Url.Action("Index", "Salida")"><i class="fa fa-folder-open-o fa-fw"></i>Salidas<span class="nav-label"></span> </a>
-                            </li>
-                        }
-                    </ul>
-                </li>
-                <li>
-                    <a href="#"><i class="fa fa-cogs fa-fw"></i><span class="nav-label">Configuración</span><span class="fa arrow"></span></a>
-                    <ul class="nav nav-second-level collapse">
-                        @if (Login.GetUserAccesoRol("Empleado/Index"))
-                        {
-                            <li class="@Html.IsSelected(action: "Index")">
-                                <a href="@Url.Action("Index", "Empleado")"><i class="fa fa-user"></i>Empleado <span class="nav-label"></span> </a>
-                            </li>
-                        }
-                        @if (Login.GetUserAccesoRol("Parametro/Index"))
-                        {
-                            <li class="@Html.IsSelected(action: "Index")">
-                                <a href="@Url.Action("Index", "Parametro")"><i class="fa fa-desktop fa-fw"></i><span class="nav-label">Parametro</span> </a>
-                            </li>
-                        }
-
-                    </ul>
-                </li>
-
-
+           
                 <li>
                     <a href="#"><i class="fa fa-lock"></i><span class="nav-label">Seguridad</span><span class="fa arrow"></span></a>
                     <ul class="nav nav-second-level collapse">
-                        @if (Login.GetUserAccesoRol("Usuario/Index"))
-                        {
                             <li class="@Html.IsSelected(action: "Index")">
-                                <a href="@Url.Action("Index", "Usuario")"><i class="fa fa-users fa-fw"></i>Usuario <span class="nav-label"></span> </a>
+                                <a href="@Url.Action("Index", "Employee")"><i class="fa fa-users fa-fw"></i>Empleado<span class="nav-label"></span> </a>
                             </li>
-                        }
-
-                        @if (Login.GetUserAccesoRol("Rol/Index"))
-                        {
-                            <li class="@Html.IsSelected(action: "Index")">
-                                <a href="@Url.Action("Index", "Rol")"><i class="fa fa-ticket fa-fw"></i>Roles<span class="nav-label"></span> </a>
-                            </li>
-                        }
-
-                        @if (Login.GetUserAccesoRol("Objeto/Index"))
-                        {
-                            <li class="@Html.IsSelected(action: "Index")">
-                                <a href="@Url.Action("Index", "Objeto")"><i class="fa fa-desktop fa-fw"></i><span class="nav-label">Objeto</span> </a>
-                            </li>
-                        }
                     </ul>
 
                 </li>
-            }
         </ul>
     </div>
 </nav>

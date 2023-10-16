@@ -8,7 +8,8 @@ namespace ERP_GMEDINA.Models
 {
     public class Helpers
     {
-        ERP_ZORZALEntities db = new ERP_ZORZALEntities();
+
+        FARSIMANEntities db = new FARSIMANEntities();
         private IAuthenticationManager AuthenticationManager
         {
             get
@@ -17,7 +18,7 @@ namespace ERP_GMEDINA.Models
             }
         }
         //Cerrar sesion
-        public void fCerrarSesion()
+        public void FCerrarSesion()
         {
             HttpContext.Current.Session.Clear();
             HttpContext.Current.Session.Abandon();
@@ -38,102 +39,80 @@ namespace ERP_GMEDINA.Models
             HttpContext.Current.Session["UserEstado"] = null;
         }
 
-        public bool GetUserAccesoRol(string sPantalla)
+        public bool GetUserPosition(string sPantalla)
         {
             bool Retorno = false;
-            try
-            {
-                if (!Convert.ToBoolean(HttpContext.Current.Session["UserLoginEsAdmin"]))
-                {
-                    var list = (IEnumerable<SDP_Acce_GetUserRols_Result>)HttpContext.Current.Session["UserLoginRols"];
-                    var BuscarList = list.Where(x => x.obj_Referencia == sPantalla);
-                    int Conteo = BuscarList.Count();
-                    if (Conteo > 0)
-                        Retorno = true;
-                }
-                else
-                    Retorno = true;
-                    
-            }
-            catch (Exception Ex)
-            {
-                InsertBitacoraErrores("Helpers", Ex.Message.ToString(), "GetUserAccesoRol");
-            }
+            //try
+            //{
+            //    if (!Convert.ToBoolean(HttpContext.Current.Session["UserLoginEsAdmin"]))
+            //    {
+            //        var userAccess = db.tbUsers.Where(x => x.user_IsActive);
+
+            //        var list = (IEnumerable<SDP_Acce_GetUserRols_Result>)HttpContext.Current.Session["UserLoginRols"];
+
+            //        var BuscarList = userAccess.Where(x => x.tbUsersPositions. == sPantalla);
+            //        int Conteo = BuscarList.Count();
+            //        if (Conteo > 0)
+            //            Retorno = true;
+            //    }
+            //    else
+            //        Retorno = true;
+
+            //}
+            //catch (Exception Ex)
+            //{
+            //    InsertBitacoraErrores("Helpers", Ex.Message.ToString(), "GetUserAccesoRol");
+            //}
             return Retorno;
         }
 
-        public void ValidarUsuario(string sPantalla, out int SesionesValidas, out bool UsuarioEstado, out bool EsAdmin, out int UsuarioRol, out bool AccesoPantalla)
+        public void ValidateUser(string sPantalla, out int SesionesValidas, out bool UsuarioEstado, out bool EsAdmin, out int UsuarioRol, out bool AccesoPantalla)
         {
-            UsuarioEstado = false;
-            SesionesValidas = -1;
-            EsAdmin = false;
-            UsuarioRol = 0;
-            AccesoPantalla = false;
-
-            try
-            {
-                SesionesValidas = Convert.ToInt32(HttpContext.Current.Session["UserLoginSesion"]);
-                UsuarioEstado = Convert.ToBoolean(HttpContext.Current.Session["UserEstado"]);
-                EsAdmin = Convert.ToBoolean(HttpContext.Current.Session["UserLoginEsAdmin"]);
-                UsuarioRol = Convert.ToInt32(HttpContext.Current.Session["UserRol"]);
-                AccesoPantalla = GetUserAccesoRol(sPantalla);
-            }
-            catch (Exception Ex)
-            {
-                InsertBitacoraErrores("Sesiones", Ex.Message.ToString(), "Helpers");
-            }
+            SesionesValidas = Convert.ToInt32(HttpContext.Current.Session["UserLoginSesion"]);
+            UsuarioEstado = Convert.ToBoolean(HttpContext.Current.Session["UserEstado"]);
+            EsAdmin = Convert.ToBoolean(HttpContext.Current.Session["UserLoginEsAdmin"]);
+            UsuarioRol = Convert.ToInt32(HttpContext.Current.Session["UserRol"]);
+            AccesoPantalla = GetUserPosition(sPantalla);
         }
 
         public bool GetUserLogin()
         {
             bool Estado = false;
-            int user = 0;
             try
             {
-                user = (int)HttpContext.Current.Session["UserLogin"];
+                var isLogged = HttpContext.Current.Session["UserLogin"];
+                if (isLogged == null)
+                {
+                    return Estado;
+                }
+
+                int user = (int)HttpContext.Current.Session["UserLogin"];
                 if (user != 0)
                     Estado = true;
             }
-            catch (Exception Ex)
+            catch (Exception)
             {
-                InsertBitacoraErrores("GetUserLogin", Ex.Message.ToString(), "Helpers");
+
             }
             return Estado;
         }
 
-        public string InsertBitacoraErrores(string sPantalla, string biteMensajeError, string biteAccion)
-        {
-            IEnumerable<object> List = null;
-            string msj = "";
-            try
-            {
-                List = db.UDP_Acce_tbBitacoraErrores_Insert(sPantalla, "", DatetimeNow(), biteMensajeError, biteAccion);
-                foreach (UDP_Acce_tbBitacoraErrores_Insert_Result Res in List)
-                    msj = Res.MensajeError;
-            }
-            catch (Exception Ex)
-            {
-                msj = Ex.Message.ToString();
-            }
-            return msj;
 
-        }
-
-        public List<tbUsuario> getUserInformation()
+        public List<tbUser> getUserInformation()
         {
             int user = 0;
-            List<tbUsuario> UsuarioList = new List<tbUsuario>();
+            List<tbUser> UsuarioList = new List<tbUser>();
             try
             {
                 user = (int)HttpContext.Current.Session["UserLogin"];
                 if (user != 0)
                 {
-                    UsuarioList = db.tbUsuario.Where(s => s.usu_Id == user).ToList();
+                    UsuarioList = db.tbUsers.Where(s => s.user_ID == user).ToList();
                 }
             }
             catch (Exception Ex)
             {
-                InsertBitacoraErrores("Helpers", Ex.Message.ToString(), "getUserInformation");
+
             }
             return UsuarioList;
         }
@@ -147,7 +126,6 @@ namespace ERP_GMEDINA.Models
             }
             catch (Exception Ex)
             {
-                InsertBitacoraErrores("Helpers", Ex.Message.ToString(), "GetUser");
             }
             return user;
         }

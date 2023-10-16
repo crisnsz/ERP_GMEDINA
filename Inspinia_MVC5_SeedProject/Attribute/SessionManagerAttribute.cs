@@ -23,7 +23,6 @@ namespace ERP_GMEDINA.Attribute
 
         public override void OnActionExecuting(ActionExecutingContext filterContext)
         {
-            bool UsuarioEstado = false;
             bool EsAdmin = false;
             int UsuarioRol = 0;
             bool AccesoPantalla = false;
@@ -36,8 +35,8 @@ namespace ERP_GMEDINA.Attribute
             //Paso 1: Validar que la sesion no haya expirado.
             if (Help.GetUserLogin())
             {
-                //Paso 4: Validar si el usuario no es admin.
-                if (!EsAdmin)
+                //Paso 4: Validar si el usuario es admin.
+                if (EsAdmin)
                 {
                     //Paso 5: Validar si el usuario tiene un rol asignado.
                     if (UsuarioRol != 0)

@@ -2,66 +2,114 @@ var tableNoAssign;
 var rowsData = [];
 var tableAssign;
 $(document).ready(function () {
-    // Inicializa DataTables en la tabla
-    tableNoAssign = $('#NoAdded').DataTable();
+    // Inicializa las tablas con DataTables
+    var table1 = $('#NoAdded').DataTable({
+        "order": [],
+        "columnDefs": [{
+            "targets": [0],
+            "visible": false
+        }]
+    });
 
+    var table2 = $('#Added').DataTable({
+        "order": [[0, 'asc']],
+        "columnDefs": [{
+            "targets": [0],
+            "visible": false
+        }]
+    });
 
-    // Obtiene los datos de las columnas 1 y 2 y las almacena en un arreglo
-    //var rowsData = table.rows().data().map(function (row) {
-    //    return [row[0], row[1], row[2]]; // Obtiene datos de la Columna 1 y Columna 2 de cada fila
-    //});
-    let maxIndex = tableNoAssign.rows().count();
+    $('#AddSubsidiary').on('click', function () {
+        table1.rows().nodes().to$().each(function () {
+            var checkbox = $(this).find('td:eq(2) input[type="checkbox"]');
+            if (checkbox.prop('checked')) {
+                var data = table1.row($(this)).data();
+                table2.row.add(data).draw();
+                table1.row($(this)).remove().draw();
+            }
+        });
 
-    for (let i = 0; i < maxIndex && i < tableNoAssign.rows().count(); i++) {
-        let row = tableNoAssign.row(i).data();
-        rowsData.push([row[1], row[2], row[3]]);
-    }
+        var datos = [];
+        $('#Added tbody tr').each(function () {
+            let subsidiary_ID = $(this).find('td:eq(0)').text();
+            let subsidiary_Name = $(this).find('td:eq(1)').text();
+            datos.push({ ID: subsidiary_ID, Nombre: subsidiary_Name });
+        });
 
-    // Convierte el arreglo en una cadena JSON
-    jsonData = JSON.stringify(rowsData[0]);
+        // Convierte los datos a una cadena JSON
+        var datosJSON = JSON.stringify(datos);
 
+        table2.order([0, 'asc']).draw();
+        $.ajax({
+            url: "/Employee/AddSubsidiary",
+            method: "POST",
+            dataType: 'json',
+            contentType: "application/json; charset=utf-8",
+            data: JSON.stringify({ tbEmployeesSubsidiary: datosJSON }),
+        })
+    });
 
-    // Imprime la cadena JSON (puedes hacer lo que necesites con los datos)
-    console.log(jsonData);
-
-})
-
-
-$('#AddSubsidiary').click(function () {
-    // Inicializa DataTables en la tabla
-    //var table = $('#NoAdded').DataTable();
-
-
-    // Get the checkbox values
-    var checkboxValues = [];
-
-    var checkboxValuestoAdd = [];
-    tableNoAssign.column(3).nodes().to$().find('#check').each(function (row) {
-        checkboxValues.push($(this).prop('checked'));
+    $('#DelSubsidiary').on('click', function () {
+        table2.rows().nodes().to$().each(function () {
+            var checkbox = $(this).find('td:eq(2) input[type="checkbox"]');
+            if (checkbox.prop('checked')) {
+                var data = table2.row($(this)).data();
+                table1.row.add(data).draw();
+                table2.row($(this)).remove().draw();
+            }
+        });
+        table1.order([0, 'asc']).draw();
     });
 
 
+    $('#enviarDatos').click(function () {
+        var datos = [];
+        $('#Added tbody tr').each(function () {
+            var id = $(this).find('td:eq(0)').text();
+            var nombre = $(this).find('td:eq(1)').text();
+            datos.push({ ID: id, Nombre: nombre });
+        });
 
+        // Convierte los datos a una cadena JSON
+        var datosJSON = JSON.stringify(datos);
 
-    // Use map to get the indices where the value is true
-    const trueIndices = checkboxValues.map((value, index) => (value === true ? index : -1)).filter(index => index !== -1);
+        // Crea un campo de formulario oculto para enviar los datos
+        $('<input>').attr({
+            type: 'hidden',
+            name: 'datos',
+            value: datosJSON
+        }).appendTo('form');
 
-
-    const valoresObtenidos = trueIndices.map(index => rowsData[index]);
-       
-    var data = rowsData[0];
-
-    const valoresNoEnArray2 = rowsD*******ata.filter((value, index) => !trueIndices.includes(index));
-
-    console.log(valoresNoEnArray2);
-
-
-
-    $('#Added').DataTable({
-        data: valoresObtenidos
+        // Envía el formulario
+        $('form').submit();
     });
+});
 
-})
+
+//$('#AddSubsidiary').click(function () {
+//    // Inicializa DataTables en la tabla
+//    var tabla1 = document.getElementById("NoAdded");
+
+//    var tabla2 = document.getElementById("Added");
+
+//    // Agregar un evento de clic a las casillas de verificación en la tercera columna
+//    var filasTabla1 = tabla1.getElementsByTagName("tr");
+//    for (var i = 1; i < filasTabla1.length; i++) { // Comenzamos en 1 para omitir la fila de encabezado
+//        var checkbox = filasTabla1[i].querySelector("input[type='checkbox']");
+//        checkbox.addEventListener("change", function () {
+//            // Verificar el estado de la casilla de verificación
+//            if (this.checked) {
+//                // Clonar la fila seleccionada y agregarla a la tabla2
+//                var filaSeleccionada = filasTabla1[i].cloneNode(true);
+//                tabla2.appendChild(filaSeleccionada);
+
+//                // Eliminar la fila seleccionada de la tabla1
+//                filasTabla1[i].parentNode.removeChild(filasTabla1[i]);
+//            }
+//        });
+//    }
+
+//})
 
 
 

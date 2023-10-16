@@ -47,6 +47,7 @@ namespace ERP_GMEDINA.Controllers
             return View();
         }
 
+
         // POST: /Employee/Create
         // To protect from overposting attacks, enable the specific properties you want to bind to, for 
         // more details see https://go.microsoft.com/fwlink/?LinkId=317598.
@@ -56,6 +57,8 @@ namespace ERP_GMEDINA.Controllers
         [SessionManager("Employee/Details")]
         public ActionResult Create([Bind(Include="employee_ID,employee_Name,employee_Direction")] tbEmployee tbEmployee)
         {
+
+
             if (ModelState.IsValid)
             {
                 db.tbEmployees.Add(tbEmployee);
@@ -65,6 +68,27 @@ namespace ERP_GMEDINA.Controllers
 
             return View(tbEmployee);
         }
+
+        [HttpPost]
+        public JsonResult AddSubsidiary(tbSubsidiary tbSubsidiary)
+        {
+
+            var tbSubsidiarys = tbSubsidiary;
+            //List<tbRolesUsuario> sessionRolesUsuario = new List<tbRolesUsuario>();
+            //var list = (List<tbRolesUsuario>)Session["tbRolesUsuario"];
+            //if (list == null)
+            //{
+            //    sessionRolesUsuario.Add(Roles);
+            //    Session["tbRolesUsuario"] = sessionRolesUsuario;
+            //}
+            //else
+            //{
+            //    list.Add(Roles);
+            //    Session["tbRolesUsuario"] = list;
+            //}
+            return Json("Exito", JsonRequestBehavior.AllowGet);
+        }
+
 
         // GET: /Employee/Edit/5
         public ActionResult Edit(int? id)
@@ -147,5 +171,6 @@ namespace ERP_GMEDINA.Controllers
             }
             base.Dispose(disposing);
         }
+
     }
 }

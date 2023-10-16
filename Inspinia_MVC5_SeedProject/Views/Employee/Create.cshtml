@@ -125,6 +125,7 @@
                                     <table class="table table table-striped table-bordered dataTable no-footer" style="width:100%" id="Added">
                                         <thead>
                                             <tr>
+                                                <th hidden style="background-color:#1ab394;color:white">ID</th>
                                                 <th id="Assign" style="background-color:#1ab394;color:white">Nombre</th>
                                                 <th style="background-color: #1ab394; color: white">
                                                 <th style="background-color:#1ab394;color:white"></th>
@@ -137,6 +138,7 @@
                             <div class="form-group">
                                 <div class="col-md-offset-2 col-md-10">
                                     <input type="submit" value="Registrar" class="btn btn-primary" />
+                                    <input type="button" value="Enviar Datos" id="enviarDatos">
                                     @Html.ActionLink("Cancel", "Index", null, new { @class = "btn btn-white" })
                                 </div>
                             </div>

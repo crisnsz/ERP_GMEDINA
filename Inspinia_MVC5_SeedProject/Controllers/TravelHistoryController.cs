@@ -51,6 +51,7 @@ namespace ERP_GMEDINA.Controllers
             ViewBag.employee_ID = new SelectList(db.tbEmployees, "employee_ID", "employee_Name");
             ViewBag.subsidiary_ID = new SelectList(db.tbSubsidiaries, "subsidiary_ID", "subsidiary_Name");
             ViewBag.transporter_ID = new SelectList(db.tbTransporters, "transporter_ID", "transporter_Name");
+            ViewBag.tbEmployees = db.tbEmployees.ToList();
             return View();
         }
 
@@ -148,24 +149,47 @@ namespace ERP_GMEDINA.Controllers
 
 
         #region JsonResult
+
         [HttpPost]
         public JsonResult GetAddress(int subsidiary_ID)
         {
-            tbSubsidiary response = new tbSubsidiary();
+            //tbSubsidiary response = new tbSubsidiary();
+            string response = string.Empty;
             try
             {
-                response = db.tbSubsidiaries.Where(x => x.subsidiary_ID == subsidiary_ID).FirstOrDefault();
+                response = db.tbSubsidiaries.Where(x => x.subsidiary_ID == subsidiary_ID).FirstOrDefault().subsidiary_Direction.ToString();
 
+                return Json(response, JsonRequestBehavior.AllowGet);
             }
             catch (Exception Ex)
             {
                 return Json(Ex.Message.ToString(), JsonRequestBehavior.DenyGet);
             }
 
-            return Json(response, JsonRequestBehavior.AllowGet);
         }
 
 
+        [HttpPost]
+        public JsonResult GetEmployeesBySubsidiary(int subsidiary_ID)
+        {
+            //List<tbSubsidiary> response = new List<tbSubsidiary>();
+            try
+            {
+                var response = (from employee in db.tbEmployees
+                           join employeeSubsidiary in db.tbEmployeesSubsidiaries
+                           on employee.employee_ID equals employeeSubsidiary.employee_ID
+                           where employeeSubsidiary.subsidiary_ID == subsidiary_ID
+                           select employee).ToList();
+
+
+                return Json(response, JsonRequestBehavior.AllowGet);
+            }
+            catch (Exception Ex)
+            {
+                return Json(Ex.Message.ToString(), JsonRequestBehavior.DenyGet);
+            }
+
+        }
         #endregion
 
         protected override void Dispose(bool disposing)

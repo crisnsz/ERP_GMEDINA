@@ -97,7 +97,7 @@ namespace ERP_GMEDINA.Controllers
         [HttpPost]
         [ValidateAntiForgeryToken]
         [SessionManager("Employee/Create")]
-        public ActionResult Create([Bind(Include = "employee_ID,employee_Name,employee_Direction,position_ID")] tbEmployee tbEmployee, int SelectedValue)
+        public ActionResult Create([Bind(Include = "employee_ID,employee_Name,employee_Direction,position_ID")] tbEmployee tbEmployee)
         {
             if (!ModelState.IsValid)
             {

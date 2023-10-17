@@ -38,64 +38,107 @@
                     {
                         @Html.AntiForgeryToken()
 
-                    <div class="form-horizontal">
-                        @Html.ValidationSummary(true)
+                        <div class="form-horizontal">
+                            @Html.ValidationSummary(true)
 
-                        <div class="form-group">
-                            <label class="control-label col-md-2">Nombre de la Subsidiaria</label>
-                            <div class="col-md-10">
-                                @Html.DropDownList("subsidiary_ID", (IEnumerable<SelectListItem>)ViewBag.subsidiary_ID, "Seleccionar", new { @class = "form-control text-box single-line", @required = string.Empty })
+                            <div class="form-group">
+                                <label class="control-label col-md-2">Nombre de la Subsidiaria</label>
+                                <div class="col-md-10">
+                                    @Html.DropDownList("subsidiary_ID", (IEnumerable<SelectListItem>)ViewBag.subsidiary_ID, "Seleccionar", new { @class = "form-control text-box single-line", @required = string.Empty })
 
-                                @Html.ValidationMessageFor(model => model.subsidiary_ID)
+                                    @Html.ValidationMessageFor(model => model.subsidiary_ID)
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <label class="control-label col-md-2">Direccion de la Subsidiaria</label>
+                                <div class="col-md-10">
+                                    <input id="subsidiary_Address" type="text" class="form-control text-box single-line" readonly>
+                                </div>
+                            </div>
+
+                            <div class="form-group">
+                                <label class="control-label col-md-2">Transportista</label>
+                                <div class="col-md-10">
+                                    @Html.DropDownList("transporter_ID", (IEnumerable<SelectListItem>)ViewBag.transporter_ID, "Seleccionar", new { @class = "form-control text-box single-line", @required = string.Empty })
+                                    @Html.ValidationMessageFor(model => model.transporter_ID)
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                @Html.LabelFor(model => model.tbEmployee.employee_Name, "employee_Name", new { @class = "control-label col-md-2" })
+                                <div class="col-md-10">
+                                    @Html.DropDownList("employee_ID", (IEnumerable<SelectListItem>)ViewBag.employee_ID, "Seleccionar", new { @class = "form-control text-box single-line", @required = string.Empty })
+
+
+                                    @Html.ValidationMessageFor(model => model.employee_ID)
+                                </div>
+                            </div>
+
+                            <div class="form-group">
+                                @Html.LabelFor(model => model.departure_Date_and_Time, new { @class = "control-label col-md-2" })
+                                <div class="col-md-10">
+                                    @Html.EditorFor(model => model.departure_Date_and_Time, new { htmlAttributes = new { @type = "date" } })
+                                    @Html.ValidationMessageFor(model => model.departure_Date_and_Time)
+                                </div>
+                            </div>
+
+                            <div class="form-group">
+                                @Html.LabelFor(model => model.travel_Cost, new { @class = "control-label col-md-2" })
+                                <div class="col-md-10">
+                                    @Html.EditorFor(model => model.travel_Cost)
+                                    @Html.ValidationMessageFor(model => model.travel_Cost)
+                                </div>
+                            </div>
+
+                            <div class="form-group ">
+
+                                <div class="col-md-5">
+                                    <label class="col-md-10" style="text-align:center">Empleados Disponibles</label>
+                                    <table id="EmployessAvalaible" class="table table table-striped table-bordered dataTable no-footer" style="width:100%">
+                                        <thead>
+                                            <tr>
+                                                <th hidden style="background-color:#1ab394;color:white">
+                                                    ID
+                                                </th>
+                                                <th id="NoAssign" style="background-color:#1ab394;color:white">
+                                                    Nombre
+                                                </th>
+                                                <th style="background-color: #1ab394; color: white">
+                                                    Direccion
+                                                </th>
+                                                <th style="background-color:#1ab394;color:white"></th>
+                                            </tr>
+                                        </thead>
+                                        <tbody>
+                                           
+                                        </tbody>
+                                    </table>
+                                </div>
+
+                                <div class="col-md-5">
+                                    <label class="col-md-10" style="text-align:center">Empleados Asignados</label>
+                                    <table id="EmployessAdded" class="table table table-striped table-bordered dataTable no-footer" style="width:100%">
+                                        <thead>
+                                            <tr>
+                                                <th hidden style="background-color:#1ab394;color:white">ID</th>
+                                                <th id="Assign" style="background-color:#1ab394;color:white">Nombre</th>
+                                                <th style="background-color: #1ab394; color: white">Direccion</th>
+                                                <th style="background-color:#1ab394;color:white"></th>
+                                            </tr>
+                                        </thead>
+                                        <tbody></tbody>
+                                    </table>
+
+                                </div>
+                            </div>
+
+
+                            <div class="form-group">
+                                <div class="col-md-offset-2 col-md-10">
+                                    <input type="submit" value="Create" class="btn btn-primary" />
+                                    @Html.ActionLink("Cancel", "Index", null, new { @class = "btn btn-white" })
+                                </div>
                             </div>
                         </div>
-                        <div class="form-group">
-                            <label class="control-label col-md-2">Direccion de la Subsidiaria</label>
-                            <div class="col-md-10">
-                                <input id="subsidiary_Name" type="text" class = "form-control text-box single-line" readonly>
-                            </div>
-                        </div>
-
-                        <div class="form-group">
-                            <label class="control-label col-md-2">Transportista</label>
-                            <div class="col-md-10">
-                                @Html.DropDownList("transporter_ID", (IEnumerable<SelectListItem>)ViewBag.transporter_ID, "Seleccionar", new { @class = "form-control text-box single-line", @required = string.Empty })
-                                @Html.ValidationMessageFor(model => model.transporter_ID)
-                            </div>
-                        </div>
-                        <div class="form-group">
-                            @Html.LabelFor(model => model.tbEmployee.employee_Name, "employee_Name", new { @class = "control-label col-md-2" })
-                            <div class="col-md-10">
-                                @Html.DropDownList("employee_ID", (IEnumerable<SelectListItem>)ViewBag.employee_ID, "Seleccionar", new { @class = "form-control text-box single-line", @required = string.Empty })
-
-
-                                @Html.ValidationMessageFor(model => model.employee_ID)
-                            </div>
-                        </div>
-
-                        <div class="form-group">
-                            @Html.LabelFor(model => model.departure_Date_and_Time, new { @class = "control-label col-md-2" })
-                            <div class="col-md-10">
-                                @Html.EditorFor(model => model.departure_Date_and_Time, new { htmlAttributes = new { @type = "date" } })
-                                @Html.ValidationMessageFor(model => model.departure_Date_and_Time)
-                            </div>
-                        </div>
-
-                        <div class="form-group">
-                            @Html.LabelFor(model => model.travel_Cost, new { @class = "control-label col-md-2" })
-                            <div class="col-md-10">
-                                @Html.EditorFor(model => model.travel_Cost)
-                                @Html.ValidationMessageFor(model => model.travel_Cost)
-                            </div>
-                        </div>
-
-                        <div class="form-group">
-                            <div class="col-md-offset-2 col-md-10">
-                                <input type="submit" value="Create" class="btn btn-primary" />
-                                @Html.ActionLink("Cancel", "Index", null, new { @class = "btn btn-white" })
-                            </div>
-                        </div>
-                    </div>
                     }
 
                 </div>

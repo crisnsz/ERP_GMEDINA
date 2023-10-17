@@ -58,7 +58,7 @@ namespace ERP_GMEDINA.Controllers
 
             if (!ModelState.IsValid)
             {
-
+                ViewBag.Positions = new SelectList(db.tbPositions, "position_ID", "position_Name");
                 return View(tbEmployee);
             }
             using (var transaction = db.Database.BeginTransaction())

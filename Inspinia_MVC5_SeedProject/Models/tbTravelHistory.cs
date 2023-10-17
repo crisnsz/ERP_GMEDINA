@@ -19,7 +19,6 @@ namespace ERP_GMEDINA.Models
         public Nullable<int> subsidiary_ID { get; set; }
         public Nullable<int> transporter_ID { get; set; }
         public Nullable<System.DateTime> departure_Date_and_Time { get; set; }
-        public Nullable<decimal> distance_Kilometers { get; set; }
         public Nullable<decimal> travel_Cost { get; set; }
     
         public virtual tbEmployee tbEmployee { get; set; }

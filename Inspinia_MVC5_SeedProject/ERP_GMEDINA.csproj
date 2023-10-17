@@ -200,6 +200,7 @@
     <Compile Include="Attribute\SessionManagerAttribute.cs" />
     <Compile Include="Controllers\EmployeeController.cs" />
     <Compile Include="Controllers\LoginController.cs" />
+    <Compile Include="Controllers\TravelHistoryController.cs" />
     <Compile Include="Dataset\Reportes.Designer.cs">
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
@@ -229,6 +230,7 @@
     <Compile Include="Models\IdentityModels.cs" />
     <Compile Include="Models\Metadata\Employee.cs" />
     <Compile Include="Models\Metadata\EmployeesSubsidiaries.cs" />
+    <Compile Include="Models\Metadata\TravelHistory.cs" />
     <Compile Include="Models\tbAccess.cs">
       <DependentUpon>FARSIMAN.tt</DependentUpon>
     </Compile>
@@ -505,6 +507,7 @@
       <LastGenOutput>FARSIMAN.cs</LastGenOutput>
     </Content>
     <Content Include="Scripts\app\Employees\EditEmployee.js" />
+    <Content Include="Scripts\app\TravelHistory\CreateTravelHistory.js" />
     <Content Include="Scripts\bootstrap.js" />
     <Content Include="Scripts\bootstrap.min.js" />
     <Content Include="Content\bootstrap.css.map" />
@@ -691,6 +694,11 @@
     <Content Include="Views\Employee\Edit.cshtml" />
     <Content Include="Views\Employee\Index.cshtml" />
     <Content Include="Views\Employee\_ModalSolicitarKM.cshtml" />
+    <Content Include="Views\TravelHistory\Create.cshtml" />
+    <Content Include="Views\TravelHistory\Delete.cshtml" />
+    <Content Include="Views\TravelHistory\Details.cshtml" />
+    <Content Include="Views\TravelHistory\Edit.cshtml" />
+    <Content Include="Views\TravelHistory\Index.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

@@ -133,8 +133,8 @@ $("#NoAdded1 tbody").on("click", "input#AddSubsidiary", function () {
 
 
     SyncToControllerAddPromise(subsidiary_ID, subsidiary_Name)
-        .then(result => {
-            console.log(result); // Data fetched from https://example.com/api/data
+        .then(response => {
+            console.log(response); // Data fetched from https://example.com/api/data
 
             //Cambiar id de #AddSubsidiary a #DelSubsidiary
             data[3] = '<input name="id02" type="button" id="DelSubsidiary" value="&#9668; Quitar &nbsp;&nbsp;" class="btn btn-primary btn-xs">'
@@ -165,8 +165,8 @@ function SyncToControllerAddPromise(id, km) {
             contentType: "application/json; charset=utf-8",
             data: JSON.stringify({ tbEmployeesSubsidiary: Subsidiary }),
         })
-            .done(function (data) {
-                resolve(data)
+            .done(function (res) {
+                resolve(res)
             })
             .fail(function (jqXHR, textStatus, errorThrown) {
                 // Error handling

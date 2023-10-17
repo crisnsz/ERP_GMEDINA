@@ -12,15 +12,15 @@
         <EntityTypeShape EntityType="FARSIMANModel.tbPosition" Width="1.5" PointX="0.75" PointY="6.375" />
         <EntityTypeShape EntityType="FARSIMANModel.tbSubsidiary" Width="1.5" PointX="6" PointY="5.75" />
         <EntityTypeShape EntityType="FARSIMANModel.tbTransporter" Width="1.5" PointX="6" PointY="12.5" />
-        <EntityTypeShape EntityType="FARSIMANModel.tbTravelHistory" Width="1.5" PointX="8.25" PointY="8.5" />
         <EntityTypeShape EntityType="FARSIMANModel.tbUser" Width="1.5" PointX="5.25" PointY="15.375" />
         <AssociationConnector Association="FARSIMANModel.FK_tbObjects_tbAccess_object_ID" />
         <AssociationConnector Association="FARSIMANModel.FK_tbPositions_tbAccess_position_ID" />
-        <AssociationConnector Association="FARSIMANModel.FK_tbEmployees_tbTravelHistory_employee_ID" />
         <AssociationConnector Association="FARSIMANModel.FK_tbEmployees_tbUsers_employee_ID" />
         <AssociationConnector Association="FARSIMANModel.FK_tbEmployeesSubsidiaries_tbEmployees_employee_ID" />
         <AssociationConnector Association="FARSIMANModel.tbEmployees_tbPositions_position_ID" />
         <AssociationConnector Association="FARSIMANModel.FK_tbEmployeesSubsidiaries_tbSubsidiaries_subsidiary_ID" />
+        <EntityTypeShape EntityType="FARSIMANModel.tbTravelHistory" Width="1.5" PointX="8.25" PointY="8.625" />
+        <AssociationConnector Association="FARSIMANModel.FK_tbEmployees_tbTravelHistory_employee_ID" />
         <AssociationConnector Association="FARSIMANModel.FK_tbSubsidiaries_tbTravelHistory_subsidiary_ID" />
         <AssociationConnector Association="FARSIMANModel.FK_tbTransporters_tbTravelHistory_transporter_ID" />
       </Diagram>

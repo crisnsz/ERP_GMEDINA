@@ -71,7 +71,6 @@
           <Property Name="subsidiary_ID" Type="int" />
           <Property Name="transporter_ID" Type="int" />
           <Property Name="departure_Date_and_Time" Type="datetime" />
-          <Property Name="distance_Kilometers" Type="decimal" Precision="10" Scale="2" />
           <Property Name="travel_Cost" Type="decimal" Precision="10" Scale="2" />
         </EntityType>
         <EntityType Name="tbUsers">
@@ -252,7 +251,6 @@
           <EntitySet Name="tbPositions" EntityType="FARSIMANModel.tbPosition" />
           <EntitySet Name="tbSubsidiaries" EntityType="FARSIMANModel.tbSubsidiary" />
           <EntitySet Name="tbTransporters" EntityType="FARSIMANModel.tbTransporter" />
-          <EntitySet Name="tbTravelHistories" EntityType="FARSIMANModel.tbTravelHistory" />
           <EntitySet Name="tbUsers" EntityType="FARSIMANModel.tbUser" />
           <AssociationSet Name="FK_tbObjects_tbAccess_object_ID" Association="FARSIMANModel.FK_tbObjects_tbAccess_object_ID">
             <End Role="tbObject" EntitySet="tbObjects" />
@@ -261,10 +259,6 @@
           <AssociationSet Name="FK_tbPositions_tbAccess_position_ID" Association="FARSIMANModel.FK_tbPositions_tbAccess_position_ID">
             <End Role="tbPosition" EntitySet="tbPositions" />
             <End Role="tbAccess" EntitySet="tbAccesses" />
-          </AssociationSet>
-          <AssociationSet Name="FK_tbEmployees_tbTravelHistory_employee_ID" Association="FARSIMANModel.FK_tbEmployees_tbTravelHistory_employee_ID">
-            <End Role="tbEmployee" EntitySet="tbEmployees" />
-            <End Role="tbTravelHistory" EntitySet="tbTravelHistories" />
           </AssociationSet>
           <AssociationSet Name="FK_tbEmployees_tbUsers_employee_ID" Association="FARSIMANModel.FK_tbEmployees_tbUsers_employee_ID">
             <End Role="tbEmployee" EntitySet="tbEmployees" />
@@ -281,6 +275,11 @@
           <AssociationSet Name="FK_tbEmployeesSubsidiaries_tbSubsidiaries_subsidiary_ID" Association="FARSIMANModel.FK_tbEmployeesSubsidiaries_tbSubsidiaries_subsidiary_ID">
             <End Role="tbSubsidiary" EntitySet="tbSubsidiaries" />
             <End Role="tbEmployeesSubsidiary" EntitySet="tbEmployeesSubsidiaries" />
+          </AssociationSet>
+          <EntitySet Name="tbTravelHistories" EntityType="FARSIMANModel.tbTravelHistory" />
+          <AssociationSet Name="FK_tbEmployees_tbTravelHistory_employee_ID" Association="FARSIMANModel.FK_tbEmployees_tbTravelHistory_employee_ID">
+            <End Role="tbEmployee" EntitySet="tbEmployees" />
+            <End Role="tbTravelHistory" EntitySet="tbTravelHistories" />
           </AssociationSet>
           <AssociationSet Name="FK_tbSubsidiaries_tbTravelHistory_subsidiary_ID" Association="FARSIMANModel.FK_tbSubsidiaries_tbTravelHistory_subsidiary_ID">
             <End Role="tbSubsidiary" EntitySet="tbSubsidiaries" />
@@ -309,10 +308,10 @@
           <Property Name="employee_Name" Type="String" Nullable="false" MaxLength="250" FixedLength="false" Unicode="false" />
           <Property Name="employee_Direction" Type="String" Nullable="false" MaxLength="250" FixedLength="false" Unicode="false" />
           <Property Name="position_ID" Type="Int32" />
-          <NavigationProperty Name="tbTravelHistories" Relationship="FARSIMANModel.FK_tbEmployees_tbTravelHistory_employee_ID" FromRole="tbEmployee" ToRole="tbTravelHistory" />
           <NavigationProperty Name="tbUsers" Relationship="FARSIMANModel.FK_tbEmployees_tbUsers_employee_ID" FromRole="tbEmployee" ToRole="tbUser" />
           <NavigationProperty Name="tbEmployeesSubsidiaries" Relationship="FARSIMANModel.FK_tbEmployeesSubsidiaries_tbEmployees_employee_ID" FromRole="tbEmployee" ToRole="tbEmployeesSubsidiary" />
           <NavigationProperty Name="tbPosition" Relationship="FARSIMANModel.tbEmployees_tbPositions_position_ID" FromRole="tbEmployee" ToRole="tbPosition" />
+          <NavigationProperty Name="tbTravelHistories" Relationship="FARSIMANModel.FK_tbEmployees_tbTravelHistory_employee_ID" FromRole="tbEmployee" ToRole="tbTravelHistory" />
         </EntityType>
         <EntityType Name="tbEmployeesSubsidiary">
           <Key>
@@ -362,21 +361,6 @@
           <Property Name="transporter_Fee" Type="Decimal" Nullable="false" Precision="10" Scale="4" />
           <NavigationProperty Name="tbTravelHistories" Relationship="FARSIMANModel.FK_tbTransporters_tbTravelHistory_transporter_ID" FromRole="tbTransporter" ToRole="tbTravelHistory" />
         </EntityType>
-        <EntityType Name="tbTravelHistory">
-          <Key>
-            <PropertyRef Name="travel_ID" />
-          </Key>
-          <Property Name="travel_ID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
-          <Property Name="employee_ID" Type="Int32" />
-          <Property Name="subsidiary_ID" Type="Int32" />
-          <Property Name="transporter_ID" Type="Int32" />
-          <Property Name="departure_Date_and_Time" Type="DateTime" Precision="3" />
-          <Property Name="distance_Kilometers" Type="Decimal" Precision="10" Scale="2" />
-          <Property Name="travel_Cost" Type="Decimal" Precision="10" Scale="2" />
-          <NavigationProperty Name="tbEmployee" Relationship="FARSIMANModel.FK_tbEmployees_tbTravelHistory_employee_ID" FromRole="tbTravelHistory" ToRole="tbEmployee" />
-          <NavigationProperty Name="tbSubsidiary" Relationship="FARSIMANModel.FK_tbSubsidiaries_tbTravelHistory_subsidiary_ID" FromRole="tbTravelHistory" ToRole="tbSubsidiary" />
-          <NavigationProperty Name="tbTransporter" Relationship="FARSIMANModel.FK_tbTransporters_tbTravelHistory_transporter_ID" FromRole="tbTravelHistory" ToRole="tbTransporter" />
-        </EntityType>
         <EntityType Name="tbUser">
           <Key>
             <PropertyRef Name="user_ID" />
@@ -410,18 +394,6 @@
             </Principal>
             <Dependent Role="tbAccess">
               <PropertyRef Name="position_ID" />
-            </Dependent>
-          </ReferentialConstraint>
-        </Association>
-        <Association Name="FK_tbEmployees_tbTravelHistory_employee_ID">
-          <End Type="FARSIMANModel.tbEmployee" Role="tbEmployee" Multiplicity="0..1" />
-          <End Type="FARSIMANModel.tbTravelHistory" Role="tbTravelHistory" Multiplicity="*" />
-          <ReferentialConstraint>
-            <Principal Role="tbEmployee">
-              <PropertyRef Name="employee_ID" />
-            </Principal>
-            <Dependent Role="tbTravelHistory">
-              <PropertyRef Name="employee_ID" />
             </Dependent>
           </ReferentialConstraint>
         </Association>
@@ -470,6 +442,32 @@
             </Principal>
             <Dependent Role="tbEmployeesSubsidiary">
               <PropertyRef Name="subsidiary_ID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <EntityType Name="tbTravelHistory">
+          <Key>
+            <PropertyRef Name="travel_ID" />
+          </Key>
+          <Property Name="travel_ID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="employee_ID" Type="Int32" />
+          <Property Name="subsidiary_ID" Type="Int32" />
+          <Property Name="transporter_ID" Type="Int32" />
+          <Property Name="departure_Date_and_Time" Type="DateTime" Precision="3" />
+          <Property Name="travel_Cost" Type="Decimal" Precision="10" Scale="2" />
+          <NavigationProperty Name="tbEmployee" Relationship="FARSIMANModel.FK_tbEmployees_tbTravelHistory_employee_ID" FromRole="tbTravelHistory" ToRole="tbEmployee" />
+          <NavigationProperty Name="tbSubsidiary" Relationship="FARSIMANModel.FK_tbSubsidiaries_tbTravelHistory_subsidiary_ID" FromRole="tbTravelHistory" ToRole="tbSubsidiary" />
+          <NavigationProperty Name="tbTransporter" Relationship="FARSIMANModel.FK_tbTransporters_tbTravelHistory_transporter_ID" FromRole="tbTravelHistory" ToRole="tbTransporter" />
+        </EntityType>
+        <Association Name="FK_tbEmployees_tbTravelHistory_employee_ID">
+          <End Type="FARSIMANModel.tbEmployee" Role="tbEmployee" Multiplicity="0..1" />
+          <End Type="FARSIMANModel.tbTravelHistory" Role="tbTravelHistory" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="tbEmployee">
+              <PropertyRef Name="employee_ID" />
+            </Principal>
+            <Dependent Role="tbTravelHistory">
+              <PropertyRef Name="employee_ID" />
             </Dependent>
           </ReferentialConstraint>
         </Association>
@@ -567,19 +565,6 @@
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
-          <EntitySetMapping Name="tbTravelHistories">
-            <EntityTypeMapping TypeName="FARSIMANModel.tbTravelHistory">
-              <MappingFragment StoreEntitySet="tbTravelHistory">
-                <ScalarProperty Name="travel_Cost" ColumnName="travel_Cost" />
-                <ScalarProperty Name="distance_Kilometers" ColumnName="distance_Kilometers" />
-                <ScalarProperty Name="departure_Date_and_Time" ColumnName="departure_Date_and_Time" />
-                <ScalarProperty Name="transporter_ID" ColumnName="transporter_ID" />
-                <ScalarProperty Name="subsidiary_ID" ColumnName="subsidiary_ID" />
-                <ScalarProperty Name="employee_ID" ColumnName="employee_ID" />
-                <ScalarProperty Name="travel_ID" ColumnName="travel_ID" />
-              </MappingFragment>
-            </EntityTypeMapping>
-          </EntitySetMapping>
           <EntitySetMapping Name="tbUsers">
             <EntityTypeMapping TypeName="FARSIMANModel.tbUser">
               <MappingFragment StoreEntitySet="tbUsers">
@@ -589,6 +574,18 @@
                 <ScalarProperty Name="user_Username" ColumnName="user_Username" />
                 <ScalarProperty Name="employee_ID" ColumnName="employee_ID" />
                 <ScalarProperty Name="user_ID" ColumnName="user_ID" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="tbTravelHistories">
+            <EntityTypeMapping TypeName="FARSIMANModel.tbTravelHistory">
+              <MappingFragment StoreEntitySet="tbTravelHistory">
+                <ScalarProperty Name="travel_Cost" ColumnName="travel_Cost" />
+                <ScalarProperty Name="departure_Date_and_Time" ColumnName="departure_Date_and_Time" />
+                <ScalarProperty Name="transporter_ID" ColumnName="transporter_ID" />
+                <ScalarProperty Name="subsidiary_ID" ColumnName="subsidiary_ID" />
+                <ScalarProperty Name="employee_ID" ColumnName="employee_ID" />
+                <ScalarProperty Name="travel_ID" ColumnName="travel_ID" />
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>

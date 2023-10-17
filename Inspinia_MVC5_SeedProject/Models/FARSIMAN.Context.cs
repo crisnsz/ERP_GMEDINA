@@ -32,7 +32,7 @@ namespace ERP_GMEDINA.Models
         public virtual DbSet<tbPosition> tbPositions { get; set; }
         public virtual DbSet<tbSubsidiary> tbSubsidiaries { get; set; }
         public virtual DbSet<tbTransporter> tbTransporters { get; set; }
-        public virtual DbSet<tbTravelHistory> tbTravelHistories { get; set; }
         public virtual DbSet<tbUser> tbUsers { get; set; }
+        public virtual DbSet<tbTravelHistory> tbTravelHistories { get; set; }
     }
 }

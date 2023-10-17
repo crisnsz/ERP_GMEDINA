@@ -17,9 +17,9 @@ namespace ERP_GMEDINA.Models
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2214:DoNotCallOverridableMethodsInConstructors")]
         public tbEmployee()
         {
-            this.tbTravelHistories = new HashSet<tbTravelHistory>();
             this.tbUsers = new HashSet<tbUser>();
             this.tbEmployeesSubsidiaries = new HashSet<tbEmployeesSubsidiary>();
+            this.tbTravelHistories = new HashSet<tbTravelHistory>();
         }
     
         public int employee_ID { get; set; }
@@ -28,11 +28,11 @@ namespace ERP_GMEDINA.Models
         public Nullable<int> position_ID { get; set; }
     
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
-        public virtual ICollection<tbTravelHistory> tbTravelHistories { get; set; }
-        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<tbUser> tbUsers { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<tbEmployeesSubsidiary> tbEmployeesSubsidiaries { get; set; }
         public virtual tbPosition tbPosition { get; set; }
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
+        public virtual ICollection<tbTravelHistory> tbTravelHistories { get; set; }
     }
 }

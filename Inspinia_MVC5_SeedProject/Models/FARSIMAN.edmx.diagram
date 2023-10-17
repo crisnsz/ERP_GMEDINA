@@ -14,17 +14,17 @@
         <EntityTypeShape EntityType="FARSIMANModel.tbTransporter" Width="1.5" PointX="3.75" PointY="8.25" IsExpanded="true" />
         <EntityTypeShape EntityType="FARSIMANModel.tbTravelHistory" Width="1.5" PointX="6" PointY="4.25" IsExpanded="true" />
         <EntityTypeShape EntityType="FARSIMANModel.tbUser" Width="1.5" PointX="3" PointY="10.875" IsExpanded="true" />
-        <EntityTypeShape EntityType="FARSIMANModel.tbUsersPosition" Width="1.5" PointX="5.25" PointY="11.25" IsExpanded="true" />
         <AssociationConnector Association="FARSIMANModel.FK_tbObjects_tbAccess_object_ID" ManuallyRouted="false" />
         <AssociationConnector Association="FARSIMANModel.FK_tbPositions_tbAccess_position_ID" ManuallyRouted="false" />
         <AssociationConnector Association="FARSIMANModel.FK_tbEmployees_tbTravelHistory_employee_ID" ManuallyRouted="false" />
         <AssociationConnector Association="FARSIMANModel.FK_tbEmployees_tbUsers_employee_ID" ManuallyRouted="false" />
         <AssociationConnector Association="FARSIMANModel.FK_tbEmployeesSubsidiaries_tbEmployees_employee_ID" ManuallyRouted="false" />
         <AssociationConnector Association="FARSIMANModel.FK_tbEmployeesSubsidiaries_tbSubsidiaries_subsidiary_ID" ManuallyRouted="false" />
-        <AssociationConnector Association="FARSIMANModel.FK_tbPositions_tbUsersPosition_position_ID" ManuallyRouted="false" />
         <AssociationConnector Association="FARSIMANModel.FK_tbSubsidiaries_tbTravelHistory_subsidiary_ID" ManuallyRouted="false" />
         <AssociationConnector Association="FARSIMANModel.FK_tbTransporters_tbTravelHistory_transporter_ID" ManuallyRouted="false" />
-        <AssociationConnector Association="FARSIMANModel.FK_tbUsers_tbUsersPosition_user_ID" ManuallyRouted="false" />
+        <EntityTypeShape EntityType="FARSIMANModel.tbEmployeesPosition" Width="1.5" PointX="6.25" PointY="9.375" />
+        <AssociationConnector Association="FARSIMANModel.FK_tbEmployees_tbEmployeesPosition_employee_ID" />
+        <AssociationConnector Association="FARSIMANModel.FK_tbPositions_tbUsersPosition_position_ID" />
       </Diagram>
     </edmx:Diagrams>
   </edmx:Designer>

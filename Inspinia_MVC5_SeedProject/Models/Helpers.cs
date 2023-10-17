@@ -39,42 +39,58 @@ namespace ERP_GMEDINA.Models
             HttpContext.Current.Session["UserEstado"] = null;
         }
 
-        public bool GetUserPosition(string sPantalla)
+        public void ValidateUser(string sPantalla,out bool UserState, out bool IsAdmin, out int UserPosition, out bool AccessPantalla)
+        {
+            UserState = Convert.ToBoolean(HttpContext.Current.Session["UserEstado"]);
+            IsAdmin = Convert.ToBoolean(HttpContext.Current.Session["UserLoginIsAdmin"]);
+            UserPosition = Convert.ToInt32(HttpContext.Current.Session["UserPosition"]);
+            AccessPantalla = GetUserAccessPosition(sPantalla);
+
+           
+        }
+
+
+        public bool GetUserAccessPosition(string sPantalla)
         {
             bool Retorno = false;
-            //try
-            //{
-            //    if (!Convert.ToBoolean(HttpContext.Current.Session["UserLoginEsAdmin"]))
-            //    {
-            //        var userAccess = db.tbUsers.Where(x => x.user_IsActive);
+            try
+            {
+                int UserPositionID = Convert.ToInt32(HttpContext.Current.Session["UserPosition"]);
+                if (!Convert.ToBoolean(HttpContext.Current.Session["UserLoginEsAdmin"]))
+                {
 
-            //        var list = (IEnumerable<SDP_Acce_GetUserRols_Result>)HttpContext.Current.Session["UserLoginRols"];
+                    //var listUserAccess = HttpContext.Current.Session["UserLoginRols"];
 
-            //        var BuscarList = userAccess.Where(x => x.tbUsersPositions. == sPantalla);
-            //        int Conteo = BuscarList.Count();
-            //        if (Conteo > 0)
-            //            Retorno = true;
-            //    }
-            //    else
-            //        Retorno = true;
+                    var listPositionAccess = (from position in db.tbPositions
+                                 join access in db.tbAccesses on position.position_ID equals access.position_ID
+                                 join obj in db.tbObjects on access.object_ID equals obj.object_ID
+                                 where position.position_ID == UserPositionID
+                                 select new
+                                 {
+                                     PositionName = position.position_Name,
+                                     ObjectName = obj.object_Name,
+                                     ObjectReference = obj.object_Reference
+                                 }).ToList();
 
-            //}
-            //catch (Exception Ex)
-            //{
-            //    InsertBitacoraErrores("Helpers", Ex.Message.ToString(), "GetUserAccesoRol");
-            //}
+
+
+                    //var list = (IEnumerable<SDP_Acce_GetUserRols_Result>)HttpContext.Current.Session["UserLoginRols"];
+                    var BuscarList = listPositionAccess.Where(x => x.ObjectReference == sPantalla);
+                    int Conteo = BuscarList.Count();
+
+                    if (Conteo > 0)
+                        Retorno = true;
+                }
+                else
+                    Retorno = true;
+
+            }
+            catch (Exception Ex)
+            {
+            }
             return Retorno;
         }
-
-        public void ValidateUser(string sPantalla, out int SesionesValidas, out bool UsuarioEstado, out bool EsAdmin, out int UsuarioRol, out bool AccesoPantalla)
-        {
-            SesionesValidas = Convert.ToInt32(HttpContext.Current.Session["UserLoginSesion"]);
-            UsuarioEstado = Convert.ToBoolean(HttpContext.Current.Session["UserEstado"]);
-            EsAdmin = Convert.ToBoolean(HttpContext.Current.Session["UserLoginEsAdmin"]);
-            UsuarioRol = Convert.ToInt32(HttpContext.Current.Session["UserRol"]);
-            AccesoPantalla = GetUserPosition(sPantalla);
-        }
-
+        
         public bool GetUserLogin()
         {
             bool Estado = false;
@@ -139,116 +155,6 @@ namespace ERP_GMEDINA.Models
             DateTime dt = DateTimeOffset.UtcNow.ToOffset(TimeSpan.FromHours(-6)).DateTime;
             return dt;
         }
-
-        public const bool AnuladoFactura = true;
-        public const int RTN = 3;
-        public const int ID = 2;
-
-        //Estados Cliente
-        public const bool ClienteActivo = true;
-
-        public const bool ClienteCredito = false;
-        public const bool ClienteInactivo = false;
-        public const bool ClienteExonerado = false;
-
-        //Lista Precios
-        public const bool ListaPrecioActivo = true;
-
-        public const bool ListaPrecioInactivo = false;
-
-        //Estados Pedido
-        public const int Pendiente = 1;
-
-        public const int Facturado = 2;
-
-        //Estado Solicitud Credito
-        public const int SolicitudPendiente = 1;
-
-        public const int SolicitudAprobado = 2;
-        public const int SolicitudDenegado = 3;
-
-        ///ESTADO ENTRADA
-        public const int EntradaAnulada = 1;
-
-        public const int EntradaEmitida = 2;
-        public const int EntradaInactivada = 4;
-        public const int EntradaAplicada = 1;
-
-        //estado movimiento
-        public const int EntradaEstadoAnulada = 3;
-
-        //Salida
-        public const int sal_Aplicada = 1;
-
-        public const int sal_Emitida = 2;
-        public const int sal_Anulada = 3;
-        public const int sal_Inactiva = 4;
-        public const int sal_Activa = 5;
-
-        public const int sal_Impresa = 6;
-        public const bool sal_EsAnulada = true;
-        public const int sal_Prestamo = 1;
-
-        public const int sal_Venta = 2;
-        public const int sal_Devolucion = 3;
-        public const int esfac_Pagada = 3;
-        public const int esfac_PagoPendiente = 4;
-        public const bool fact_EsAnulada = true;
-        public const string sal_Estado = "Emitida";
-
-
-        ///ESTADO OBJETO
-        public const bool ObjetoActivo = true;
-
-        public const bool ObjetoInactivo = false;
-
-        //Estado Rol
-        public const bool RolActivo = true;//1
-
-        public const bool RolInactivo = false;//0
-
-        //Inventario Físico
-        public const int InvFisicoActivo = 1;
-
-        public const int InvFisicoConciliado = 2;
-
-        public const int InvFisicoReconteo = 3;
-
-        //BODEGA
-        public const int BodegaActivo = 1;
-
-        public const int BodegaInactivo = 0;
-
-        //Empleado
-        public const bool EmpleadoActivo = true;//1
-
-        public const bool EmpleadoInactivo = false;//0
-
-        //Estados Producto
-        public const bool ProductoActivo = true;
-
-        public const bool ProductoInactivo = false;
-
-        //Estado Categoria
-        public const int CategoriaActivo = 1;
-
-        public const int CategoriaInactivo = 2;
-
-        //Estado Subcategoria
-        public const int SubcategoriaActivo = 1;
-
-        public const int SubcategoriaInactivo = 2;
-
-        //Estado Box
-        public const int vbox_Abrierta = 1;
-
-        public const int vbox_Cerrada = 2;
-
-        public const string box_Abrierta = "Abrierta";
-
-        public const string box_Cerrada = "Cerrada";
-
-
 
     }
 }

@@ -17,6 +17,7 @@ namespace ERP_GMEDINA.Models
         public int employeeSubsidiary_ID { get; set; }
         public Nullable<int> employee_ID { get; set; }
         public Nullable<int> subsidiary_ID { get; set; }
+        public Nullable<decimal> employeeSubsidiary_DistanceKM { get; set; }
     
         public virtual tbEmployee tbEmployee { get; set; }
         public virtual tbSubsidiary tbSubsidiary { get; set; }

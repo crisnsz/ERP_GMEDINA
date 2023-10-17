@@ -14,12 +14,6 @@ namespace ERP_GMEDINA.Models
     
     public partial class tbUser
     {
-        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2214:DoNotCallOverridableMethodsInConstructors")]
-        public tbUser()
-        {
-            this.tbUsersPositions = new HashSet<tbUsersPosition>();
-        }
-    
         public int user_ID { get; set; }
         public Nullable<int> employee_ID { get; set; }
         public string user_Username { get; set; }
@@ -28,7 +22,5 @@ namespace ERP_GMEDINA.Models
         public bool user_IsAdmin { get; set; }
     
         public virtual tbEmployee tbEmployee { get; set; }
-        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
-        public virtual ICollection<tbUsersPosition> tbUsersPositions { get; set; }
     }
 }

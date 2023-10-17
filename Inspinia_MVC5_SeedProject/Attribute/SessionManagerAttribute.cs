@@ -11,7 +11,7 @@ namespace ERP_GMEDINA.Attribute
     public class SessionManagerAttribute : ActionFilterAttribute
     {
         private readonly string _screenId;
-        Helpers Help = new Helpers();
+        private Helpers helpers = new Helpers();
         public SessionManagerAttribute()
         {
         }
@@ -26,17 +26,20 @@ namespace ERP_GMEDINA.Attribute
             bool EsAdmin = false;
             int UsuarioRol = 0;
             bool AccesoPantalla = false;
+            bool UsuarioEstado = false;
 
-            var valuesUsuarioInactivo = new RouteValueDictionary(new { action = "Index", controller = "Login" });//--//
+            helpers.ValidateUser(_screenId, out UsuarioEstado, out EsAdmin, out UsuarioRol, out AccesoPantalla);
+
+
             var valuesSinAcceso = new RouteValueDictionary(new { action = "SinAcceso", controller = "Login" });
             var valuesSinRol = new RouteValueDictionary(new { action = "SinRol", controller = "Login" });
             var valuesIndex = new RouteValueDictionary(new { action = "Index", controller = "Login" });
 
             //Paso 1: Validar que la sesion no haya expirado.
-            if (Help.GetUserLogin())
+            if (helpers.GetUserLogin())
             {
                 //Paso 4: Validar si el usuario es admin.
-                if (EsAdmin)
+                if (!EsAdmin)
                 {
                     //Paso 5: Validar si el usuario tiene un rol asignado.
                     if (UsuarioRol != 0)
@@ -62,5 +65,8 @@ namespace ERP_GMEDINA.Attribute
             else
                 filterContext.Result = new RedirectToRouteResult(valuesIndex);
         }
+
+
+
     }
 }

@@ -47,15 +47,31 @@ namespace ERP_GMEDINA.Controllers
                             Session["UserLogin"] = UserLogin.user_ID;
                             Session["UserLoginEsAdmin"] = UserLogin.user_IsAdmin;
                             Session["UserEstado"] = UserLogin.user_IsActive;
+
+
+
                             //Si el usuario no es admin, recuperar la información del rol y sus accesos
                             if (!UserLogin.user_IsAdmin)
                             {
-                                //foreach (SDP_Acce_GetRolesAsignados_Result Rol in ListadoRol)
-                                //{
-                                //    Session["UserRolEstado"] = Rol.rol_Estado;
-                                //    Session["UserLoginRols"] = Listado;
-                                //    Session["UserRol"] = ListadoRol.Count();
-                                //}
+
+                                var UserPosition = (from user in db.tbUsers
+                                                 where user.user_ID == UserLogin.user_ID
+                                                  join employee in db.tbEmployees
+                                                    on user.employee_ID equals employee.employee_ID
+                                                  join empPosition in db.tbEmployeesPositions
+                                                    on user.employee_ID equals empPosition.employee_ID
+                                                  join position in db.tbPositions
+                                                    on empPosition.position_ID equals position.position_ID
+                                                select new
+                                                    {
+                                                        user.user_Username,
+                                                        user.user_Password,
+                                                        employee.employee_Name,
+                                                        position.position_ID,
+                                                        position.position_Name
+                                                    }).FirstOrDefault();
+
+                                Session["UserPosition"] = UserPosition.position_ID;
                             }
 
                         }
@@ -67,7 +83,7 @@ namespace ERP_GMEDINA.Controllers
                         }
 
                     }
-                    return RedirectToAction("Index", "Home");
+                    return RedirectToAction("Index", "Employee");
                 }
                 else
                 {

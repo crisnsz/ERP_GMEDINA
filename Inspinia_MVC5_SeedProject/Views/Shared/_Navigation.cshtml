@@ -6,12 +6,11 @@
 
     List<tbUser> User = Login.getUserInformation();
 
-}  
+}
 
 <nav class="navbar-default navbar-static-side" role="navigation">
     <div class="sidebar-collapse">
         <div class="logo-element">
-            GM
         </div>
         <ul class="nav" id="side-menu">
             <li class="nav-header">
@@ -19,22 +18,18 @@
                     <a data-toggle="dropdown" class="dropdown-toggle" href="#">
                         <span class="clear">
                             <span class="block m-t-xs">
-                                Tiendas García Medina
                             </span>
                         </span>
                     </a>
                 </div>
             </li>
-           
-                <li>
-                    <a href="#"><i class="fa fa-lock"></i><span class="nav-label">Seguridad</span><span class="fa arrow"></span></a>
-                    <ul class="nav nav-second-level collapse">
-                            <li class="@Html.IsSelected(action: "Index")">
-                                <a href="@Url.Action("Index", "Employee")"><i class="fa fa-users fa-fw"></i>Empleado<span class="nav-label"></span> </a>
-                            </li>
-                    </ul>
+            <li class="@Html.IsSelected(action: "Index")">
+                <a href="@Url.Action("Index", "Employee")"><i class="nav-label fa fa-users fa-fw"></i>Empleado<span class="nav-label"></span> </a>
+            </li>
 
-                </li>
+            <li class="@Html.IsSelected(action: "Index")">
+                <a href="@Url.Action("Index", "Employee")"><i class="nav-label fa fa-bus fa-fw"></i>Viajes<span class="nav-label"></span> </a>
+            </li>
         </ul>
     </div>
 </nav>

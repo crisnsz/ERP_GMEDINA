@@ -4,7 +4,7 @@
   <edmx:Runtime>
     <!-- SSDL content -->
     <edmx:StorageModels>
-      <Schema Namespace="FARSIMANModel.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2012" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
+    <Schema Namespace="FARSIMANModel.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2012" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
         <EntityType Name="tbAccess">
           <Key>
             <PropertyRef Name="access_ID" />
@@ -21,6 +21,14 @@
           <Property Name="employee_Name" Type="varchar" MaxLength="250" Nullable="false" />
           <Property Name="employee_Direction" Type="varchar" MaxLength="250" Nullable="false" />
         </EntityType>
+        <EntityType Name="tbEmployeesPosition">
+          <Key>
+            <PropertyRef Name="employeePosition_ID" />
+          </Key>
+          <Property Name="employeePosition_ID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="position_ID" Type="int" />
+          <Property Name="employee_ID" Type="int" />
+        </EntityType>
         <EntityType Name="tbEmployeesSubsidiaries">
           <Key>
             <PropertyRef Name="employeeSubsidiary_ID" />
@@ -28,6 +36,7 @@
           <Property Name="employeeSubsidiary_ID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
           <Property Name="employee_ID" Type="int" />
           <Property Name="subsidiary_ID" Type="int" />
+          <Property Name="employeeSubsidiary_DistanceKM" Type="decimal" Precision="10" Scale="2" />
         </EntityType>
         <EntityType Name="tbObjects">
           <Key>
@@ -83,14 +92,18 @@
           <Property Name="user_IsActive" Type="bit" Nullable="false" />
           <Property Name="user_IsAdmin" Type="bit" Nullable="false" />
         </EntityType>
-        <EntityType Name="tbUsersPosition">
-          <Key>
-            <PropertyRef Name="userPosition_ID" />
-          </Key>
-          <Property Name="userPosition_ID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
-          <Property Name="position_ID" Type="int" />
-          <Property Name="user_ID" Type="int" />
-        </EntityType>
+        <Association Name="FK_tbEmployees_tbEmployeesPosition_employee_ID">
+          <End Role="tbEmployees" Type="Self.tbEmployees" Multiplicity="0..1" />
+          <End Role="tbEmployeesPosition" Type="Self.tbEmployeesPosition" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="tbEmployees">
+              <PropertyRef Name="employee_ID" />
+            </Principal>
+            <Dependent Role="tbEmployeesPosition">
+              <PropertyRef Name="employee_ID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
         <Association Name="FK_tbEmployees_tbTravelHistory_employee_ID">
           <End Role="tbEmployees" Type="Self.tbEmployees" Multiplicity="0..1" />
           <End Role="tbTravelHistory" Type="Self.tbTravelHistory" Multiplicity="*" />
@@ -165,12 +178,12 @@
         </Association>
         <Association Name="FK_tbPositions_tbUsersPosition_position_ID">
           <End Role="tbPositions" Type="Self.tbPositions" Multiplicity="0..1" />
-          <End Role="tbUsersPosition" Type="Self.tbUsersPosition" Multiplicity="*" />
+          <End Role="tbEmployeesPosition" Type="Self.tbEmployeesPosition" Multiplicity="*" />
           <ReferentialConstraint>
             <Principal Role="tbPositions">
               <PropertyRef Name="position_ID" />
             </Principal>
-            <Dependent Role="tbUsersPosition">
+            <Dependent Role="tbEmployeesPosition">
               <PropertyRef Name="position_ID" />
             </Dependent>
           </ReferentialConstraint>
@@ -199,21 +212,10 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
-        <Association Name="FK_tbUsers_tbUsersPosition_user_ID">
-          <End Role="tbUsers" Type="Self.tbUsers" Multiplicity="0..1" />
-          <End Role="tbUsersPosition" Type="Self.tbUsersPosition" Multiplicity="*" />
-          <ReferentialConstraint>
-            <Principal Role="tbUsers">
-              <PropertyRef Name="user_ID" />
-            </Principal>
-            <Dependent Role="tbUsersPosition">
-              <PropertyRef Name="user_ID" />
-            </Dependent>
-          </ReferentialConstraint>
-        </Association>
         <EntityContainer Name="FARSIMANModelStoreContainer">
           <EntitySet Name="tbAccess" EntityType="Self.tbAccess" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="tbEmployees" EntityType="Self.tbEmployees" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="tbEmployeesPosition" EntityType="Self.tbEmployeesPosition" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="tbEmployeesSubsidiaries" EntityType="Self.tbEmployeesSubsidiaries" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="tbObjects" EntityType="Self.tbObjects" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="tbPositions" EntityType="Self.tbPositions" Schema="dbo" store:Type="Tables" />
@@ -221,7 +223,10 @@
           <EntitySet Name="tbTransporters" EntityType="Self.tbTransporters" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="tbTravelHistory" EntityType="Self.tbTravelHistory" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="tbUsers" EntityType="Self.tbUsers" Schema="dbo" store:Type="Tables" />
-          <EntitySet Name="tbUsersPosition" EntityType="Self.tbUsersPosition" Schema="dbo" store:Type="Tables" />
+          <AssociationSet Name="FK_tbEmployees_tbEmployeesPosition_employee_ID" Association="Self.FK_tbEmployees_tbEmployeesPosition_employee_ID">
+            <End Role="tbEmployees" EntitySet="tbEmployees" />
+            <End Role="tbEmployeesPosition" EntitySet="tbEmployeesPosition" />
+          </AssociationSet>
           <AssociationSet Name="FK_tbEmployees_tbTravelHistory_employee_ID" Association="Self.FK_tbEmployees_tbTravelHistory_employee_ID">
             <End Role="tbEmployees" EntitySet="tbEmployees" />
             <End Role="tbTravelHistory" EntitySet="tbTravelHistory" />
@@ -248,7 +253,7 @@
           </AssociationSet>
           <AssociationSet Name="FK_tbPositions_tbUsersPosition_position_ID" Association="Self.FK_tbPositions_tbUsersPosition_position_ID">
             <End Role="tbPositions" EntitySet="tbPositions" />
-            <End Role="tbUsersPosition" EntitySet="tbUsersPosition" />
+            <End Role="tbEmployeesPosition" EntitySet="tbEmployeesPosition" />
           </AssociationSet>
           <AssociationSet Name="FK_tbSubsidiaries_tbTravelHistory_subsidiary_ID" Association="Self.FK_tbSubsidiaries_tbTravelHistory_subsidiary_ID">
             <End Role="tbSubsidiaries" EntitySet="tbSubsidiaries" />
@@ -258,13 +263,8 @@
             <End Role="tbTransporters" EntitySet="tbTransporters" />
             <End Role="tbTravelHistory" EntitySet="tbTravelHistory" />
           </AssociationSet>
-          <AssociationSet Name="FK_tbUsers_tbUsersPosition_user_ID" Association="Self.FK_tbUsers_tbUsersPosition_user_ID">
-            <End Role="tbUsers" EntitySet="tbUsers" />
-            <End Role="tbUsersPosition" EntitySet="tbUsersPosition" />
-          </AssociationSet>
         </EntityContainer>
-      </Schema>
-    </edmx:StorageModels>
+      </Schema></edmx:StorageModels>
     <!-- CSDL content -->
     <edmx:ConceptualModels>
       <Schema Namespace="FARSIMANModel" Alias="Self" annotation:UseStrongSpatialTypes="false" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
@@ -288,6 +288,7 @@
           <NavigationProperty Name="tbTravelHistories" Relationship="Self.FK_tbEmployees_tbTravelHistory_employee_ID" FromRole="tbEmployees" ToRole="tbTravelHistory" />
           <NavigationProperty Name="tbUsers" Relationship="Self.FK_tbEmployees_tbUsers_employee_ID" FromRole="tbEmployees" ToRole="tbUsers" />
           <NavigationProperty Name="tbEmployeesSubsidiaries" Relationship="Self.FK_tbEmployeesSubsidiaries_tbEmployees_employee_ID" FromRole="tbEmployees" ToRole="tbEmployeesSubsidiaries" />
+          <NavigationProperty Name="tbEmployeesPositions" Relationship="FARSIMANModel.FK_tbEmployees_tbEmployeesPosition_employee_ID" FromRole="tbEmployee" ToRole="tbEmployeesPosition" />
         </EntityType>
         <EntityType Name="tbEmployeesSubsidiary">
           <Key>
@@ -298,6 +299,7 @@
           <Property Name="subsidiary_ID" Type="Int32" />
           <NavigationProperty Name="tbEmployee" Relationship="Self.FK_tbEmployeesSubsidiaries_tbEmployees_employee_ID" FromRole="tbEmployeesSubsidiaries" ToRole="tbEmployees" />
           <NavigationProperty Name="tbSubsidiary" Relationship="Self.FK_tbEmployeesSubsidiaries_tbSubsidiaries_subsidiary_ID" FromRole="tbEmployeesSubsidiaries" ToRole="tbSubsidiaries" />
+          <Property Name="employeeSubsidiary_DistanceKM" Type="Decimal" Precision="10" Scale="2" />
         </EntityType>
         <EntityType Name="tbObject">
           <Key>
@@ -315,7 +317,7 @@
           <Property Name="position_ID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
           <Property Name="position_Name" Type="String" MaxLength="100" FixedLength="false" Unicode="false" Nullable="false" />
           <NavigationProperty Name="tbAccesses" Relationship="Self.FK_tbPositions_tbAccess_position_ID" FromRole="tbPositions" ToRole="tbAccess" />
-          <NavigationProperty Name="tbUsersPositions" Relationship="Self.FK_tbPositions_tbUsersPosition_position_ID" FromRole="tbPositions" ToRole="tbUsersPosition" />
+          <NavigationProperty Name="tbEmployeesPositions" Relationship="FARSIMANModel.FK_tbPositions_tbUsersPosition_position_ID" FromRole="tbPosition" ToRole="tbEmployeesPosition" />
         </EntityType>
         <EntityType Name="tbSubsidiary">
           <Key>
@@ -362,17 +364,6 @@
           <Property Name="user_IsActive" Type="Boolean" Nullable="false" />
           <Property Name="user_IsAdmin" Type="Boolean" Nullable="false" />
           <NavigationProperty Name="tbEmployee" Relationship="Self.FK_tbEmployees_tbUsers_employee_ID" FromRole="tbUsers" ToRole="tbEmployees" />
-          <NavigationProperty Name="tbUsersPositions" Relationship="Self.FK_tbUsers_tbUsersPosition_user_ID" FromRole="tbUsers" ToRole="tbUsersPosition" />
-        </EntityType>
-        <EntityType Name="tbUsersPosition">
-          <Key>
-            <PropertyRef Name="userPosition_ID" />
-          </Key>
-          <Property Name="userPosition_ID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
-          <Property Name="position_ID" Type="Int32" />
-          <Property Name="user_ID" Type="Int32" />
-          <NavigationProperty Name="tbPosition" Relationship="Self.FK_tbPositions_tbUsersPosition_position_ID" FromRole="tbUsersPosition" ToRole="tbPositions" />
-          <NavigationProperty Name="tbUser" Relationship="Self.FK_tbUsers_tbUsersPosition_user_ID" FromRole="tbUsersPosition" ToRole="tbUsers" />
         </EntityType>
         <Association Name="FK_tbObjects_tbAccess_object_ID">
           <End Role="tbObjects" Type="Self.tbObject" Multiplicity="0..1" />
@@ -446,18 +437,6 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
-        <Association Name="FK_tbPositions_tbUsersPosition_position_ID">
-          <End Role="tbPositions" Type="Self.tbPosition" Multiplicity="0..1" />
-          <End Role="tbUsersPosition" Type="Self.tbUsersPosition" Multiplicity="*" />
-          <ReferentialConstraint>
-            <Principal Role="tbPositions">
-              <PropertyRef Name="position_ID" />
-            </Principal>
-            <Dependent Role="tbUsersPosition">
-              <PropertyRef Name="position_ID" />
-            </Dependent>
-          </ReferentialConstraint>
-        </Association>
         <Association Name="FK_tbSubsidiaries_tbTravelHistory_subsidiary_ID">
           <End Role="tbSubsidiaries" Type="Self.tbSubsidiary" Multiplicity="0..1" />
           <End Role="tbTravelHistory" Type="Self.tbTravelHistory" Multiplicity="*" />
@@ -482,18 +461,6 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
-        <Association Name="FK_tbUsers_tbUsersPosition_user_ID">
-          <End Role="tbUsers" Type="Self.tbUser" Multiplicity="0..1" />
-          <End Role="tbUsersPosition" Type="Self.tbUsersPosition" Multiplicity="*" />
-          <ReferentialConstraint>
-            <Principal Role="tbUsers">
-              <PropertyRef Name="user_ID" />
-            </Principal>
-            <Dependent Role="tbUsersPosition">
-              <PropertyRef Name="user_ID" />
-            </Dependent>
-          </ReferentialConstraint>
-        </Association>
         <EntityContainer Name="FARSIMANEntities" annotation:LazyLoadingEnabled="true">
           <EntitySet Name="tbAccesses" EntityType="Self.tbAccess" />
           <EntitySet Name="tbEmployees" EntityType="Self.tbEmployee" />
@@ -504,7 +471,6 @@
           <EntitySet Name="tbTransporters" EntityType="Self.tbTransporter" />
           <EntitySet Name="tbTravelHistories" EntityType="Self.tbTravelHistory" />
           <EntitySet Name="tbUsers" EntityType="Self.tbUser" />
-          <EntitySet Name="tbUsersPositions" EntityType="Self.tbUsersPosition" />
           <AssociationSet Name="FK_tbObjects_tbAccess_object_ID" Association="Self.FK_tbObjects_tbAccess_object_ID">
             <End Role="tbObjects" EntitySet="tbObjects" />
             <End Role="tbAccess" EntitySet="tbAccesses" />
@@ -529,10 +495,6 @@
             <End Role="tbSubsidiaries" EntitySet="tbSubsidiaries" />
             <End Role="tbEmployeesSubsidiaries" EntitySet="tbEmployeesSubsidiaries" />
           </AssociationSet>
-          <AssociationSet Name="FK_tbPositions_tbUsersPosition_position_ID" Association="Self.FK_tbPositions_tbUsersPosition_position_ID">
-            <End Role="tbPositions" EntitySet="tbPositions" />
-            <End Role="tbUsersPosition" EntitySet="tbUsersPositions" />
-          </AssociationSet>
           <AssociationSet Name="FK_tbSubsidiaries_tbTravelHistory_subsidiary_ID" Association="Self.FK_tbSubsidiaries_tbTravelHistory_subsidiary_ID">
             <End Role="tbSubsidiaries" EntitySet="tbSubsidiaries" />
             <End Role="tbTravelHistory" EntitySet="tbTravelHistories" />
@@ -541,11 +503,50 @@
             <End Role="tbTransporters" EntitySet="tbTransporters" />
             <End Role="tbTravelHistory" EntitySet="tbTravelHistories" />
           </AssociationSet>
-          <AssociationSet Name="FK_tbUsers_tbUsersPosition_user_ID" Association="Self.FK_tbUsers_tbUsersPosition_user_ID">
-            <End Role="tbUsers" EntitySet="tbUsers" />
-            <End Role="tbUsersPosition" EntitySet="tbUsersPositions" />
+          <EntitySet Name="tbEmployeesPositions" EntityType="FARSIMANModel.tbEmployeesPosition" />
+          <AssociationSet Name="FK_tbEmployees_tbEmployeesPosition_employee_ID" Association="FARSIMANModel.FK_tbEmployees_tbEmployeesPosition_employee_ID">
+            <End Role="tbEmployee" EntitySet="tbEmployees" />
+            <End Role="tbEmployeesPosition" EntitySet="tbEmployeesPositions" />
+          </AssociationSet>
+          <AssociationSet Name="FK_tbPositions_tbUsersPosition_position_ID" Association="FARSIMANModel.FK_tbPositions_tbUsersPosition_position_ID">
+            <End Role="tbPosition" EntitySet="tbPositions" />
+            <End Role="tbEmployeesPosition" EntitySet="tbEmployeesPositions" />
           </AssociationSet>
         </EntityContainer>
+        <EntityType Name="tbEmployeesPosition">
+          <Key>
+            <PropertyRef Name="employeePosition_ID" />
+          </Key>
+          <Property Name="employeePosition_ID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="position_ID" Type="Int32" />
+          <Property Name="employee_ID" Type="Int32" />
+          <NavigationProperty Name="tbEmployee" Relationship="FARSIMANModel.FK_tbEmployees_tbEmployeesPosition_employee_ID" FromRole="tbEmployeesPosition" ToRole="tbEmployee" />
+          <NavigationProperty Name="tbPosition" Relationship="FARSIMANModel.FK_tbPositions_tbUsersPosition_position_ID" FromRole="tbEmployeesPosition" ToRole="tbPosition" />
+        </EntityType>
+        <Association Name="FK_tbEmployees_tbEmployeesPosition_employee_ID">
+          <End Type="FARSIMANModel.tbEmployee" Role="tbEmployee" Multiplicity="0..1" />
+          <End Type="FARSIMANModel.tbEmployeesPosition" Role="tbEmployeesPosition" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="tbEmployee">
+              <PropertyRef Name="employee_ID" />
+            </Principal>
+            <Dependent Role="tbEmployeesPosition">
+              <PropertyRef Name="employee_ID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_tbPositions_tbUsersPosition_position_ID">
+          <End Type="FARSIMANModel.tbPosition" Role="tbPosition" Multiplicity="0..1" />
+          <End Type="FARSIMANModel.tbEmployeesPosition" Role="tbEmployeesPosition" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="tbPosition">
+              <PropertyRef Name="position_ID" />
+            </Principal>
+            <Dependent Role="tbEmployeesPosition">
+              <PropertyRef Name="position_ID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
       </Schema>
     </edmx:ConceptualModels>
     <!-- C-S mapping content -->
@@ -573,6 +574,7 @@
           <EntitySetMapping Name="tbEmployeesSubsidiaries">
             <EntityTypeMapping TypeName="FARSIMANModel.tbEmployeesSubsidiary">
               <MappingFragment StoreEntitySet="tbEmployeesSubsidiaries">
+                <ScalarProperty Name="employeeSubsidiary_DistanceKM" ColumnName="employeeSubsidiary_DistanceKM" />
                 <ScalarProperty Name="employeeSubsidiary_ID" ColumnName="employeeSubsidiary_ID" />
                 <ScalarProperty Name="employee_ID" ColumnName="employee_ID" />
                 <ScalarProperty Name="subsidiary_ID" ColumnName="subsidiary_ID" />
@@ -639,12 +641,12 @@
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
-          <EntitySetMapping Name="tbUsersPositions">
-            <EntityTypeMapping TypeName="FARSIMANModel.tbUsersPosition">
-              <MappingFragment StoreEntitySet="tbUsersPosition">
-                <ScalarProperty Name="userPosition_ID" ColumnName="userPosition_ID" />
+          <EntitySetMapping Name="tbEmployeesPositions">
+            <EntityTypeMapping TypeName="FARSIMANModel.tbEmployeesPosition">
+              <MappingFragment StoreEntitySet="tbEmployeesPosition">
+                <ScalarProperty Name="employee_ID" ColumnName="employee_ID" />
                 <ScalarProperty Name="position_ID" ColumnName="position_ID" />
-                <ScalarProperty Name="user_ID" ColumnName="user_ID" />
+                <ScalarProperty Name="employeePosition_ID" ColumnName="employeePosition_ID" />
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>

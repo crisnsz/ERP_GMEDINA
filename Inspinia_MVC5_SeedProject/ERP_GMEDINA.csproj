@@ -199,7 +199,6 @@
     <Compile Include="App_Start\Startup.Auth.cs" />
     <Compile Include="Attribute\SessionManagerAttribute.cs" />
     <Compile Include="Controllers\EmployeeController.cs" />
-    <Compile Include="Controllers\HomeController.cs" />
     <Compile Include="Controllers\LoginController.cs" />
     <Compile Include="Dataset\Reportes.Designer.cs">
       <AutoGen>True</AutoGen>
@@ -235,6 +234,9 @@
     <Compile Include="Models\tbEmployee.cs">
       <DependentUpon>FARSIMAN.tt</DependentUpon>
     </Compile>
+    <Compile Include="Models\tbEmployeesPosition.cs">
+      <DependentUpon>FARSIMAN.tt</DependentUpon>
+    </Compile>
     <Compile Include="Models\tbEmployeesSubsidiary.cs">
       <DependentUpon>FARSIMAN.tt</DependentUpon>
     </Compile>
@@ -254,9 +256,6 @@
       <DependentUpon>FARSIMAN.tt</DependentUpon>
     </Compile>
     <Compile Include="Models\tbUser.cs">
-      <DependentUpon>FARSIMAN.tt</DependentUpon>
-    </Compile>
-    <Compile Include="Models\tbUsersPosition.cs">
       <DependentUpon>FARSIMAN.tt</DependentUpon>
     </Compile>
     <Compile Include="Properties\AssemblyInfo.cs" />
@@ -507,59 +506,6 @@
       <DependentUpon>FARSIMAN.edmx</DependentUpon>
       <LastGenOutput>FARSIMAN.cs</LastGenOutput>
     </Content>
-    <Content Include="Scripts\app\Activo.js" />
-    <Content Include="Scripts\app\ActivoP.js" />
-    <Content Include="Scripts\app\AgregarMunicipio.js" />
-    <Content Include="Scripts\app\BodegaDetalle.js" />
-    <Content Include="Scripts\app\BusquedaGenerica.js" />
-    <Content Include="Scripts\app\Categoria.js" />
-    <Content Include="Scripts\app\Comparar.js" />
-    <Content Include="Scripts\app\CrearActualizarEliminar.js" />
-    <Content Include="Scripts\app\DataTable.js" />
-    <Content Include="Scripts\app\Datepicker.js" />
-    <Content Include="Scripts\app\DatepickerEmpleado.js" />
-    <Content Include="Scripts\app\Departamento.js" />
-    <Content Include="Scripts\app\DetalleBox.js" />
-    <Content Include="Scripts\app\disableSubmits.js" />
-    <Content Include="Scripts\app\EditBodegaDetalle.js" />
-    <Content Include="Scripts\app\emailvalidation.js" />
-    <Content Include="Scripts\app\EntradaDetalle.js" />
-    <Content Include="Scripts\app\InActivarProducto.js" />
-    <Content Include="Scripts\app\InActivarUsuario.js" />
-    <Content Include="Scripts\app\inspinia.js" />
-    <Content Include="Scripts\app\InvFisicoDetalle.js" />
-    <Content Include="Scripts\app\letras.js" />
-    <Content Include="Scripts\app\MostrarCamposEditar.js" />
-    <Content Include="Scripts\app\MostrarCamposEntradajs.js" />
-    <Content Include="Scripts\app\MostrarCamposSalida.js" />
-    <Content Include="Scripts\app\MostrarOcultar.js" />
-    <Content Include="Scripts\app\Municipio.js" />
-    <Content Include="Scripts\app\Objeto.js" />
-    <Content Include="Scripts\app\Parametro.js" />
-    <Content Include="Scripts\app\PartialViewGetObjectos.js" />
-    <Content Include="Scripts\app\PersonaNatural.js" />
-    <Content Include="Scripts\app\ProductoCodigo.js" />
-    <Content Include="Scripts\app\RolesUsuario.js" />
-    <Content Include="Scripts\app\RolesUsuarioEdit.js" />
-    <Content Include="Scripts\app\RolObjetosEdit.js" />
-    <Content Include="Scripts\app\RolObjetos.js" />
-    <Content Include="Scripts\app\Salida.js" />
-    <Content Include="Scripts\app\SalidaDetalle.js" />
-    <Content Include="Scripts\app\SalidaEdit.js" />
-    <Content Include="Scripts\app\search.js" />
-    <Content Include="Scripts\app\SolicitarProducto.js" />
-    <Content Include="Scripts\app\SubCategoriaProducto.js" />
-    <Content Include="Scripts\app\SubCategoriaProductoEdit.js" />
-    <Content Include="Scripts\app\TeclasEspeciales.js" />
-    <Content Include="Scripts\app\TipoDevolucion.js" />
-    <Content Include="Scripts\app\Tipo_Salida.js" />
-    <Content Include="Scripts\app\Unidad_Medida.js" />
-    <Content Include="Scripts\app\ValidacionProveedor.js" />
-    <Content Include="Scripts\app\ValidationEmail.js" />
-    <Content Include="Scripts\app\ValidationErrorsBodega.js" />
-    <Content Include="Scripts\app\ValidationEstadoInventarioFisico.js" />
-    <Content Include="Scripts\app\ValidationEstadoMovimientojs.js" />
-    <Content Include="Scripts\app\ValidationNumber.js" />
     <Content Include="Scripts\bootstrap.js" />
     <Content Include="Scripts\bootstrap.min.js" />
     <Content Include="Content\bootstrap.css.map" />
@@ -719,8 +665,6 @@
     <Content Include="Scripts\plugins\metisMenu\metisMenu.min.js" />
     <Content Include="Scripts\plugins\pace\pace.min.js" />
     <Content Include="Scripts\plugins\slimscroll\jquery.slimscroll.min.js" />
-    <Content Include="Scripts\Salida.js" />
-    <Content Include="Scripts\SalidaDetalle.js" />
     <Content Include="Scripts\wp-embed.min.js" />
     <Content Include="Web.config">
       <SubType>Designer</SubType>
@@ -734,18 +678,11 @@
     <Content Include="Views\Web.config" />
     <Content Include="Views\_ViewStart.cshtml" />
     <Content Include="Views\Shared\_Layout.cshtml" />
-    <Content Include="Views\Home\Index.cshtml" />
     <Content Include="Views\Shared\_LoginPartial.cshtml" />
-    <Content Include="Views\Home\Minor.cshtml" />
     <Content Include="Views\Shared\_Footer.cshtml" />
     <Content Include="Views\Shared\_Navigation.cshtml" />
     <Content Include="Views\Shared\_TopNavbar.cshtml" />
     <Content Include="Views\Login\Index.cshtml" />
-    <Content Include="Views\Empleado\Create.cshtml" />
-    <Content Include="Views\Empleado\Delete.cshtml" />
-    <Content Include="Views\Empleado\Details.cshtml" />
-    <Content Include="Views\Empleado\Edit.cshtml" />
-    <Content Include="Views\Empleado\Index.cshtml" />
     <Content Include="Views\Login\SinAcceso.cshtml" />
     <Content Include="Views\Login\NotFound.cshtml" />
     <Content Include="Views\Login\SinRol.cshtml" />

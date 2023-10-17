@@ -9,6 +9,7 @@
 
     EmployeeController employeeController = new EmployeeController();
     List<ERP_GMEDINA.Models.tbSubsidiary> tbSubsidiaries = employeeController.GetSubsidiaries();
+    List<ERP_GMEDINA.Models.tbPosition> tbPositions = employeeController.GetPositions();
     //foreach (ERP_GMEDINA.Models.tbSubsidiary tbSubsidiary in tbSubsidiaries)
     //{
     //    UserName = user.tbEmployee.employee_Name;
@@ -66,7 +67,13 @@
                                     @Html.ValidationMessageFor(model => model.employee_Direction)
                                 </div>
                             </div>
-
+                            <div class="form-group">
+                                @*@Html.LabelFor(tbPositions => tbPositions.tbEmployeesPositions, new { @class = "control-label col-md-2" })*@
+                                <label class="control-label col-md-2">Puesto o Cargo</label>
+                                <div class="col-md-10">
+                                    @Html.DropDownList("SelectedValue", (SelectList)ViewBag.Positions, new { @class = "text-box single-line", @required = string.Empty })
+                                </div>
+                            </div>
                             <div class="form-group">
 
                                 <table class="table table-striped table-responsive table-bordered table-hover" id="DataTable">
@@ -104,7 +111,7 @@
                                                         @Html.DisplayFor(modelItem => item.subsidiary_Direction)
                                                     </td>
                                                     @*<td><input name="id02" style="background-color:#1ab394" type="checkbox" id="@string.Join("", new object[] { "check", item.subsidiary_ID })" /></td>*@
-                                                    <td><input name="id02" style="background-color:#1ab394" type="checkbox" id="check", item.subsidiary_ID })" /></td>
+                                                    <td><input name="id02" style="background-color:#1ab394" type="checkbox" id="check" , item.subsidiary_ID })" /></td>
                                                 </tr>
                                             }
                                         </tbody>
@@ -127,7 +134,7 @@
                                             <tr>
                                                 <th hidden style="background-color:#1ab394;color:white">ID</th>
                                                 <th id="Assign" style="background-color:#1ab394;color:white">Nombre</th>
-                                                <th style="background-color: #1ab394; color: white">
+                                                <th style="background-color: #1ab394; color: white">Direccion</th>
                                                 <th style="background-color:#1ab394;color:white"></th>
                                             </tr>
                                         </thead>
@@ -138,7 +145,6 @@
                             <div class="form-group">
                                 <div class="col-md-offset-2 col-md-10">
                                     <input type="submit" value="Registrar" class="btn btn-primary" />
-                                    <input type="button" value="Enviar Datos" id="enviarDatos">
                                     @Html.ActionLink("Cancel", "Index", null, new { @class = "btn btn-white" })
                                 </div>
                             </div>

@@ -3,6 +3,7 @@ using ERP_GMEDINA.Models;
 using System;
 using System.Collections.Generic;
 using System.Data.Entity;
+using System.IdentityModel.Metadata;
 using System.Linq;
 using System.Net;
 using System.Web.Mvc;
@@ -13,10 +14,20 @@ namespace ERP_GMEDINA.Controllers
     {
         private FARSIMANEntities db = new FARSIMANEntities();
 
+        public static List<tbEmployeesSubsidiary> ListEmployeesSubsidiaries { get; set; } = new List<tbEmployeesSubsidiary>();
+
+
+        public static bool Modified { get; set; }
+
+
         // GET: /Employee/
         [SessionManager("Employee/Index")]
         public ActionResult Index()
         {
+
+            Modified = false;
+
+            ListEmployeesSubsidiaries.Clear();
             return View(db.tbEmployees.ToList());
         }
 
@@ -25,16 +36,46 @@ namespace ERP_GMEDINA.Controllers
         [SessionManager("Employee/Details")]
         public ActionResult Details(int? id)
         {
+
+
             if (id == null)
             {
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
             }
+
+
+
+            Modified = false;
+
+            ListEmployeesSubsidiaries.Clear();
+
+
             tbEmployee tbEmployee = db.tbEmployees.Find(id);
             if (tbEmployee == null)
             {
                 return HttpNotFound();
             }
+
+
+
+            ViewBag.position_ID = new SelectList(db.tbPositions, "position_ID", "position_Name", tbEmployee.position_ID);
+
+            var tbEmployeesSubsidiaries = db.tbEmployeesSubsidiaries.Where(x => x.employee_ID == tbEmployee.employee_ID);
+
+            ListEmployeesSubsidiaries = tbEmployeesSubsidiaries.ToList();
+
+            ViewBag.tbEmployeesSubsidiaries = tbEmployeesSubsidiaries.ToList();
+
+            ViewBag.tbSubsidiary = db.tbSubsidiaries.Where(x => !tbEmployeesSubsidiaries.Select(y => y.subsidiary_ID).Contains(x.subsidiary_ID)).ToList();
+
             return View(tbEmployee);
+
+
+
+
+
+
+
         }
 
         // GET: /Employee/Create
@@ -42,6 +83,9 @@ namespace ERP_GMEDINA.Controllers
         [SessionManager("Employee/Create")]
         public ActionResult Create()
         {
+            ListEmployeesSubsidiaries.Clear();
+            Modified = false;
+
             ViewBag.Positions = new SelectList(db.tbPositions, "position_ID", "position_Name");
 
             return View();
@@ -53,9 +97,8 @@ namespace ERP_GMEDINA.Controllers
         [HttpPost]
         [ValidateAntiForgeryToken]
         [SessionManager("Employee/Create")]
-        public ActionResult Create([Bind(Include = "employee_ID,employee_Name,employee_Direction")] tbEmployee tbEmployee, int SelectedValue)
+        public ActionResult Create([Bind(Include = "employee_ID,employee_Name,employee_Direction,position_ID")] tbEmployee tbEmployee, int SelectedValue)
         {
-
             if (!ModelState.IsValid)
             {
                 ViewBag.Positions = new SelectList(db.tbPositions, "position_ID", "position_Name");
@@ -65,26 +108,137 @@ namespace ERP_GMEDINA.Controllers
             {
                 try
                 {
-                    
                     db.tbEmployees.Add(tbEmployee);
 
                     db.SaveChanges();
 
+                    //var newEmployeesPosition = new tbEmployeesPosition
+                    //{
+                    //    position_ID = SelectedValue,
+                    //    employee_ID = tbEmployee.employee_ID
+                    //};
 
-                    var newEmployeesPosition = new tbEmployeesPosition
+                    //db.tbEmployeesPositions.Add(newEmployeesPosition);
+
+                    //db.SaveChanges();
+
+                    foreach (var employeesSubsidiary in ListEmployeesSubsidiaries)
                     {
-                        position_ID = SelectedValue,
-                        employee_ID = tbEmployee.employee_ID
-                    };
-
-                    db.tbEmployeesPositions.Add(newEmployeesPosition);
+                        employeesSubsidiary.employee_ID = tbEmployee.employee_ID;
+                        db.tbEmployeesSubsidiaries.Add(employeesSubsidiary);
+                    }
 
                     db.SaveChanges();
 
-                    foreach (var employeesSubsidiary in listEmployeesSubsidiaries)
+                    transaction.Commit();
+
+                    return RedirectToAction("Index");
+                }
+                catch (Exception ex)
+                {
+                    return View(tbEmployee);
+                }
+            }
+        }
+
+        // GET: /Employee/Edit/5
+        [SessionManager("Employee/Edit")]
+        public ActionResult Edit(int? id)
+        {
+            if (id == null)
+            {
+                return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
+            }
+
+            Modified = false;
+
+            ListEmployeesSubsidiaries.Clear();
+
+            tbEmployee tbEmployee = db.tbEmployees.Find(id);
+
+
+            if (tbEmployee == null)
+            {
+                return HttpNotFound();
+            }
+
+            ViewBag.position_ID = new SelectList(db.tbPositions, "position_ID", "position_Name", tbEmployee.position_ID);
+
+            var tbEmployeesSubsidiaries = db.tbEmployeesSubsidiaries.Where(x => x.employee_ID == tbEmployee.employee_ID);
+
+            ListEmployeesSubsidiaries = tbEmployeesSubsidiaries.ToList();
+
+            ViewBag.tbEmployeesSubsidiaries = tbEmployeesSubsidiaries.ToList();
+
+            ViewBag.tbSubsidiary = db.tbSubsidiaries.Where(x => !tbEmployeesSubsidiaries.Select(y => y.subsidiary_ID).Contains(x.subsidiary_ID)).ToList();
+
+            return View(tbEmployee);
+        }
+
+        // POST: /Employee/Edit/5
+        // To protect from overposting attacks, enable the specific properties you want to bind to, for
+        // more details see https://go.microsoft.com/fwlink/?LinkId=317598.
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        [SessionManager("Employee/Edit")]
+        public ActionResult Edit([Bind(Include = "employee_ID,employee_Name,employee_Direction,position_ID")] tbEmployee tbEmployee)
+        {
+            var tbEmployeesSubsidiaries = db.tbEmployeesSubsidiaries.Where(x => x.employee_ID == tbEmployee.employee_ID);
+
+            if (!ModelState.IsValid)
+            {
+                ListEmployeesSubsidiaries.Clear();
+                ViewBag.position_ID = new SelectList(db.tbPositions, "position_ID", "position_Name", tbEmployee.position_ID);
+
+
+                ListEmployeesSubsidiaries = tbEmployeesSubsidiaries.ToList();
+
+                ViewBag.tbEmployeesSubsidiaries = tbEmployeesSubsidiaries.ToList();
+
+                ViewBag.tbSubsidiary = db.tbSubsidiaries.Where(x => !tbEmployeesSubsidiaries.Select(y => y.subsidiary_ID).Contains(x.subsidiary_ID)).ToList();
+
+                return View(tbEmployee);
+            }
+
+            using (var transaction = db.Database.BeginTransaction())
+            {
+                try
+                {
+                    db.Entry(tbEmployee).State = EntityState.Modified;
+                    db.SaveChanges();
+
+
+                    if (Modified)
                     {
-                        db.tbEmployeesSubsidiaries.Add(employeesSubsidiary);
+                        foreach (var employeesSubsidiary in tbEmployeesSubsidiaries)
+                        {
+                            var existingInList = ListEmployeesSubsidiaries.Find(x => x.employeeSubsidiary_ID == employeesSubsidiary.employeeSubsidiary_ID);
+
+                            if (existingInList == null)
+                            {
+                                //Eliminar
+                                db.tbEmployeesSubsidiaries.Remove(employeesSubsidiary);
+                            }
+
+                        }
+                        foreach (var employeesSubsidiary in ListEmployeesSubsidiaries)
+                        {
+                            var existingEntity = db.tbEmployeesSubsidiaries.Find(employeesSubsidiary.employeeSubsidiary_ID);
+
+                            if (existingEntity != null)
+                            {
+                                db.Entry(existingEntity).State = EntityState.Modified;
+                            }
+                            else
+                            {
+                                employeesSubsidiary.employee_ID = tbEmployee.employee_ID;
+                                db.tbEmployeesSubsidiaries.Add(employeesSubsidiary);
+                            }
+                        }
                     }
+
+
+
                     db.SaveChanges();
 
 
@@ -99,8 +253,6 @@ namespace ERP_GMEDINA.Controllers
             }
         }
 
-        private List<tbSubsidiary> listSubsidiaries = new List<tbSubsidiary>();
-        private List<tbEmployeesSubsidiary> listEmployeesSubsidiaries = new List<tbEmployeesSubsidiary>();
 
         [HttpPost]
         public JsonResult AddSubsidiary(tbEmployeesSubsidiary tbEmployeesSubsidiary)
@@ -108,12 +260,9 @@ namespace ERP_GMEDINA.Controllers
             bool response;
             try
             {
-                //var newEmployeesSubsidiary = new tbEmployeesSubsidiary
-                //{
-                //    subsidiary_ID = tbSubsidiary.subsidiary_ID,
+                ListEmployeesSubsidiaries.Add(tbEmployeesSubsidiary);
 
-                //};
-                listEmployeesSubsidiaries.Add(tbEmployeesSubsidiary);
+                Modified = true;
 
                 response = true;
             }
@@ -125,21 +274,14 @@ namespace ERP_GMEDINA.Controllers
             return Json(response, JsonRequestBehavior.AllowGet);
         }
 
-        public JsonResult AddSubsidiaryOLD(tbSubsidiary tbSubsidiary)
+        [HttpPost]
+        public JsonResult RemoveSubsidiary(tbEmployeesSubsidiary tbEmployeesSubsidiary)
         {
             bool response;
             try
             {
-                listSubsidiaries.Add(tbSubsidiary);
-
-
-                var newEmployeesSubsidiary = new tbEmployeesSubsidiary
-                {
-                    subsidiary_ID = tbSubsidiary.subsidiary_ID,
-                    
-                };
-                listEmployeesSubsidiaries.Add(newEmployeesSubsidiary);
-
+                ListEmployeesSubsidiaries.RemoveAll(item => item.subsidiary_ID == tbEmployeesSubsidiary.subsidiary_ID);
+                Modified = true;
                 response = true;
             }
             catch (Exception)
@@ -150,46 +292,50 @@ namespace ERP_GMEDINA.Controllers
             return Json(response, JsonRequestBehavior.AllowGet);
         }
 
-        [HttpPost]
-        public JsonResult RemoveSubsidiary(tbSubsidiary tbSubsidiary)
+        public List<tbPosition> GetPositions()
         {
-            listSubsidiaries.Remove(tbSubsidiary);
+            List<tbPosition> ListPositions = db.tbPositions.ToList();
 
-            return Json("Exito", JsonRequestBehavior.AllowGet);
+            return ListPositions;
         }
 
-        // GET: /Employee/Edit/5
-        public ActionResult Edit(int? id)
+        public List<tbSubsidiary> GetSubsidiaries()
         {
-            if (id == null)
-            {
-                return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
-            }
-            tbEmployee tbEmployee = db.tbEmployees.Find(id);
-            if (tbEmployee == null)
-            {
-                return HttpNotFound();
-            }
-            return View(tbEmployee);
+            List<tbSubsidiary> SubsidiariesList = db.tbSubsidiaries.ToList();
+
+            return SubsidiariesList;
         }
 
-        // POST: /Employee/Edit/5
-        // To protect from overposting attacks, enable the specific properties you want to bind to, for
-        // more details see https://go.microsoft.com/fwlink/?LinkId=317598.
-        [HttpPost]
-        [ValidateAntiForgeryToken]
-        public ActionResult Edit([Bind(Include = "employee_ID,employee_Name,employee_Direction")] tbEmployee tbEmployee)
+        public List<tbSubsidiary> GetSubsidiaries(int Employee_ID)
         {
-            if (ModelState.IsValid)
+            List<tbSubsidiary> SubsidiariesList = new List<tbSubsidiary>();
+            try
             {
-                db.Entry(tbEmployee).State = EntityState.Modified;
-                db.SaveChanges();
-                return RedirectToAction("Index");
+                var tbEmployeesSubsidiaries = db.tbEmployeesSubsidiaries.Where(x => x.employee_ID == Employee_ID);
+
+                SubsidiariesList = db.tbSubsidiaries.Where(x => !tbEmployeesSubsidiaries.Select(y => y.subsidiary_ID).Contains(x.subsidiary_ID)).ToList();
             }
-            return View(tbEmployee);
+            catch (Exception Ex)
+            {
+            }
+            return SubsidiariesList;
+        }
+
+        public List<tbEmployeesSubsidiary> GetEmployeesSubsidiary()
+        {
+            List<tbEmployeesSubsidiary> EmployeesSubsidiaries = new List<tbEmployeesSubsidiary>();
+            try
+            {
+                EmployeesSubsidiaries = db.tbEmployeesSubsidiaries.ToList();
+            }
+            catch (Exception Ex)
+            {
+            }
+            return EmployeesSubsidiaries;
         }
 
         // GET: /Employee/Delete/5
+        [SessionManager("Employee/Delete")]
         public ActionResult Delete(int? id)
         {
             if (id == null)
@@ -213,33 +359,6 @@ namespace ERP_GMEDINA.Controllers
             db.tbEmployees.Remove(tbEmployee);
             db.SaveChanges();
             return RedirectToAction("Index");
-        }
-
-        public List<tbSubsidiary> GetSubsidiaries()
-        {
-            List<tbSubsidiary> SubsidiariesList = new List<tbSubsidiary>();
-            try
-            {
-                SubsidiariesList = db.tbSubsidiaries.ToList();
-            }
-            catch (Exception Ex)
-            {
-            }
-            return SubsidiariesList;
-        }
-
-        public List<tbPosition> GetPositions()
-        {
-            List<tbPosition> ListPositions = new List<tbPosition>();
-
-            try
-            {
-                ListPositions = db.tbPositions.ToList();
-            }
-            catch (Exception Ex)
-            {
-            }
-            return ListPositions;
         }
 
         protected override void Dispose(bool disposing)

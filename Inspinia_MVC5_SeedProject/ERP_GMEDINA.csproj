@@ -228,13 +228,11 @@
     <Compile Include="Models\Helpers.cs" />
     <Compile Include="Models\IdentityModels.cs" />
     <Compile Include="Models\Metadata\Employee.cs" />
+    <Compile Include="Models\Metadata\EmployeesSubsidiaries.cs" />
     <Compile Include="Models\tbAccess.cs">
       <DependentUpon>FARSIMAN.tt</DependentUpon>
     </Compile>
     <Compile Include="Models\tbEmployee.cs">
-      <DependentUpon>FARSIMAN.tt</DependentUpon>
-    </Compile>
-    <Compile Include="Models\tbEmployeesPosition.cs">
       <DependentUpon>FARSIMAN.tt</DependentUpon>
     </Compile>
     <Compile Include="Models\tbEmployeesSubsidiary.cs">
@@ -506,6 +504,7 @@
       <DependentUpon>FARSIMAN.edmx</DependentUpon>
       <LastGenOutput>FARSIMAN.cs</LastGenOutput>
     </Content>
+    <Content Include="Scripts\app\Employees\EditEmployee.js" />
     <Content Include="Scripts\bootstrap.js" />
     <Content Include="Scripts\bootstrap.min.js" />
     <Content Include="Content\bootstrap.css.map" />
@@ -645,7 +644,7 @@
       <Generator>SettingsSingleFileGenerator</Generator>
       <LastGenOutput>Settings.Designer.cs</LastGenOutput>
     </None>
-    <Content Include="Scripts\app\Employees\Employees.js" />
+    <Content Include="Scripts\app\Employees\CreateEmployee.js" />
     <None Include="Scripts\jquery-3.3.1.intellisense.js" />
     <Content Include="Scripts\jquery-3.3.1.js" />
     <Content Include="Scripts\jquery-3.3.1.min.js" />
@@ -691,6 +690,7 @@
     <Content Include="Views\Employee\Details.cshtml" />
     <Content Include="Views\Employee\Edit.cshtml" />
     <Content Include="Views\Employee\Index.cshtml" />
+    <Content Include="Views\Employee\_ModalSolicitarKM.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

@@ -18,7 +18,7 @@ namespace ERP_GMEDINA.Models
         public tbPosition()
         {
             this.tbAccesses = new HashSet<tbAccess>();
-            this.tbEmployeesPositions = new HashSet<tbEmployeesPosition>();
+            this.tbEmployees = new HashSet<tbEmployee>();
         }
     
         public int position_ID { get; set; }
@@ -27,6 +27,6 @@ namespace ERP_GMEDINA.Models
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<tbAccess> tbAccesses { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
-        public virtual ICollection<tbEmployeesPosition> tbEmployeesPositions { get; set; }
+        public virtual ICollection<tbEmployee> tbEmployees { get; set; }
     }
 }

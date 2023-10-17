@@ -4,28 +4,24 @@
 @model ERP_GMEDINA.Models.tbEmployee
 
 @{
-    ViewBag.Title = "Create";
+    ViewBag.Title = "Registrar";
     Layout = "~/Views/Shared/_Layout.cshtml";
 
     EmployeeController employeeController = new EmployeeController();
     List<ERP_GMEDINA.Models.tbSubsidiary> tbSubsidiaries = employeeController.GetSubsidiaries();
     List<ERP_GMEDINA.Models.tbPosition> tbPositions = employeeController.GetPositions();
-    //foreach (ERP_GMEDINA.Models.tbSubsidiary tbSubsidiary in tbSubsidiaries)
-    //{
-    //    UserName = user.tbEmployee.employee_Name;
-    //    UserId = user.user_ID;
-    //}
+    
 }
 
 <div class="row wrapper border-bottom white-bg page-heading">
     <div class="col-sm-4">
-        <h2>Create</h2>
+        <h2>Registrar</h2>
         <ol class="breadcrumb">
             <li>
-                @Html.ActionLink("List", "Index")
+                @Html.ActionLink("Volver", "Index")
             </li>
             <li class="active">
-                <strong>Create</strong>
+                <strong>Registrar Empleado</strong>
             </li>
         </ol>
     </div>
@@ -48,7 +44,9 @@
                     @using (Html.BeginForm())
                     {
                         @Html.AntiForgeryToken()
-
+                        <div class="form-horizontal">
+                            @Html.Partial("_ModalSolicitarKM")
+                        </div>
                         <div class="form-horizontal">
                             @Html.ValidationSummary(true)
 
@@ -71,9 +69,12 @@
                                 @*@Html.LabelFor(tbPositions => tbPositions.tbEmployeesPositions, new { @class = "control-label col-md-2" })*@
                                 <label class="control-label col-md-2">Puesto o Cargo</label>
                                 <div class="col-md-10">
-                                    @Html.DropDownList("SelectedValue", (SelectList)ViewBag.Positions, new { @class = "text-box single-line", @required = string.Empty })
+                                    @Html.DropDownList("position_ID", (SelectList)ViewBag.Positions, new { @class = "text-box single-line", @required = string.Empty })
                                 </div>
                             </div>
+
+                            @*<input type="button" value="Abrir Modal" class="btn btn-primary" data-toggle="modal" data-target="#modalKM"/>*@
+
                             <div class="form-group ">
 
                                 <div class="col-md-5">
@@ -108,7 +109,7 @@
                                                         @Html.DisplayFor(modelItem => item.subsidiary_Direction)
                                                     </td>
                                                     <td>
-                                                        <input name="id02" type="button" id="AddSubsidiary" class="btn btn-primary btn-xs" value="Agregar &#9658"/>
+                                                        <input name="id02" type="button" id="AddSubsidiary" class="btn btn-primary btn-xs" value="Agregar &#9658" />
                                                     </td>
 
                                                 </tr>
@@ -125,6 +126,7 @@
                                                 <th hidden style="background-color:#1ab394;color:white">ID</th>
                                                 <th id="Assign" style="background-color:#1ab394;color:white">Nombre</th>
                                                 <th style="background-color: #1ab394; color: white">Direccion</th>
+                                                <th style="background-color:#1ab394;color:white">Distancia(KM)</th>
                                                 <th style="background-color:#1ab394;color:white"></th>
                                             </tr>
                                         </thead>
@@ -136,7 +138,7 @@
                             <div class="form-group">
                                 <div class="col-md-offset-2 col-md-10">
                                     <input type="submit" value="Registrar" class="btn btn-primary" />
-                                    @Html.ActionLink("Cancel", "Index", null, new { @class = "btn btn-white" })
+                                    @Html.ActionLink("Cancelar", "Index", null, new { @class = "btn btn-white" })
                                 </div>
                             </div>
                         </div>
@@ -148,6 +150,6 @@
 </div>
 
 @section scripts{
-    <script src="~/Scripts/app/Employees/Employees.js"></script>
+    <script src="~/Scripts/app/Employees/CreateEmployee.js"></script>
 
 }

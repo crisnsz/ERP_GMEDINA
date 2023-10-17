@@ -1,6 +1,6 @@
-var tableNoAdded;
+﻿let tableNoAdded;
 
-var tableAdded;
+let tableAdded;
 
 
 document.addEventListener("DOMContentLoaded", function () {
@@ -51,12 +51,86 @@ document.addEventListener("DOMContentLoaded", function () {
     });
 });
 
-$("#NoAdded tbody").on("click", "input#AddSubsidiary", function () {
-    var data = tableNoAdded.row($(this).parents("tr")).data();
-    var subsidiary_ID = data[0];
-    var subsidiary_Name = data[1];
 
-    
+$("#NoAdded tbody").on("click", "input#AddSubsidiary", function () {
+
+    let data = tableNoAdded.row($(this).parents("tr")).data();
+    let subsidiary_ID = data[0];
+
+    // Utiliza el ID del modal para abrirlo
+    $('#modalKM').modal('show');
+
+
+    document.getElementById("subsidiary_ID").value = subsidiary_ID;
+
+    document.getElementById("dataButton").value = data;
+
+})
+
+$("#btnAddSubsidiary").on("click", function () {
+
+
+
+    let subsidiary_ID = document.getElementById("subsidiary_ID").value;
+
+    let data = document.getElementById("dataButton").value.split(',');;
+
+    let KMVal = document.getElementById("km").value;
+
+    if (KMVal == null || KMVal == "" || KMVal == undefined) {
+        return;
+    }
+
+    if (KMVal < 1 || KMVal > 50) {
+        alert("Ingrese un numero mayor que 0 y menor que 50");
+        return;
+    }
+
+    console.log(subsidiary_ID, KMVal);
+
+    SyncToControllerAddPromise(subsidiary_ID, KMVal)
+        .then(result => {
+            console.log(result); // Data fetched from https://example.com/api/data
+
+            $('#modalKM').modal('hide');
+
+            data[4] = '<input name="id02" type="button" id="DelSubsidiary" value="&#9668; Quitar &nbsp;&nbsp;" class="btn btn-primary btn-xs">'
+
+            let newRowData = [data[0], data[1], data[2], KMVal, data[4]];
+            //Cambiar id de #AddSubsidiary a #DelSubsidiary
+
+            // Mueve la fila a tabla2
+            tableAdded.row.add(newRowData).draw();
+
+
+
+
+            // Elimina la fila de tabla1
+            tableNoAdded.row(`[data-id="${data[0]}"]`).remove().draw();
+
+            //Clean Data
+            document.getElementById("subsidiary_ID").value = "";
+
+            document.getElementById("dataButton").value = "";
+
+            document.getElementById("km").value = "";
+        })
+        .catch(error => {
+            console.error(error); // Request timed out
+        });
+
+
+})
+
+
+
+
+$("#NoAdded1 tbody").on("click", "input#AddSubsidiary", function () {
+    let data = tableNoAdded.row($(this).parents("tr")).data();
+    let subsidiary_ID = data[0];
+    let subsidiary_Name = data[1];
+
+
 
     SyncToControllerAddPromise(subsidiary_ID, subsidiary_Name)
         .then(result => {
@@ -75,6 +149,8 @@ $("#NoAdded tbody").on("click", "input#AddSubsidiary", function () {
             console.error(error); // Request timed out
         });
 });
+
+
 function SyncToControllerAddPromise(id, km) {
     return new Promise((resolve, reject) => {
         let Subsidiary = {
@@ -101,9 +177,9 @@ function SyncToControllerAddPromise(id, km) {
 
 
 $("#Added tbody").on("click", "input#DelSubsidiary", function () {
-    var data = tableAdded.row($(this).parents("tr")).data();
-    var subsidiary_ID = data[0];
-    var subsidiary_Name = data[1];
+    let data = tableAdded.row($(this).parents("tr")).data();
+    let subsidiary_ID = data[0];
+    let subsidiary_Name = data[1];
 
 
     SyncToControllerRemovePromise(subsidiary_ID, subsidiary_Name)
@@ -128,8 +204,7 @@ $("#Added tbody").on("click", "input#DelSubsidiary", function () {
 function SyncToControllerRemovePromise(id, name) {
     return new Promise((resolve, reject) => {
         let Subsidiary = {
-            subsidiary_ID: id,
-            subsidiary_Name: name,
+            subsidiary_ID: id
         };
 
         $.ajax({
@@ -137,7 +212,7 @@ function SyncToControllerRemovePromise(id, name) {
             method: "POST",
             dataType: 'json',
             contentType: "application/json; charset=utf-8",
-            data: JSON.stringify({ tbSubsidiary: Subsidiary }),
+            data: JSON.stringify({ tbEmployeesSubsidiary: Subsidiary }),
         })
             .done(function (data) {
                 resolve(data)

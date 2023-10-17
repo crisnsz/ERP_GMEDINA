@@ -7,13 +7,13 @@
 
 <div class="row wrapper border-bottom white-bg page-heading">
     <div class="col-sm-4">
-        <h2>Details</h2>
+        <h2>Detattles del Empleado </h2>
         <ol class="breadcrumb">
             <li>
-                @Html.ActionLink("List", "Index")
+                @Html.ActionLink("Volver", "Index")
             </li>
             <li class="active">
-                <strong>Details</strong>
+                <strong>Detalles</strong>
             </li>
         </ol>
     </div>
@@ -27,49 +27,118 @@
         <div class="col-lg-12">
             <div class="ibox float-e-margins">
                 <div class="ibox-title">
-                    <h5>Details tbEmployee</h5>
+                    <h5>Detalles de Empleado</h5>
                 </div>
                 <div class="ibox-content">
 
+                    <div class="form-horizontal">
+                        <dl class="col-md-8">
+                            <dt class="form-group">
+                                @Html.DisplayNameFor(model => model.employee_Name)
+                            </dt>
 
-				    <dl class="dl-horizontal">
-        <dt>
-            @Html.DisplayNameFor(model => model.employee_Name)
-        </dt>
+                            <dd class="form-group">
+                                @Html.DisplayFor(model => model.employee_Name)
+                            </dd>
 
-        <dd>
-            @Html.DisplayFor(model => model.employee_Name)
-        </dd>
+                            <dt class="form-group">
+                                @Html.DisplayNameFor(model => model.employee_Direction)
+                            </dt>
 
-        <dt>
-            @Html.DisplayNameFor(model => model.employee_Direction)
-        </dt>
-
-        <dd>
-            @Html.DisplayFor(model => model.employee_Direction)
-        </dd>
-
-    </dl>
+                            <dd class="form-group">
+                                @Html.DisplayFor(model => model.employee_Direction)
+                            </dd>
 
 
-	    @Html.ActionLink("Edit", "Edit", new { id = Model.employee_ID }, new { @class = "btn btn-primary"})
-    @Html.ActionLink("Back to List", "Index", null, new { @class = "btn btn-white"})
+                        </dl>
+
+                        <div class="form-group ">
+
+                            <div class="col-md-6 center">
+                                <label class="col-md-10" style="text-align:center">Sucursales Asignadas</label>
+                                <table id="Added" class="table table table-striped table-bordered dataTable no-footer" style="width:100%">
+                                    <thead>
+                                        <tr>
+                                            <th hidden style="background-color:#1ab394;color:white">ID</th>
+                                            <th id="Assign" style="background-color:#1ab394;color:white">Nombre</th>
+                                            <th style="background-color: #1ab394; color: white">Direccion</th>
+                                            <th style="background-color:#1ab394;color:white">Distancia(KM)</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        @foreach (var item in (List<ERP_GMEDINA.Models.tbEmployeesSubsidiary>)ViewBag.tbEmployeesSubsidiaries)
+                                        {
+                                            <tr data-id="@item.subsidiary_ID">
+                                                <td hidden>
+                                                    @Html.DisplayFor(modelItem => item.subsidiary_ID)
+                                                </td>
+                                                <td>
+                                                    @Html.DisplayFor(modelItem => item.tbSubsidiary.subsidiary_Name)
+                                                </td>
+                                                <td>
+                                                    @Html.DisplayFor(modelItem => item.tbSubsidiary.subsidiary_Direction)
+                                                </td>
+                                                <td>
+                                                    @Html.DisplayFor(modelItem => item.employeeSubsidiary_DistanceKM)
+                                                </td>
+                                            </tr>
+                                        }
+                                    </tbody>
+                                </table>
+
+                            </div>
+
+
+                        </div>
+
+
+
+                    </div>
+
+
+                    @Html.ActionLink("Editar", "Edit", new { id = Model.employee_ID }, new { @class = "btn btn-primary" })
+                    @Html.ActionLink("Volver al Listado", "Index", null, new { @class = "btn btn-white" })
 
                 </div>
             </div>
         </div>
     </div>
- </div>
+</div>
 
 
 
 
 
 
+@section scripts{
 
+    <script>
 
+        document.addEventListener("DOMContentLoaded", function () {
+            // Inicializar las tablas con DataTables
+            tableNoAdded = $('#Added').DataTable({
+                "searching": false,
+                "lengthChange": false,
 
+                "order": [[0, 'asc']],
+                "columnDefs": [{
+                    "targets": [0],
+                    "visible": false
+                }],
+                "oLanguage": {
+                    "oPaginate": {
+                        "sNext": "Siguiente",
+                        "sPrevious": "Anterior",
+                    },
+                    "sEmptyTable": "No hay registros",
+                    "sInfoEmpty": "Mostrando 0 de 0 Entradas",
+                    "sSearch": "Buscar",
+                    "sInfo": "Mostrando _START_ a _END_ Entradas",
 
+                }
+            });
+        })
 
-
+    </script>
+}
 

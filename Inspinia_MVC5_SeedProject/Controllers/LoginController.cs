@@ -58,10 +58,8 @@ namespace ERP_GMEDINA.Controllers
                                                  where user.user_ID == UserLogin.user_ID
                                                   join employee in db.tbEmployees
                                                     on user.employee_ID equals employee.employee_ID
-                                                  join empPosition in db.tbEmployeesPositions
-                                                    on user.employee_ID equals empPosition.employee_ID
                                                   join position in db.tbPositions
-                                                    on empPosition.position_ID equals position.position_ID
+                                                    on employee.position_ID equals position.position_ID
                                                 select new
                                                     {
                                                         user.user_Username,

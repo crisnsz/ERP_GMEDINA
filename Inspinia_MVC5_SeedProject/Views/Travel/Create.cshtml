@@ -1,4 +1,4 @@
-﻿@model ERP_GMEDINA.Models.tbTravelHistory
+﻿@model ERP_GMEDINA.Models.tbTravel
 
 @{
     ViewBag.Title = "Create";
@@ -7,19 +7,19 @@
 
 <div class="row wrapper border-bottom white-bg page-heading">
     <div class="col-sm-4">
-        <h2>Create</h2>
+        <h2>Registrar</h2>
         <ol class="breadcrumb">
             <li>
-                @Html.ActionLink("List", "Index")
+                @Html.ActionLink("Volver", "Index", null, new { @class = "btn btn-primary" })
             </li>
             <li class="active">
-                <strong>Create</strong>
+                <strong>Registrar Viaje</strong>
             </li>
         </ol>
     </div>
     <div class="col-sm-8">
         <div class="title-action">
-            @Html.ActionLink("Back to List", "Index", null, new { @class = "btn btn-primary" })
+            @Html.ActionLink("Volver al listado", "Index", null, new { @class = "btn btn-primary" })
         </div>
     </div>
 </div>
@@ -30,7 +30,7 @@
         <div class="col-lg-12">
             <div class="ibox float-e-margins">
                 <div class="ibox-title">
-                    <h5>Create tbTravelHistory</h5>
+                    <h5>Registrar Viaje</h5>
                 </div>
                 <div class="ibox-content">
 
@@ -41,8 +41,10 @@
                         <div class="form-horizontal">
                             @Html.ValidationSummary(true)
 
+
                             <div class="form-group">
-                                <label class="control-label col-md-2">Nombre de la Subsidiaria</label>
+                                @Html.LabelFor(model => model.subsidiary_ID, "transporter_ID", new { @class = "control-label col-md-2" })
+
                                 <div class="col-md-10">
                                     @Html.DropDownList("subsidiary_ID", (IEnumerable<SelectListItem>)ViewBag.subsidiary_ID, "Seleccionar", new { @class = "form-control text-box single-line", @required = string.Empty })
 
@@ -51,24 +53,24 @@
                             </div>
                             <div class="form-group">
                                 <label class="control-label col-md-2">Direccion de la Subsidiaria</label>
+
                                 <div class="col-md-10">
                                     <input id="subsidiary_Address" type="text" class="form-control text-box single-line" readonly>
                                 </div>
                             </div>
 
                             <div class="form-group">
-                                <label class="control-label col-md-2">Transportista</label>
+                                @Html.LabelFor(model => model.transporter_ID, "transporter_ID", new { @class = "control-label col-md-2" })
                                 <div class="col-md-10">
                                     @Html.DropDownList("transporter_ID", (IEnumerable<SelectListItem>)ViewBag.transporter_ID, "Seleccionar", new { @class = "form-control text-box single-line", @required = string.Empty })
                                     @Html.ValidationMessageFor(model => model.transporter_ID)
                                 </div>
                             </div>
+
                             <div class="form-group">
-                                @Html.LabelFor(model => model.tbEmployee.employee_Name, "employee_Name", new { @class = "control-label col-md-2" })
+                                @Html.LabelFor(model => model.employee_ID, "employee_ID", new { @class = "control-label col-md-2" })
                                 <div class="col-md-10">
-                                    @Html.DropDownList("employee_ID", (IEnumerable<SelectListItem>)ViewBag.employee_ID, "Seleccionar", new { @class = "form-control text-box single-line", @required = string.Empty })
-
-
+                                    @Html.DropDownList("employee_ID", String.Empty)
                                     @Html.ValidationMessageFor(model => model.employee_ID)
                                 </div>
                             </div>
@@ -76,16 +78,24 @@
                             <div class="form-group">
                                 @Html.LabelFor(model => model.departure_Date_and_Time, new { @class = "control-label col-md-2" })
                                 <div class="col-md-10">
-                                    @Html.EditorFor(model => model.departure_Date_and_Time, new { htmlAttributes = new { @type = "date" } })
+                                    @Html.EditorFor(model => model.departure_Date_and_Time)
                                     @Html.ValidationMessageFor(model => model.departure_Date_and_Time)
                                 </div>
                             </div>
 
                             <div class="form-group">
-                                @Html.LabelFor(model => model.travel_Cost, new { @class = "control-label col-md-2" })
+                                @Html.LabelFor(model => model.distance_Kilometers, new { @class = "control-label col-md-2" })
                                 <div class="col-md-10">
-                                    @Html.EditorFor(model => model.travel_Cost)
-                                    @Html.ValidationMessageFor(model => model.travel_Cost)
+                                    @Html.EditorFor(model => model.distance_Kilometers)
+                                    @Html.ValidationMessageFor(model => model.distance_Kilometers)
+                                </div>
+                            </div>
+
+                            <div class="form-group">
+                                @Html.LabelFor(model => model.total_travel_Cost, new { @class = "control-label col-md-2" })
+                                <div class="col-md-10">
+                                    @Html.EditorFor(model => model.total_travel_Cost)
+                                    @Html.ValidationMessageFor(model => model.total_travel_Cost)
                                 </div>
                             </div>
 
@@ -135,10 +145,13 @@
                             </div>
 
 
+
+
+
                             <div class="form-group">
                                 <div class="col-md-offset-2 col-md-10">
                                     <input type="submit" value="Create" class="btn btn-primary" />
-                                    @Html.ActionLink("Cancel", "Index", null, new { @class = "btn btn-white" })
+                                    @Html.ActionLink("Cancelar", "Index", null, new { @class = "btn btn-white" })
                                 </div>
                             </div>
                         </div>
@@ -152,6 +165,6 @@
 
 
 @section scripts{
-    <script src="~/Scripts/app/TravelHistory/CreateTravelHistory.js"></script>
+    <script src="~/Scripts/app/Travel/CreateTravel.js"></script>
 
 }

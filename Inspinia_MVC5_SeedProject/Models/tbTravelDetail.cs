@@ -12,17 +12,15 @@ namespace ERP_GMEDINA.Models
     using System;
     using System.Collections.Generic;
     
-    public partial class tbTravel
+    public partial class tbTravelDetail
     {
-        public int travel_ID { get; set; }
+        public int travel_Detail_ID { get; set; }
+        public Nullable<int> travel_ID { get; set; }
         public Nullable<int> employee_ID { get; set; }
-        public Nullable<int> subsidiary_ID { get; set; }
-        public Nullable<int> transporter_ID { get; set; }
-        public Nullable<System.DateTime> departure_Date_and_Time { get; set; }
-        public Nullable<decimal> travel_Cost { get; set; }
+        public decimal distance_Kilometers { get; set; }
+        public decimal travel_Cost { get; set; }
     
         public virtual tbEmployee tbEmployee { get; set; }
-        public virtual tbSubsidiary tbSubsidiary { get; set; }
-        public virtual tbTransporter tbTransporter { get; set; }
+        public virtual tbTravel tbTravel { get; set; }
     }
 }

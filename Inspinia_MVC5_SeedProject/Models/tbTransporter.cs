@@ -17,7 +17,8 @@ namespace ERP_GMEDINA.Models
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2214:DoNotCallOverridableMethodsInConstructors")]
         public tbTransporter()
         {
-            this.tbTravelHistories = new HashSet<tbTravelHistory>();
+            this.tbTravelHistories = new HashSet<tbTravel>();
+            this.tbTravels = new HashSet<tbTravel>();
         }
     
         public int transporter_ID { get; set; }
@@ -25,6 +26,8 @@ namespace ERP_GMEDINA.Models
         public decimal transporter_Fee { get; set; }
     
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
-        public virtual ICollection<tbTravelHistory> tbTravelHistories { get; set; }
+        public virtual ICollection<tbTravel> tbTravelHistories { get; set; }
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
+        public virtual ICollection<tbTravel> tbTravels { get; set; }
     }
 }

@@ -16,6 +16,11 @@ namespace ERP_GMEDINA.Controllers
     {
         private FARSIMANEntities db = new FARSIMANEntities();
 
+        public static List<tbEmployeesSubsidiary> ListEmployeesSubsidiaries { get; set; } = new List<tbEmployeesSubsidiary>();
+
+        public static bool Modified { get; set; }
+
+
         #region ActionResult
 
         // GET: /TravelHistory/
@@ -23,7 +28,8 @@ namespace ERP_GMEDINA.Controllers
         [SessionManager("TravelHistory/Index")]
         public ActionResult Index()
         {
-            var tbtravelhistories = db.tbTravelHistories.Include(t => t.tbEmployee).Include(t => t.tbSubsidiary).Include(t => t.tbTransporter);
+            //var tbtravelhistories = db.tbTravelHistories.Include(t => t.tbEmployee).Include(t => t.tbSubsidiary).Include(t => t.tbTransporter);
+            var tbtravelhistories = db.tbTravelHistories;
             return View(tbtravelhistories.ToList());
         }
 
@@ -36,7 +42,7 @@ namespace ERP_GMEDINA.Controllers
             {
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
             }
-            tbTravelHistory tbTravelHistory = db.tbTravelHistories.Find(id);
+            tbTravel tbTravelHistory = db.tbTravelHistories.Find(id);
             if (tbTravelHistory == null)
             {
                 return HttpNotFound();
@@ -63,7 +69,53 @@ namespace ERP_GMEDINA.Controllers
         [SessionManager("TravelHistory/Create")]
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Create([Bind(Include = "travel_ID,employee_ID,subsidiary_ID,transporter_ID,departure_Date_and_Time,travel_Cost")] tbTravelHistory tbTravelHistory)
+        public ActionResult Create([Bind(Include = "travel_ID,employee_ID,subsidiary_ID,transporter_ID,departure_Date_and_Time,travel_Cost")] tbTravel tbTravelHistory)
+        {
+            if (!ModelState.IsValid)
+            {
+                ViewBag.Positions = new SelectList(db.tbPositions, "position_ID", "position_Name");
+                return View(tbTravelHistory);
+            }
+
+            using (var transaction = db.Database.BeginTransaction())
+            {
+                try
+                {
+                    db.tbTravelHistories.Add(tbTravelHistory);
+
+                    db.SaveChanges();
+
+
+                    foreach (var employeesSubsidiary in ListEmployeesSubsidiaries)
+                    {
+
+                        //employeesSubsidiary.subsidiary_ID = tbTravelHistory.subsidiary_ID;
+
+
+                        db.tbEmployeesSubsidiaries.Add(employeesSubsidiary);
+                    }
+
+                    db.SaveChanges();
+
+                    transaction.Commit();
+
+                    return RedirectToAction("Index");
+                }
+                catch (Exception ex)
+                {
+                    return View(tbTravelHistory);
+                }
+            }
+
+        } 
+        
+        
+        
+        
+        [SessionManager("TravelHistory/Create")]
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public ActionResult Create2([Bind(Include = "travel_ID,employee_ID,subsidiary_ID,transporter_ID,departure_Date_and_Time,travel_Cost")] tbTravel tbTravelHistory)
         {
             if (!ModelState.IsValid)
             {
@@ -88,7 +140,7 @@ namespace ERP_GMEDINA.Controllers
             {
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
             }
-            tbTravelHistory tbTravelHistory = db.tbTravelHistories.Find(id);
+            tbTravel tbTravelHistory = db.tbTravelHistories.Find(id);
             if (tbTravelHistory == null)
             {
                 return HttpNotFound();
@@ -105,7 +157,7 @@ namespace ERP_GMEDINA.Controllers
         [HttpPost]
         [ValidateAntiForgeryToken]
         [SessionManager("TravelHistory/Edit")]
-        public ActionResult Edit([Bind(Include = "travel_ID,employee_ID,subsidiary_ID,transporter_ID,departure_Date_and_Time,travel_Cost")] tbTravelHistory tbTravelHistory)
+        public ActionResult Edit([Bind(Include = "travel_ID,employee_ID,subsidiary_ID,transporter_ID,departure_Date_and_Time,travel_Cost")] tbTravel tbTravelHistory)
         {
             if (ModelState.IsValid)
             {
@@ -127,7 +179,7 @@ namespace ERP_GMEDINA.Controllers
             {
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
             }
-            tbTravelHistory tbTravelHistory = db.tbTravelHistories.Find(id);
+            tbTravel tbTravelHistory = db.tbTravelHistories.Find(id);
             if (tbTravelHistory == null)
             {
                 return HttpNotFound();
@@ -141,7 +193,7 @@ namespace ERP_GMEDINA.Controllers
         [SessionManager("TravelHistory/Delete")]
         public ActionResult DeleteConfirmed(int id)
         {
-            tbTravelHistory tbTravelHistory = db.tbTravelHistories.Find(id);
+            tbTravel tbTravelHistory = db.tbTravelHistories.Find(id);
             db.tbTravelHistories.Remove(tbTravelHistory);
             db.SaveChanges();
             return RedirectToAction("Index");
@@ -171,30 +223,74 @@ namespace ERP_GMEDINA.Controllers
 
 
         [HttpPost]
-        public async Task<JsonResult> GetEmployeesBySubsidiaryAsync(int subsidiary_ID)
+        public JsonResult GetEmployeesBySubsidiary(int subsidiary_ID)
         {
             try
             {
-                var response = await GetEmployeesAsync(subsidiary_ID);
+                var response = (from employee in db.tbEmployees
+                            join employeeSubsidiary in db.tbEmployeesSubsidiaries
+                            on employee.employee_ID equals employeeSubsidiary.employee_ID
+                            where employeeSubsidiary.subsidiary_ID == subsidiary_ID
+                            select new
+                            {
+                                employee.employee_ID,
+                                employee.employee_Name,
+                                employee.employee_Direction,
+                                employee.position_ID,
+                                employeeSubsidiary.tbSubsidiary.subsidiary_Name,
+                                employeeSubsidiary.employeeSubsidiary_DistanceKM
+                            }).ToList();
+
                 return Json(response, JsonRequestBehavior.AllowGet);
             }
             catch (Exception Ex)
             {
-                return Json(Ex.Message, JsonRequestBehavior.DenyGet);
+                return Json(Ex.Message.ToString(), JsonRequestBehavior.DenyGet);
             }
-        }
 
-        private async Task<List<tbEmployee>> GetEmployeesAsync(int subsidiary_ID)
+        }
+        
+       
+
+        [HttpPost]
+        public JsonResult AddEmployeestoTravel(tbEmployeesSubsidiary tbEmployeesSubsidiary)
         {
+            try
+            {
+                ListEmployeesSubsidiaries.Add(tbEmployeesSubsidiary);
 
-            var employees = await (from employee in db.tbEmployees
-                                   join employeeSubsidiary in db.tbEmployeesSubsidiaries
-                                   on employee.employee_ID equals employeeSubsidiary.employee_ID
-                                   where employeeSubsidiary.subsidiary_ID == subsidiary_ID
-                                   select employee).ToListAsync();
+                Modified = true;
 
-            return employees;
+                return Json(true, JsonRequestBehavior.AllowGet);
+            }
+            catch (Exception)
+            {
+                return Json(false, JsonRequestBehavior.DenyGet);
+            }
+
         }
+
+        
+        [HttpPost]
+        public JsonResult RemoveEmployeestoTravel(tbEmployeesSubsidiary tbEmployeesSubsidiary)
+        {
+            try
+            {
+
+                ListEmployeesSubsidiaries.RemoveAll(item => item.employee_ID == tbEmployeesSubsidiary.employee_ID);
+                
+                Modified = true;
+
+                return Json(true, JsonRequestBehavior.AllowGet);
+            }
+            catch (Exception)
+            {
+                return Json(false, JsonRequestBehavior.DenyGet);
+            }
+
+        }
+
+
 
         #endregion
 

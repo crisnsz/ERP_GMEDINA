@@ -8,7 +8,7 @@ namespace ERP_GMEDINA.Models
 {
 
     [MetadataType(typeof(TravelHistoryMetaData))]
-    public partial class tbTravelHistory
+    public partial class tbTravel
     {
         
     }

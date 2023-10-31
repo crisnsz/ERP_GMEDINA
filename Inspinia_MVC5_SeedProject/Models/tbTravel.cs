@@ -14,15 +14,24 @@ namespace ERP_GMEDINA.Models
     
     public partial class tbTravel
     {
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2214:DoNotCallOverridableMethodsInConstructors")]
+        public tbTravel()
+        {
+            this.tbTravelDetails = new HashSet<tbTravelDetail>();
+        }
+    
         public int travel_ID { get; set; }
-        public Nullable<int> employee_ID { get; set; }
         public Nullable<int> subsidiary_ID { get; set; }
         public Nullable<int> transporter_ID { get; set; }
-        public Nullable<System.DateTime> departure_Date_and_Time { get; set; }
-        public Nullable<decimal> travel_Cost { get; set; }
+        public Nullable<int> employee_ID { get; set; }
+        public System.DateTime departure_Date_and_Time { get; set; }
+        public decimal distance_Kilometers { get; set; }
+        public decimal total_travel_Cost { get; set; }
     
         public virtual tbEmployee tbEmployee { get; set; }
         public virtual tbSubsidiary tbSubsidiary { get; set; }
         public virtual tbTransporter tbTransporter { get; set; }
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
+        public virtual ICollection<tbTravelDetail> tbTravelDetails { get; set; }
     }
 }

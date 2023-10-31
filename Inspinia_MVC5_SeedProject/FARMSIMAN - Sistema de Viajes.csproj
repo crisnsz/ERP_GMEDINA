@@ -200,6 +200,7 @@
     <Compile Include="Attribute\SessionManagerAttribute.cs" />
     <Compile Include="Controllers\EmployeeController.cs" />
     <Compile Include="Controllers\LoginController.cs" />
+    <Compile Include="Controllers\TravelController.cs" />
     <Compile Include="Controllers\TravelHistoryController.cs" />
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
@@ -245,6 +246,12 @@
       <DependentUpon>FARSIMAN.tt</DependentUpon>
     </Compile>
     <Compile Include="Models\tbTransporter.cs">
+      <DependentUpon>FARSIMAN.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\tbTravel.cs">
+      <DependentUpon>FARSIMAN.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\tbTravelDetail.cs">
       <DependentUpon>FARSIMAN.tt</DependentUpon>
     </Compile>
     <Compile Include="Models\tbTravelHistory.cs">
@@ -502,6 +509,7 @@
       <LastGenOutput>FARSIMAN.cs</LastGenOutput>
     </Content>
     <Content Include="Scripts\app\Employees\EditEmployee.js" />
+    <Content Include="Scripts\app\Travel\CreateTravel.js" />
     <Content Include="Scripts\app\TravelHistory\CreateTravelHistory.js" />
     <Content Include="Scripts\bootstrap.js" />
     <Content Include="Scripts\bootstrap.min.js" />
@@ -683,6 +691,11 @@
     <Content Include="Views\TravelHistory\Details.cshtml" />
     <Content Include="Views\TravelHistory\Edit.cshtml" />
     <Content Include="Views\TravelHistory\Index.cshtml" />
+    <Content Include="Views\Travel\Create.cshtml" />
+    <Content Include="Views\Travel\Delete.cshtml" />
+    <Content Include="Views\Travel\Details.cshtml" />
+    <Content Include="Views\Travel\Edit.cshtml" />
+    <Content Include="Views\Travel\Index.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

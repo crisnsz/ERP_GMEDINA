@@ -15,7 +15,6 @@ namespace ERP_GMEDINA.Controllers
     public class TravelHistoryController : Controller
     {
         private FARSIMANEntities db = new FARSIMANEntities();
-
         public static List<tbEmployeesSubsidiary> ListEmployeesSubsidiaries { get; set; } = new List<tbEmployeesSubsidiary>();
 
         public static bool Modified { get; set; }
@@ -28,8 +27,7 @@ namespace ERP_GMEDINA.Controllers
         [SessionManager("TravelHistory/Index")]
         public ActionResult Index()
         {
-            //var tbtravelhistories = db.tbTravelHistories.Include(t => t.tbEmployee).Include(t => t.tbSubsidiary).Include(t => t.tbTransporter);
-            var tbtravelhistories = db.tbTravelHistories;
+            var tbtravelhistories = db.tbTravelHistories.Include(t => t.tbEmployee).Include(t => t.tbSubsidiary).Include(t => t.tbTransporter);
             return View(tbtravelhistories.ToList());
         }
 
@@ -42,7 +40,7 @@ namespace ERP_GMEDINA.Controllers
             {
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
             }
-            tbTravel tbTravelHistory = db.tbTravelHistories.Find(id);
+            tbTravelHistory tbTravelHistory = db.tbTravelHistories.Find(id);
             if (tbTravelHistory == null)
             {
                 return HttpNotFound();
@@ -69,7 +67,7 @@ namespace ERP_GMEDINA.Controllers
         [SessionManager("TravelHistory/Create")]
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Create([Bind(Include = "travel_ID,employee_ID,subsidiary_ID,transporter_ID,departure_Date_and_Time,travel_Cost")] tbTravel tbTravelHistory)
+        public ActionResult Create([Bind(Include = "travel_ID,employee_ID,subsidiary_ID,transporter_ID,departure_Date_and_Time,travel_Cost")] tbTravelHistory tbTravelHistory)
         {
             if (!ModelState.IsValid)
             {
@@ -106,29 +104,6 @@ namespace ERP_GMEDINA.Controllers
                     return View(tbTravelHistory);
                 }
             }
-
-        } 
-        
-        
-        
-        
-        [SessionManager("TravelHistory/Create")]
-        [HttpPost]
-        [ValidateAntiForgeryToken]
-        public ActionResult Create2([Bind(Include = "travel_ID,employee_ID,subsidiary_ID,transporter_ID,departure_Date_and_Time,travel_Cost")] tbTravel tbTravelHistory)
-        {
-            if (!ModelState.IsValid)
-            {
-                ViewBag.employee_ID = new SelectList(db.tbEmployees, "employee_ID", "employee_Name", tbTravelHistory.employee_ID);
-                ViewBag.subsidiary_ID = new SelectList(db.tbSubsidiaries, "subsidiary_ID", "subsidiary_Name", tbTravelHistory.subsidiary_ID);
-                ViewBag.transporter_ID = new SelectList(db.tbTransporters, "transporter_ID", "transporter_Name", tbTravelHistory.transporter_ID);
-                return View(tbTravelHistory);
-            }
-
-            db.tbTravelHistories.Add(tbTravelHistory);
-            db.SaveChanges();
-            return RedirectToAction("Index");
-
         }
 
         // GET: /TravelHistory/Edit/5
@@ -140,7 +115,7 @@ namespace ERP_GMEDINA.Controllers
             {
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
             }
-            tbTravel tbTravelHistory = db.tbTravelHistories.Find(id);
+            tbTravelHistory tbTravelHistory = db.tbTravelHistories.Find(id);
             if (tbTravelHistory == null)
             {
                 return HttpNotFound();
@@ -157,7 +132,7 @@ namespace ERP_GMEDINA.Controllers
         [HttpPost]
         [ValidateAntiForgeryToken]
         [SessionManager("TravelHistory/Edit")]
-        public ActionResult Edit([Bind(Include = "travel_ID,employee_ID,subsidiary_ID,transporter_ID,departure_Date_and_Time,travel_Cost")] tbTravel tbTravelHistory)
+        public ActionResult Edit([Bind(Include = "travel_ID,employee_ID,subsidiary_ID,transporter_ID,departure_Date_and_Time,travel_Cost")] tbTravelHistory tbTravelHistory)
         {
             if (ModelState.IsValid)
             {
@@ -179,7 +154,7 @@ namespace ERP_GMEDINA.Controllers
             {
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
             }
-            tbTravel tbTravelHistory = db.tbTravelHistories.Find(id);
+            tbTravelHistory tbTravelHistory = db.tbTravelHistories.Find(id);
             if (tbTravelHistory == null)
             {
                 return HttpNotFound();
@@ -193,12 +168,13 @@ namespace ERP_GMEDINA.Controllers
         [SessionManager("TravelHistory/Delete")]
         public ActionResult DeleteConfirmed(int id)
         {
-            tbTravel tbTravelHistory = db.tbTravelHistories.Find(id);
+            tbTravelHistory tbTravelHistory = db.tbTravelHistories.Find(id);
             db.tbTravelHistories.Remove(tbTravelHistory);
             db.SaveChanges();
             return RedirectToAction("Index");
         }
         #endregion
+
 
 
         #region JsonResult
@@ -228,18 +204,18 @@ namespace ERP_GMEDINA.Controllers
             try
             {
                 var response = (from employee in db.tbEmployees
-                            join employeeSubsidiary in db.tbEmployeesSubsidiaries
-                            on employee.employee_ID equals employeeSubsidiary.employee_ID
-                            where employeeSubsidiary.subsidiary_ID == subsidiary_ID
-                            select new
-                            {
-                                employee.employee_ID,
-                                employee.employee_Name,
-                                employee.employee_Direction,
-                                employee.position_ID,
-                                employeeSubsidiary.tbSubsidiary.subsidiary_Name,
-                                employeeSubsidiary.employeeSubsidiary_DistanceKM
-                            }).ToList();
+                                join employeeSubsidiary in db.tbEmployeesSubsidiaries
+                                on employee.employee_ID equals employeeSubsidiary.employee_ID
+                                where employeeSubsidiary.subsidiary_ID == subsidiary_ID
+                                select new
+                                {
+                                    employee.employee_ID,
+                                    employee.employee_Name,
+                                    employee.employee_Direction,
+                                    employee.position_ID,
+                                    employeeSubsidiary.tbSubsidiary.subsidiary_Name,
+                                    employeeSubsidiary.employeeSubsidiary_DistanceKM
+                                }).ToList();
 
                 return Json(response, JsonRequestBehavior.AllowGet);
             }
@@ -249,8 +225,8 @@ namespace ERP_GMEDINA.Controllers
             }
 
         }
-        
-       
+
+
 
         [HttpPost]
         public JsonResult AddEmployeestoTravel(tbEmployeesSubsidiary tbEmployeesSubsidiary)
@@ -270,7 +246,7 @@ namespace ERP_GMEDINA.Controllers
 
         }
 
-        
+
         [HttpPost]
         public JsonResult RemoveEmployeestoTravel(tbEmployeesSubsidiary tbEmployeesSubsidiary)
         {
@@ -278,7 +254,7 @@ namespace ERP_GMEDINA.Controllers
             {
 
                 ListEmployeesSubsidiaries.RemoveAll(item => item.employee_ID == tbEmployeesSubsidiary.employee_ID);
-                
+
                 Modified = true;
 
                 return Json(true, JsonRequestBehavior.AllowGet);

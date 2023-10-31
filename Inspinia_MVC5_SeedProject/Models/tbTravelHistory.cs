@@ -12,7 +12,7 @@ namespace ERP_GMEDINA.Models
     using System;
     using System.Collections.Generic;
     
-    public partial class tbTravel
+    public partial class tbTravelHistory
     {
         public int travel_ID { get; set; }
         public Nullable<int> employee_ID { get; set; }

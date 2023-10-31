@@ -200,7 +200,6 @@
     <Compile Include="Attribute\SessionManagerAttribute.cs" />
     <Compile Include="Controllers\EmployeeController.cs" />
     <Compile Include="Controllers\LoginController.cs" />
-    <Compile Include="Controllers\TravelController.cs" />
     <Compile Include="Controllers\TravelHistoryController.cs" />
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
@@ -246,12 +245,6 @@
       <DependentUpon>FARSIMAN.tt</DependentUpon>
     </Compile>
     <Compile Include="Models\tbTransporter.cs">
-      <DependentUpon>FARSIMAN.tt</DependentUpon>
-    </Compile>
-    <Compile Include="Models\tbTravel.cs">
-      <DependentUpon>FARSIMAN.tt</DependentUpon>
-    </Compile>
-    <Compile Include="Models\tbTravelDetail.cs">
       <DependentUpon>FARSIMAN.tt</DependentUpon>
     </Compile>
     <Compile Include="Models\tbTravelHistory.cs">

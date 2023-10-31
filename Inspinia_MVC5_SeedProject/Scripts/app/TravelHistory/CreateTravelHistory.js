@@ -57,7 +57,7 @@ document.getElementById("subsidiary_ID").addEventListener("change", function () 
     let subsidiary_ID = document.getElementById("subsidiary_ID").value;
 
 
-    GetAddressPromise(subsidiary_ID)
+    getAddressPromise(subsidiary_ID)
         .then(response => {
             document.getElementById("subsidiary_Address").value = response;
             console.log(response);
@@ -66,7 +66,7 @@ document.getElementById("subsidiary_ID").addEventListener("change", function () 
             console.error(error);
         });
 
-    GetEmployeesBySubsidiaryPromise(subsidiary_ID)
+    getEmployeesBySubsidiaryPromise(subsidiary_ID)
         .then(response => {
             document.getElementById("subsidiary_Address").value = response;
 
@@ -89,7 +89,34 @@ document.getElementById("subsidiary_ID").addEventListener("change", function () 
 });
 
 
-function GetAddressPromise(id) {
+function getAddressPromise(id) {
+    return new Promise((resolve, reject) => {
+        fetch("/TravelHistory/GetAddress", {
+            method: "POST",
+            headers: {
+                "Content-Type": "application/json; charset=utf-8",
+            },
+            body: JSON.stringify({ subsidiary_ID: id }),
+        })
+            .then(response => {
+                if (response.ok) {
+                    return response.json();
+                } else {
+                    throw new Error("Request failed with status: " + response.status);
+                }
+            })
+            .then(data => {
+                resolve(data);
+            })
+            .catch(error => {
+                reject(error);
+            });
+    });
+}
+
+
+
+function getAddressPromiseOld(id) {
     return new Promise((resolve, reject) => {
 
         $.ajax({
@@ -109,25 +136,32 @@ function GetAddressPromise(id) {
     });
 }
 
-function GetEmployeesBySubsidiaryPromise(id) {
-    return new Promise((resolve, reject) => {
 
-        $.ajax({
-            url: "/TravelHistory/GetEmployeesBySubsidiary",
+function getEmployeesBySubsidiaryPromise(id) {
+    return new Promise((resolve, reject) => {
+        fetch("/TravelHistory/GetEmployeesBySubsidiaryAsync", {
             method: "POST",
-            dataType: 'json',
-            contentType: "application/json; charset=utf-8",
-            data: JSON.stringify({ subsidiary_ID: id }),
+            headers: {
+                "Content-Type": "application/json; charset=utf-8",
+            },
+            body: JSON.stringify({ subsidiary_ID: id }),
         })
-            .done(function (res) {
-                resolve(res)
+            .then(response => {
+                if (response.ok) {
+                    return response.json();
+                } else {
+                    throw new Error("Request failed with status: " + response.status);
+                }
             })
-            .fail(function (jqXHR, textStatus, errorThrown) {
-                // Error handling
-                reject(new Error("Request timed out"));
+            .then(data => {
+                resolve(data);
+            })
+            .catch(error => {
+                reject(error);
             });
     });
 }
+
 //$("#EmployessAvalaible tbody").on("click", "input#addToTravel", function () {
 
 //    let data = tableNoAdded.row($(this).parents("tr")).data();

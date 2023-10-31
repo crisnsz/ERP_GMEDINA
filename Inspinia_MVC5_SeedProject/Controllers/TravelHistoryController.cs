@@ -4,6 +4,7 @@ using System.Data;
 using System.Data.Entity;
 using System.Linq;
 using System.Net;
+using System.Threading.Tasks;
 using System.Web;
 using System.Web.Mvc;
 using ERP_GMEDINA.Attribute;
@@ -170,26 +171,31 @@ namespace ERP_GMEDINA.Controllers
 
 
         [HttpPost]
-        public JsonResult GetEmployeesBySubsidiary(int subsidiary_ID)
+        public async Task<JsonResult> GetEmployeesBySubsidiaryAsync(int subsidiary_ID)
         {
-            //List<tbSubsidiary> response = new List<tbSubsidiary>();
             try
             {
-                var response = (from employee in db.tbEmployees
-                           join employeeSubsidiary in db.tbEmployeesSubsidiaries
-                           on employee.employee_ID equals employeeSubsidiary.employee_ID
-                           where employeeSubsidiary.subsidiary_ID == subsidiary_ID
-                           select employee).ToList();
-
-
+                var response = await GetEmployeesAsync(subsidiary_ID);
                 return Json(response, JsonRequestBehavior.AllowGet);
             }
             catch (Exception Ex)
             {
-                return Json(Ex.Message.ToString(), JsonRequestBehavior.DenyGet);
+                return Json(Ex.Message, JsonRequestBehavior.DenyGet);
             }
-
         }
+
+        private async Task<List<tbEmployee>> GetEmployeesAsync(int subsidiary_ID)
+        {
+
+            var employees = await (from employee in db.tbEmployees
+                                   join employeeSubsidiary in db.tbEmployeesSubsidiaries
+                                   on employee.employee_ID equals employeeSubsidiary.employee_ID
+                                   where employeeSubsidiary.subsidiary_ID == subsidiary_ID
+                                   select employee).ToListAsync();
+
+            return employees;
+        }
+
         #endregion
 
         protected override void Dispose(bool disposing)

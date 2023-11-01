@@ -61,8 +61,15 @@ document.addEventListener("DOMContentLoaded", function () {
 
 
 document.getElementById("subsidiary_ID").addEventListener("change", function () {
+    let subsidiary = document.getElementById("subsidiary_ID");
 
-    let subsidiary_ID = document.getElementById("subsidiary_ID").value;
+
+
+    let subsidiary_ID = subsidiary.value;
+
+    if (subsidiary_ID == "") {
+        return;
+    }
 
 
     getAddressPromise(subsidiary_ID)
@@ -227,7 +234,7 @@ function AddEmployeeToTravelPromise(id) {
         };
 
 
-        fetch("/TravelHistory/AddEmployeestoTravel", {
+        fetch("/Travel/AddEmployeestoTravel", {
             method: "POST",
             headers: {
                 "Content-Type": "application/json; charset=utf-8",
@@ -299,7 +306,7 @@ function RemoveEmployeeToTravelPromise(id) {
         };
 
 
-        fetch("/TravelHistory/RemoveEmployeestoTravel", {
+        fetch("/Travel/RemoveEmployeestoTravel", {
             method: "POST",
             headers: {
                 "Content-Type": "application/json; charset=utf-8",

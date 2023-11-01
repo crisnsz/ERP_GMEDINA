@@ -23,6 +23,13 @@
         <AssociationConnector Association="FARSIMANModel.FK_tbEmployees_tbTravelHistory_employee_ID" />
         <AssociationConnector Association="FARSIMANModel.FK_tbSubsidiaries_tbTravelHistory_subsidiary_ID" />
         <AssociationConnector Association="FARSIMANModel.FK_tbTransporters_tbTravelHistory_transporter_ID" />
+        <EntityTypeShape EntityType="FARSIMANModel.tbTravelDetail" Width="1.5" PointX="13.5" PointY="9" />
+        <EntityTypeShape EntityType="FARSIMANModel.tbTravel" Width="1.5" PointX="11.25" PointY="8.5" />
+        <AssociationConnector Association="FARSIMANModel.FK_tbEmployees_tbTravelDetail_employee_ID" />
+        <AssociationConnector Association="FARSIMANModel.FK_tbEmployees_tbTravels_employee_ID" />
+        <AssociationConnector Association="FARSIMANModel.FK_tbSubsidiaries_tbTravels_subsidiary_ID" />
+        <AssociationConnector Association="FARSIMANModel.FK_tbTransporters_tbTravels_transporter_ID" />
+        <AssociationConnector Association="FARSIMANModel.FK_tbTravels_tbTravelDetail_travel_ID" />
         </Diagram>
     </edmx:Diagrams>
   </edmx:Designer>

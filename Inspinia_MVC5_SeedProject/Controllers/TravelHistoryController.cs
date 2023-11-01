@@ -15,7 +15,7 @@ namespace ERP_GMEDINA.Controllers
     public class TravelHistoryController : Controller
     {
         private FARSIMANEntities db = new FARSIMANEntities();
-        public static List<tbEmployeesSubsidiary> ListEmployeesSubsidiaries { get; set; } = new List<tbEmployeesSubsidiary>();
+        public static List<tbTravelDetail> ListTravelDetail { get; set; } = new List<tbTravelDetail>();
 
         public static bool Modified { get; set; }
 
@@ -84,13 +84,9 @@ namespace ERP_GMEDINA.Controllers
                     db.SaveChanges();
 
 
-                    foreach (var employeesSubsidiary in ListEmployeesSubsidiaries)
+                    foreach (var TravelDetail in ListTravelDetail)
                     {
-
-                        //employeesSubsidiary.subsidiary_ID = tbTravelHistory.subsidiary_ID;
-
-
-                        db.tbEmployeesSubsidiaries.Add(employeesSubsidiary);
+                        db.tbTravelDetails.Add(TravelDetail);
                     }
 
                     db.SaveChanges();
@@ -182,18 +178,15 @@ namespace ERP_GMEDINA.Controllers
         [HttpPost]
         public JsonResult GetAddress(int subsidiary_ID)
         {
-            //tbSubsidiary response = new tbSubsidiary();
-            string response = string.Empty;
-            try
-            {
-                response = db.tbSubsidiaries.Where(x => x.subsidiary_ID == subsidiary_ID).FirstOrDefault().subsidiary_Direction.ToString();
+            tbSubsidiary subsidiary = db.tbSubsidiaries.Where(x => x.subsidiary_ID == subsidiary_ID).FirstOrDefault();
 
-                return Json(response, JsonRequestBehavior.AllowGet);
-            }
-            catch (Exception Ex)
+            if (subsidiary is null)
             {
-                return Json(Ex.Message.ToString(), JsonRequestBehavior.DenyGet);
+                return Json(string.Empty);
             }
+
+
+            return Json(subsidiary.subsidiary_Direction.ToString(), JsonRequestBehavior.AllowGet);
 
         }
 
@@ -229,11 +222,11 @@ namespace ERP_GMEDINA.Controllers
 
 
         [HttpPost]
-        public JsonResult AddEmployeestoTravel(tbEmployeesSubsidiary tbEmployeesSubsidiary)
+        public JsonResult AddEmployeestoTravel(tbTravelDetail TravelDetail)
         {
             try
             {
-                ListEmployeesSubsidiaries.Add(tbEmployeesSubsidiary);
+                ListTravelDetail.Add(TravelDetail);
 
                 Modified = true;
 
@@ -248,12 +241,12 @@ namespace ERP_GMEDINA.Controllers
 
 
         [HttpPost]
-        public JsonResult RemoveEmployeestoTravel(tbEmployeesSubsidiary tbEmployeesSubsidiary)
+        public JsonResult RemoveEmployeestoTravel(tbTravelDetail TravelDetail)
         {
             try
             {
 
-                ListEmployeesSubsidiaries.RemoveAll(item => item.employee_ID == tbEmployeesSubsidiary.employee_ID);
+                ListTravelDetail.RemoveAll(item => item.employee_ID == TravelDetail.employee_ID);
 
                 Modified = true;
 

@@ -41,23 +41,8 @@
                         <div class="form-horizontal">
                             @Html.ValidationSummary(true)
 
-
-                            <div class="form-group">
-                                @Html.LabelFor(model => model.subsidiary_ID, "transporter_ID", new { @class = "control-label col-md-2" })
-
-                                <div class="col-md-10">
-                                    @Html.DropDownList("subsidiary_ID", (IEnumerable<SelectListItem>)ViewBag.subsidiary_ID, "Seleccionar", new { @class = "form-control text-box single-line", @required = string.Empty })
-
-                                    @Html.ValidationMessageFor(model => model.subsidiary_ID)
-                                </div>
-                            </div>
-                            <div class="form-group">
-                                <label class="control-label col-md-2">Direccion de la Subsidiaria</label>
-
-                                <div class="col-md-10">
-                                    <input id="subsidiary_Address" type="text" class="form-control text-box single-line" readonly>
-                                </div>
-                            </div>
+                            @Html.HiddenFor(model => model.employee_ID, new { Value = ViewBag.employee_ID })
+                            <input type="text" id="transporter_fee" disabled readonly hidden />
 
                             <div class="form-group">
                                 @Html.LabelFor(model => model.transporter_ID, "transporter_ID", new { @class = "control-label col-md-2" })
@@ -68,17 +53,37 @@
                             </div>
 
                             <div class="form-group">
+                                @Html.LabelFor(model => model.subsidiary_ID, "transporter_ID", new { @class = "control-label col-md-2" })
+
+                                <div class="col-md-10">
+                                    @Html.DropDownList("subsidiary_ID", (IEnumerable<SelectListItem>)ViewBag.subsidiary_ID, "Seleccionar", new { @class = "form-control text-box single-line", @required = string.Empty, @disabled = string.Empty })
+
+                                    @Html.ValidationMessageFor(model => model.subsidiary_ID)
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <label class="control-label col-md-2">Direccion de la Subsidiaria</label>
+
+                                <div class="col-md-10">
+                                    <input id="subsidiary_Address" type="text" class="form-control text-box single-line" readonly disabled>
+                                </div>
+                            </div>
+
+
+                            <div class="form-group">
                                 @Html.LabelFor(model => model.employee_ID, "employee_ID", new { @class = "control-label col-md-2" })
                                 <div class="col-md-10">
-                                    @Html.DropDownList("employee_ID", String.Empty)
+                                    @Html.TextBox("registered_By", (String)ViewBag.employee_Name, new { @class = "form-control", @autocomplete = "off", @readonly = "readonly", @disabled = "disabled" })
+
                                     @Html.ValidationMessageFor(model => model.employee_ID)
                                 </div>
                             </div>
 
+
                             <div class="form-group">
                                 @Html.LabelFor(model => model.departure_Date_and_Time, new { @class = "control-label col-md-2" })
-                                <div class="col-md-10">
-                                    @Html.EditorFor(model => model.departure_Date_and_Time)
+                                <div class="col-md-3">
+                                    @Html.EditorFor(model => model.departure_Date_and_Time, new { htmlAttributes = new { @type = "datetime-local" } })
                                     @Html.ValidationMessageFor(model => model.departure_Date_and_Time)
                                 </div>
                             </div>
@@ -86,7 +91,7 @@
                             <div class="form-group">
                                 @Html.LabelFor(model => model.distance_Kilometers, new { @class = "control-label col-md-2" })
                                 <div class="col-md-10">
-                                    @Html.EditorFor(model => model.distance_Kilometers)
+                                    @Html.TextBoxFor(model => model.distance_Kilometers, new { @class = "form-control", @autocomplete = "off", @disabled = "disabled", @readonly = "readonly" })
                                     @Html.ValidationMessageFor(model => model.distance_Kilometers)
                                 </div>
                             </div>
@@ -94,10 +99,13 @@
                             <div class="form-group">
                                 @Html.LabelFor(model => model.total_travel_Cost, new { @class = "control-label col-md-2" })
                                 <div class="col-md-10">
-                                    @Html.EditorFor(model => model.total_travel_Cost)
+                                    @Html.TextBoxFor(model => model.total_travel_Cost, new { @class = "form-control", @autocomplete = "off", @disabled = "disabled", @readonly = "readonly" })
+
                                     @Html.ValidationMessageFor(model => model.total_travel_Cost)
                                 </div>
                             </div>
+
+
 
                             <div class="form-group ">
 

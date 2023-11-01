@@ -19,6 +19,7 @@ namespace ERP_GMEDINA.Models
         {
             this.tbEmployeesSubsidiaries = new HashSet<tbEmployeesSubsidiary>();
             this.tbTravelHistories = new HashSet<tbTravelHistory>();
+            this.tbTravels = new HashSet<tbTravel>();
         }
     
         public int subsidiary_ID { get; set; }
@@ -29,5 +30,7 @@ namespace ERP_GMEDINA.Models
         public virtual ICollection<tbEmployeesSubsidiary> tbEmployeesSubsidiaries { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<tbTravelHistory> tbTravelHistories { get; set; }
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
+        public virtual ICollection<tbTravel> tbTravels { get; set; }
     }
 }

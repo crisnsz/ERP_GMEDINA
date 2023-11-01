@@ -14,20 +14,26 @@ namespace ERP_GMEDINA.Controllers
     {
         private FARSIMANEntities db = new FARSIMANEntities();
 
-        public static List<tbEmployeesSubsidiary> ListEmployeesSubsidiaries { get; set; } = new List<tbEmployeesSubsidiary>();
+        private static List<tbEmployeesSubsidiary> ListEmployeesSubsidiaries { get; set; } = new List<tbEmployeesSubsidiary>();
 
 
         public static bool Modified { get; set; }
 
-
-        // GET: /Employee/
-        [SessionManager("Employee/Index")]
-        public ActionResult Index()
+        private void CleanVariables()
         {
 
             Modified = false;
 
             ListEmployeesSubsidiaries.Clear();
+
+        }
+        // GET: /Employee/
+        [SessionManager("Employee/Index")]
+        public ActionResult Index()
+        {
+
+            CleanVariables();
+
             return View(db.tbEmployees.ToList());
         }
 
@@ -44,11 +50,7 @@ namespace ERP_GMEDINA.Controllers
             }
 
 
-
-            Modified = false;
-
-            ListEmployeesSubsidiaries.Clear();
-
+            CleanVariables();
 
             tbEmployee tbEmployee = db.tbEmployees.Find(id);
             if (tbEmployee == null)
@@ -83,8 +85,8 @@ namespace ERP_GMEDINA.Controllers
         [SessionManager("Employee/Create")]
         public ActionResult Create()
         {
-            ListEmployeesSubsidiaries.Clear();
-            Modified = false;
+
+            CleanVariables();
 
             ViewBag.Positions = new SelectList(db.tbPositions, "position_ID", "position_Name");
 
@@ -134,7 +136,7 @@ namespace ERP_GMEDINA.Controllers
 
                     return RedirectToAction("Index");
                 }
-                catch (Exception ex)
+                catch (Exception)
                 {
                     return View(tbEmployee);
                 }
@@ -150,9 +152,9 @@ namespace ERP_GMEDINA.Controllers
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
             }
 
-            Modified = false;
 
-            ListEmployeesSubsidiaries.Clear();
+            CleanVariables();
+
 
             tbEmployee tbEmployee = db.tbEmployees.Find(id);
 
@@ -308,29 +310,18 @@ namespace ERP_GMEDINA.Controllers
 
         public List<tbSubsidiary> GetSubsidiaries(int Employee_ID)
         {
-            List<tbSubsidiary> SubsidiariesList = new List<tbSubsidiary>();
-            try
-            {
-                var tbEmployeesSubsidiaries = db.tbEmployeesSubsidiaries.Where(x => x.employee_ID == Employee_ID);
 
-                SubsidiariesList = db.tbSubsidiaries.Where(x => !tbEmployeesSubsidiaries.Select(y => y.subsidiary_ID).Contains(x.subsidiary_ID)).ToList();
-            }
-            catch (Exception Ex)
-            {
-            }
+            var tbEmployeesSubsidiaries = db.tbEmployeesSubsidiaries.Where(x => x.employee_ID == Employee_ID);
+
+            List<tbSubsidiary> SubsidiariesList = db.tbSubsidiaries.Where(x => !tbEmployeesSubsidiaries.Select(y => y.subsidiary_ID).Contains(x.subsidiary_ID)).ToList();
+
             return SubsidiariesList;
         }
 
         public List<tbEmployeesSubsidiary> GetEmployeesSubsidiary()
         {
-            List<tbEmployeesSubsidiary> EmployeesSubsidiaries = new List<tbEmployeesSubsidiary>();
-            try
-            {
-                EmployeesSubsidiaries = db.tbEmployeesSubsidiaries.ToList();
-            }
-            catch (Exception Ex)
-            {
-            }
+            List<tbEmployeesSubsidiary> EmployeesSubsidiaries = db.tbEmployeesSubsidiaries.ToList();
+
             return EmployeesSubsidiaries;
         }
 

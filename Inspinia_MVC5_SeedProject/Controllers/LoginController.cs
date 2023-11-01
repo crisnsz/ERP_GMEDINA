@@ -13,7 +13,6 @@ namespace ERP_GMEDINA.Controllers
     {
         FARSIMANEntities db = new FARSIMANEntities();
 
-        Helpers Function = new Helpers();
         Helpers Help = new Helpers();
 
         // GET: Login
@@ -89,7 +88,7 @@ namespace ERP_GMEDINA.Controllers
                     return View(tbUser);
                 }
             }
-            catch (Exception Ex)
+            catch (Exception)
             {
                 return View(tbUser);
             }

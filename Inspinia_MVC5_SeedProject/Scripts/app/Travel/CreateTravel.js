@@ -114,14 +114,8 @@ dropdown.addEventListener("change", async function () {
         });
 
 
-    if (arrayEmployseesAdded.length > 0) {
-        let kmSum = 0;
-        for (let row of arrayEmployseesAdded) {
-
-            // Suma el valor al total
-            kmSum += row[1];
-        }
-        totalCostField.value = kmSum * fee
+    if (tableEmployessAdded.rows().count() > 0) {
+        totalCostField.value = distance.value * fee
     }
 
     // Check if the selected value is not an empty string
@@ -461,9 +455,6 @@ $("#EmployessAvalaible tbody").on("click", "input#btnAddEmployee", async functio
 
             updateDistance(add, Kilometers)
 
-            arrayEmployseesAdded.push([Employee_ID, Kilometers]);
-
-            console.log(arrayEmployseesAdded)
             //#DelSubsidiary
             data[4] = '<input name="id02" type="button" id="btnDelEmployee" value="&#9668; Quitar &nbsp;&nbsp;" class="btn btn-primary btn-xs">'
 
@@ -524,14 +515,6 @@ $("#EmployessAdded tbody").on("click", "input#btnDelEmployee", async function ()
 
     RemoveEmployeeToTravelPromise(Employee_ID)
         .then(response => {
-
-
-            arrayEmployseesAdded = arrayEmployseesAdded.filter(function (row) {
-                return row[0] !== Employee_ID;
-            });
-
-            console.log("New Array");
-            console.log(arrayEmployseesAdded);
 
 
             updateTotalCost(subtract, Kilometers)

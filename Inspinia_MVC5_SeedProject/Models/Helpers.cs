@@ -9,7 +9,7 @@ namespace ERP_GMEDINA.Models
     public class Helpers
     {
 
-        FARSIMANEntities db = new FARSIMANEntities();
+        readonly FARSIMANEntities db = new FARSIMANEntities();
         private IAuthenticationManager AuthenticationManager
         {
             get
@@ -39,77 +39,64 @@ namespace ERP_GMEDINA.Models
             HttpContext.Current.Session["UserEstado"] = null;
         }
 
-        public void ValidateUser(string sPantalla,out bool UserState, out bool IsAdmin, out int UserPosition, out bool AccessPantalla)
+        public void ValidateUser(string sPantalla, out bool UserState, out bool IsAdmin, out int UserPosition, out bool AccessPantalla)
         {
             UserState = Convert.ToBoolean(HttpContext.Current.Session["UserEstado"]);
             IsAdmin = Convert.ToBoolean(HttpContext.Current.Session["UserLoginIsAdmin"]);
             UserPosition = Convert.ToInt32(HttpContext.Current.Session["UserPosition"]);
             AccessPantalla = GetUserAccessPosition(sPantalla);
 
-           
+
         }
 
 
         public bool GetUserAccessPosition(string sPantalla)
         {
             bool Retorno = false;
-            try
+            int UserPositionID = Convert.ToInt32(HttpContext.Current.Session["UserPosition"]);
+            if (!Convert.ToBoolean(HttpContext.Current.Session["UserLoginEsAdmin"]))
             {
-                int UserPositionID = Convert.ToInt32(HttpContext.Current.Session["UserPosition"]);
-                if (!Convert.ToBoolean(HttpContext.Current.Session["UserLoginEsAdmin"]))
-                {
 
-                    //var listUserAccess = HttpContext.Current.Session["UserLoginRols"];
 
-                    var listPositionAccess = (from position in db.tbPositions
-                                 join access in db.tbAccesses on position.position_ID equals access.position_ID
-                                 join obj in db.tbObjects on access.object_ID equals obj.object_ID
-                                 where position.position_ID == UserPositionID
-                                 select new
-                                 {
-                                     PositionName = position.position_Name,
-                                     ObjectName = obj.object_Name,
-                                     ObjectReference = obj.object_Reference
-                                 }).ToList();
+                var listPositionAccess = (from position in db.tbPositions
+                                          join access in db.tbAccesses on position.position_ID equals access.position_ID
+                                          join obj in db.tbObjects on access.object_ID equals obj.object_ID
+                                          where position.position_ID == UserPositionID
+                                          select new
+                                          {
+                                              PositionName = position.position_Name,
+                                              ObjectName = obj.object_Name,
+                                              ObjectReference = obj.object_Reference
+                                          }).ToList();
 
 
 
-                    //var list = (IEnumerable<SDP_Acce_GetUserRols_Result>)HttpContext.Current.Session["UserLoginRols"];
-                    var BuscarList = listPositionAccess.Where(x => x.ObjectReference == sPantalla);
-                    int Conteo = BuscarList.Count();
+                var BuscarList = listPositionAccess.Where(x => x.ObjectReference == sPantalla);
+                int Conteo = BuscarList.Count();
 
-                    if (Conteo > 0)
-                        Retorno = true;
-                }
-                else
+                if (Conteo > 0)
                     Retorno = true;
+            }
+            else
+                Retorno = true;
 
-            }
-            catch (Exception Ex)
-            {
-            }
             return Retorno;
         }
-        
+
         public bool GetUserLogin()
         {
             bool Estado = false;
-            try
-            {
-                var isLogged = HttpContext.Current.Session["UserLogin"];
-                if (isLogged == null)
-                {
-                    return Estado;
-                }
 
-                int user = (int)HttpContext.Current.Session["UserLogin"];
-                if (user != 0)
-                    Estado = true;
-            }
-            catch (Exception)
+            var isLogged = HttpContext.Current.Session["UserLogin"];
+            if (isLogged == null)
             {
-
+                return Estado;
             }
+
+            int user = (int)HttpContext.Current.Session["UserLogin"];
+            if (user != 0)
+                Estado = true;
+
             return Estado;
         }
 
@@ -118,31 +105,22 @@ namespace ERP_GMEDINA.Models
         {
             int user = 0;
             List<tbUser> UsuarioList = new List<tbUser>();
-            try
-            {
-                user = (int)HttpContext.Current.Session["UserLogin"];
-                if (user != 0)
-                {
-                    UsuarioList = db.tbUsers.Where(s => s.user_ID == user).ToList();
-                }
-            }
-            catch (Exception Ex)
-            {
 
+            user = (int)HttpContext.Current.Session["UserLogin"];
+            if (user != 0)
+            {
+                UsuarioList = db.tbUsers.Where(s => s.user_ID == user).ToList();
             }
+
             return UsuarioList;
         }
 
         public int GetUser()
         {
             int user = 0;
-            try
-            {
-                user = (int)HttpContext.Current.Session["UserLogin"];
-            }
-            catch (Exception Ex)
-            {
-            }
+
+            user = (int)HttpContext.Current.Session["UserLogin"];
+
             return user;
         }
 

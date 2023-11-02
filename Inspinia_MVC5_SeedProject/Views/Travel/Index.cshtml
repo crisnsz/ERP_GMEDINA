@@ -5,12 +5,13 @@
     Layout = "~/Views/Shared/_Layout.cshtml";
 }
 
+
 <div class="row wrapper border-bottom white-bg page-heading">
     <div class="col-sm-4">
-        <h2>Index</h2>
+        <h2>Listado de Viajes</h2>
         <ol class="breadcrumb">
             <li class="active">
-                <strong>tbTravel</strong>
+                <strong>Viajes</strong>
             </li>
         </ol>
     </div>
@@ -78,8 +79,8 @@
                                     </td>
                                     <td>
                                         @Html.ActionLink("Details", "Details", new { id = item.travel_ID }, new { @class = "btn btn-primary btn-sm" })
-                                        @Html.ActionLink("Edit", "Edit", new { id = item.travel_ID }, new { @class = "btn btn-white btn-sm" })
-                                        @Html.ActionLink("Delete", "Delete", new { id = item.travel_ID }, new { @class = "btn btn-white btn-sm" })
+                                        @Html.ActionLink("Edit", "Edit", new { id = item.travel_ID }, new { @class = "btn btn-info btn-sm" })
+                                        @Html.ActionLink("Delete", "Delete", new { id = item.travel_ID }, new { @class = "btn btn-danger btn-sm" })
                                     </td>
                                 </tr>
                             }

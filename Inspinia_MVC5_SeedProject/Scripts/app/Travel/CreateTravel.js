@@ -540,12 +540,6 @@ function RemoveEmployeeToTravelPromise(id) {
 
     return new Promise((resolve, reject) => {
 
-
-        let TravelDetail = {
-            employee_ID: id
-        };
-
-
         fetch("/Travel/RemoveEmployeeTravel", {
             method: "POST",
             headers: {

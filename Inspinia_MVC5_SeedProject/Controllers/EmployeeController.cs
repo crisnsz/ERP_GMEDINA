@@ -12,7 +12,7 @@ namespace ERP_GMEDINA.Controllers
 {
     public class EmployeeController : Controller
     {
-        private FARSIMANEntities db = new FARSIMANEntities();
+        private readonly FARSIMANEntities db = new FARSIMANEntities();
 
         private static List<tbEmployeesSubsidiary> ListEmployeesSubsidiaries { get; set; } = new List<tbEmployeesSubsidiary>();
 
@@ -114,15 +114,6 @@ namespace ERP_GMEDINA.Controllers
 
                     db.SaveChanges();
 
-                    //var newEmployeesPosition = new tbEmployeesPosition
-                    //{
-                    //    position_ID = SelectedValue,
-                    //    employee_ID = tbEmployee.employee_ID
-                    //};
-
-                    //db.tbEmployeesPositions.Add(newEmployeesPosition);
-
-                    //db.SaveChanges();
 
                     foreach (var employeesSubsidiary in ListEmployeesSubsidiaries)
                     {
@@ -248,7 +239,7 @@ namespace ERP_GMEDINA.Controllers
 
                     return RedirectToAction("Index");
                 }
-                catch (Exception ex)
+                catch (Exception)
                 {
                     return View(tbEmployee);
                 }

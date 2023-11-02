@@ -10,20 +10,12 @@
     EmployeeController employeeController = new EmployeeController();
     List<ERP_GMEDINA.Models.tbSubsidiary> tbSubsidiaries = employeeController.GetSubsidiaries();
     List<ERP_GMEDINA.Models.tbPosition> tbPositions = employeeController.GetPositions();
-    
+
 }
 
 <div class="row wrapper border-bottom white-bg page-heading">
     <div class="col-sm-4">
-        <h2>Registrar</h2>
-        <ol class="breadcrumb">
-            <li>
-                @Html.ActionLink("Volver", "Index", null, new { @class = "btn btn-primary" })
-            </li>
-            <li class="active">
-                <strong>Registrar Empleado</strong>
-            </li>
-        </ol>
+        <h2>Registrar Empleado</h2>
     </div>
     <div class="col-sm-8">
         <div class="title-action">
@@ -32,12 +24,13 @@
     </div>
 </div>
 
+
 <div class="wrapper wrapper-content animated fadeInRight">
     <div class="row">
         <div class="col-lg-12">
             <div class="ibox float-e-margins">
                 <div class="ibox-title">
-                    <h5>Registrar Empleado</h5>
+                    <h5>Registrar Viaje</h5>
                 </div>
                 <div class="ibox-content">
 
@@ -75,71 +68,89 @@
 
                             @*<input type="button" value="Abrir Modal" class="btn btn-primary" data-toggle="modal" data-target="#modalKM"/>*@
 
-                            <div class="form-group ">
 
-                                <div class="col-md-5">
-                                    <label class="col-md-10" style="text-align:center">Sucursales Disponibles</label>
-                                    <table id="NoAdded" class="table table table-striped table-bordered dataTable no-footer" style="width:100%">
-                                        <thead>
-                                            <tr>
-                                                <th hidden style="background-color:#1ab394;color:white">
-                                                    ID
-                                                </th>
-                                                <th id="NoAssign" style="background-color:#1ab394;color:white">
-                                                    Nombre
-                                                </th>
-                                                <th style="background-color: #1ab394; color: white">
-                                                    @*@Html.DisplayNameFor(model => model.tbEmployeesSubsidiaries)*@
-                                                    Direccion
-                                                </th>
-                                                <th style="background-color:#1ab394;color:white"></th>
-                                            </tr>
-                                        </thead>
-                                        <tbody>
-                                            @foreach (var item in tbSubsidiaries)
-                                            {
-                                                <tr data-id="@item.subsidiary_ID">
-                                                    <td hidden>
-                                                        @Html.DisplayFor(modelItem => item.subsidiary_ID)
-                                                    </td>
-                                                    <td>
-                                                        @Html.DisplayFor(modelItem => item.subsidiary_Name)
-                                                    </td>
-                                                    <td>
-                                                        @Html.DisplayFor(modelItem => item.subsidiary_Direction)
-                                                    </td>
-                                                    <td>
-                                                        <input name="id02" type="button" id="AddSubsidiary" class="btn btn-primary btn-xs" value="Agregar &#9658" />
-                                                    </td>
+                            <div class="row">
+                                <div class="col-lg-12">
+                                    <div class="ibox float-e-margins">
 
-                                                </tr>
-                                            }
-                                        </tbody>
-                                    </table>
-                                </div>
+                                        <div class="ibox-content" id="Crear">
 
-                                <div class="col-md-5">
-                                    <label class="col-md-10" style="text-align:center">Sucursales Asignadas</label>
-                                    <table id="Added" class="table table table-striped table-bordered dataTable no-footer" style="width:100%">
-                                        <thead>
-                                            <tr>
-                                                <th hidden style="background-color:#1ab394;color:white">ID</th>
-                                                <th id="Assign" style="background-color:#1ab394;color:white">Nombre</th>
-                                                <th style="background-color: #1ab394; color: white">Direccion</th>
-                                                <th style="background-color:#1ab394;color:white">Distancia(KM)</th>
-                                                <th style="background-color:#1ab394;color:white"></th>
-                                            </tr>
-                                        </thead>
-                                        <tbody></tbody>
-                                    </table>
+                                            <div id="EmployessAddedValidation" class="validation-error">
+                                                <p style="color:red">
+                                                    <span class="field-validation-valid" data-valmsg-for="EmployessAvalaible" data-valmsg-replace="true"></span>
+                                                </p>
+                                            </div>
+                                            <div class="row">
+                                                <div class="col-md-6">
+                                                    <label class="col-md-10" style="text-align:center">Sucursales Disponibles</label>
+                                                    <table id="NoAdded" class="table table table-striped table-bordered dataTable no-footer" style="width:100%">
+                                                        <thead>
+                                                            <tr>
+                                                                <th hidden style="background-color:#1ab394;color:white">
+                                                                    ID
+                                                                </th>
+                                                                <th id="NoAssign" style="background-color:#1ab394;color:white">
+                                                                    Nombre
+                                                                </th>
+                                                                <th style="background-color: #1ab394; color: white">
+                                                                    Direccion
+                                                                </th>
+                                                                <th style="background-color:#1ab394;color:white"></th>
+                                                            </tr>
+                                                        </thead>
+                                                        <tbody>
+                                                            @foreach (var item in tbSubsidiaries)
+                                                            {
+                                                                <tr data-id="@item.subsidiary_ID">
+                                                                    <td hidden>
+                                                                        @Html.DisplayFor(modelItem => item.subsidiary_ID)
+                                                                    </td>
+                                                                    <td>
+                                                                        @Html.DisplayFor(modelItem => item.subsidiary_Name)
+                                                                    </td>
+                                                                    <td>
+                                                                        @Html.DisplayFor(modelItem => item.subsidiary_Direction)
+                                                                    </td>
+                                                                    <td>
+                                                                        <input name="id02" type="button" id="AddSubsidiary" class="btn btn-primary btn-xs" value="Agregar &#9658" />
+                                                                    </td>
 
+                                                                </tr>
+                                                            }
+                                                        </tbody>
+                                                    </table>
+
+
+                                                </div>
+                                                <div class="col-md-6">
+
+                                                    <label class="col-md-10" style="text-align:center">Sucursales Asignadas</label>
+                                                    <table id="Added" class="table table table-striped table-bordered dataTable no-footer" style="width:100%">
+                                                        <thead>
+                                                            <tr>
+                                                                <th hidden style="background-color:#1ab394;color:white">ID</th>
+                                                                <th id="Assign" style="background-color:#1ab394;color:white">Nombre</th>
+                                                                <th style="background-color: #1ab394; color: white">Direccion</th>
+                                                                <th style="background-color:#1ab394;color:white">Distancia(KM)</th>
+                                                                <th style="background-color:#1ab394;color:white"></th>
+                                                            </tr>
+                                                        </thead>
+                                                        <tbody></tbody>
+                                                    </table>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
                                 </div>
                             </div>
-                            <div class="form-group">
-                                <div class="col-md-offset-2 col-md-10">
-                                    <input type="submit" value="Registrar" class="btn btn-primary" />
-                                    @Html.ActionLink("Cancelar", "Index", null, new { @class = "btn btn-white" })
-                                </div>
+                            <div class="form-horizontal">
+                                <fieldset class="box-border">
+                                    @*botones*@
+                                    <div class="col-md-offset-5 col-md-10">
+                                        <input type="submit" value="Registrar" class="btn btn-primary" />
+                                        @Html.ActionLink("Cancelar", "Index", null, new { @class = "btn btn-white" })
+                                    </div>
+                                </fieldset>
                             </div>
                         </div>
                     }

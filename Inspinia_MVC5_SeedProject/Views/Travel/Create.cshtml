@@ -83,14 +83,14 @@
                                 <div class="form-group">
                                     @Html.LabelFor(model => model.distance_Kilometers, new { @class = "control-label col-md-2" })
                                     <div class="col-md-4">
-                                        @Html.TextBoxFor(model => model.distance_Kilometers, new { @class = "form-control", @autocomplete = "off", @disabled = "disabled", @readonly = "readonly" })
+                                        @Html.TextBoxFor(model => model.distance_Kilometers, new { @class = "form-control", @autocomplete = "off", @readonly = "readonly" })
                                         @Html.ValidationMessageFor(model => model.distance_Kilometers)
                                     </div>
 
                                     @Html.LabelFor(model => model.total_travel_Cost, new { @class = "control-label col-md-2" })
 
                                     <div class="col-md-4">
-                                        @Html.TextBoxFor(model => model.total_travel_Cost, new { @class = "form-control", @autocomplete = "off", @disabled = "disabled", @readonly = "readonly" })
+                                        @Html.TextBoxFor(model => model.total_travel_Cost, new { @class = "form-control", @autocomplete = "off", @readonly = "readonly" })
 
                                         @Html.ValidationMessageFor(model => model.total_travel_Cost)
                                     </div>

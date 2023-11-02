@@ -17,7 +17,7 @@ namespace ERP_GMEDINA.Controllers
 {
     public class TravelController : Controller
     {
-        private FARSIMANEntities db = new FARSIMANEntities();
+        private readonly FARSIMANEntities db = new FARSIMANEntities();
 
         public static List<tbTravelDetail> ListTravelDetails { get; set; } = new List<tbTravelDetail>();
         private static bool Modified { get; set; }
@@ -160,19 +160,8 @@ namespace ERP_GMEDINA.Controllers
                         return View(tbTravel);
                     }
 
-                    //foreach (var employeesSubsidiary in ListTravelDetails)
-                    //{
-
-                    //    employeesSubsidiary.travel_ID = tbTravel.travel_ID;
-
-                    //    db.tbTravelDetails.Add(employeesSubsidiary);
-                    //} 
-
 
                     var Transportists = db.tbTransporters.Find(tbTravel.transporter_ID);
-
-
-                    
 
                     if (Transportists == null)
                     {
@@ -206,7 +195,7 @@ namespace ERP_GMEDINA.Controllers
 
                     return RedirectToAction("Index");
                 }
-                catch (Exception ex)
+                catch (Exception)
                 {
                     return View(tbTravel);
                 }
@@ -458,8 +447,6 @@ namespace ERP_GMEDINA.Controllers
                            where travelDetail.employee_ID == Employee
                               && DbFunctions.TruncateTime(travel.departure_Date_and_Time) == today
                           select travelDetail.travel_ID;
-
-                var listQuery = query.ToList();
 
                 hasRowsToday = query.Any();
 

@@ -61,9 +61,6 @@ namespace ERP_GMEDINA.Controllers
 
 
 
-
-
-
         // GET: /Travel/
 
         [SessionManager("TravelHistory/Index")]
@@ -112,7 +109,15 @@ namespace ERP_GMEDINA.Controllers
             ViewBag.subsidiary_ID = new SelectList(db.tbSubsidiaries, "subsidiary_ID", "subsidiary_Name");
             ViewBag.transporter_ID = new SelectList(db.tbTransporters, "transporter_ID", "transporter_Name");
 
-            return View();
+
+            tbTravel tbTravel = new tbTravel
+            {
+                distance_Kilometers = 0,
+                total_travel_Cost = 0,
+
+            };
+
+            return View(tbTravel);
         }
 
         // POST: /Travel/Create
@@ -128,8 +133,10 @@ namespace ERP_GMEDINA.Controllers
 
             GetUserInformation();
 
-            if (!ModelState.IsValid)
+            if (!ModelState.IsValid || ListEmployees.Count <= 0)
             {
+                GetUserInformation();
+
                 ViewBag.employee_ID = EmployeeInfo.employee_ID;
                 ViewBag.employee_Name = EmployeeInfo.employee_Name;
 
@@ -355,7 +362,7 @@ namespace ERP_GMEDINA.Controllers
         }
 
         [HttpPost]
-        public JsonResult AddEmployeestoTravel(int Employee)
+        public JsonResult AddEmployeeTravel(int Employee)
         {
             try
             {
@@ -394,7 +401,7 @@ namespace ERP_GMEDINA.Controllers
         }
 
         [HttpPost]
-        public JsonResult RemoveEmployeestoTravel(int Employee)
+        public JsonResult RemoveEmployeeTravel(int Employee)
         {
             try
             {
@@ -451,6 +458,8 @@ namespace ERP_GMEDINA.Controllers
                            where travelDetail.employee_ID == Employee
                               && DbFunctions.TruncateTime(travel.departure_Date_and_Time) == today
                           select travelDetail.travel_ID;
+
+                var listQuery = query.ToList();
 
                 hasRowsToday = query.Any();
 

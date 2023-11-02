@@ -3,20 +3,27 @@
 let tableEmployessAdded;
 
 const dropdown = document.getElementById("transporter_ID");
+const transporterFee = document.getElementById("transporter_fee");
+
 const dropdownBlocked = document.getElementById("subsidiary_ID");
+
+const date = document.getElementById("departure_Date_and_Time");
 
 const distance = document.getElementById("distance_Kilometers");
 const totalCostField = document.getElementById("total_travel_Cost");
 
 const add = "add";
 const subtract = "subtract";
-document.addEventListener("DOMContentLoaded", function () {
 
+
+let arrayEmployseesAdded = [];
+
+document.addEventListener("DOMContentLoaded", function () {
 
     // Inicializar las tablas con DataTables
     tableEmployessAvalaible = $('#EmployessAvalaible').DataTable({
         "lengthChange": false,
-
+        "pageLength": 5,// Set the number of rows per page
         "order": [[0, 'asc']],
         "columnDefs": [{
             "targets": [0],
@@ -39,9 +46,9 @@ document.addEventListener("DOMContentLoaded", function () {
         }
     });
 
-    // Inicializar las tablas con DataTables
     tableEmployessAdded = $('#EmployessAdded').DataTable({
         "lengthChange": false,
+        "pageLength": 5,// Set the number of rows per page
         "order": [[0, 'asc']],
         "columnDefs": [{
             "targets": [0],
@@ -68,48 +75,56 @@ document.addEventListener("DOMContentLoaded", function () {
 
 
     let subsidiary_ID = document.getElementById("subsidiary_ID").value;
-    console.log(subsidiary_ID);
 
     if (subsidiary_ID != '' && subsidiary_ID != null && subsidiary_ID != undefined) {
         loadSubsidaryInfo(subsidiary_ID);
     }
 
-    distance.value = 0;
-    totalCostField.value = 0;
 
+    cleanValue();
 
+    // Format the current date as a string in "yyyy-MM-dd" format
+    let formattedDate = `${new Date().toISOString().slice(0, 10)}T${new Date().toTimeString().slice(0, 5)}`;
 
+    // Set the value of the input element to the formatted date
+    date.value = formattedDate;
 });
 
 
 // Add an event listener to the dropdown list
-dropdown.addEventListener("change", function () {
-
+dropdown.addEventListener("change", async function () {
     const selectedOption = dropdown.options[dropdown.selectedIndex];
     const transporter_ID = selectedOption.value;
-    const transporter = document.getElementById("transporter_fee");
-
-    console.log(`Transporter ${transporter_ID}`);
+    let fee = transporterFee.value;
 
 
-    if (transporter_ID == 'Transporter') {
-        transporter.value = '';
+    if (transporter_ID === '') {
+        cleanValue();
+        return;
     }
 
-    getTransporterInfo(transporter_ID)
-        .then(res => {
-            transporter.value = res.transporter_Fee
 
-            console.log(res);
+    await getTransporterInfo(transporter_ID)
+        .then(res => {
+            transporterFee.value = res.transporter_Fee;
+            fee = res.transporter_Fee;
         })
         .catch(error => {
             console.error(error);
         });
 
 
+    if (arrayEmployseesAdded.length > 0) {
+        let kmSum = 0;
+        for (let row of arrayEmployseesAdded) {
+
+            // Suma el valor al total
+            kmSum += row[1];
+        }
+        totalCostField.value = kmSum * fee
+    }
 
     // Check if the selected value is not an empty string
-
     if (dropdown.value !== "") {
         // Enable the input field
         dropdownBlocked.disabled = false;
@@ -118,11 +133,37 @@ dropdown.addEventListener("change", function () {
         dropdownBlocked.disabled = true;
     }
 
-
-
-
-
 });
+
+function cleanValue() {
+    transporterFee.value = 0;
+    totalCostField.value = 0;
+}
+
+function validate_Form() {
+
+
+    //Check if the selected date is less than current date.
+    let selectedDate = new Date(date.value);
+    let currentDate = new Date();
+
+    if (selectedDate < currentDate) {
+        alert("Fecha Incorrecta o menor que la actual")
+        return false;
+    }
+
+
+    //Check if there are employees on the trip.
+    let employessAddedValidation = document.getElementById('EmployessAddedValidation');
+
+    if (tableEmployessAdded.rows().count() === 0) {
+        employessAddedValidation.querySelector('span').textContent = "No hay empleados en el viaje";
+        return false;
+    }
+
+
+    return true;
+}
 
 function getTransporterInfo(id) {
     return new Promise((resolve, reject) => {
@@ -148,8 +189,6 @@ function getTransporterInfo(id) {
             });
     });
 }
-
-
 
 function EmployeeTravelToday(employee_ID) {
     return new Promise((resolve, reject) => {
@@ -177,7 +216,6 @@ function EmployeeTravelToday(employee_ID) {
 
 
 }
-
 
 function setDate() {
     // Get the current date and time
@@ -212,7 +250,6 @@ function loadSubsidaryInfo(subsidiary_ID) {
     getAddressPromise(subsidiary_ID)
         .then(response => {
             document.getElementById("subsidiary_Address").value = response;
-            console.log(response);
         })
         .catch(error => {
             console.error(error);
@@ -251,7 +288,6 @@ function loadSubsidaryInfo(subsidiary_ID) {
             // Draw the DataTable to display the data
             tableEmployessAvalaible.draw();
 
-            console.log(res);
         })
         .catch(error => {
             console.error(error);
@@ -304,7 +340,6 @@ function getAddressPromiseOld(id) {
 }
 
 function getEmployeesBySubsidiaryPromise(id) {
-    console.log(id);
     if (id == null || id === undefined) {
         // TODO document why this block is empty
         return;
@@ -349,13 +384,9 @@ function updateTotalCost(operation, km) {
 
     const transporter = document.getElementById("transporter_fee");
 
-
     let transporterfee = parseFloat(transporter.value); // Convert to a number if needed
 
     km = parseFloat(km);
-
-
-    console.log(`Add ${totalCostField.value}, ${transporterfee}, ${km}`);
 
 
     if (isNaN(transporterfee) && isNaN(km)) {
@@ -364,6 +395,7 @@ function updateTotalCost(operation, km) {
         return;
     }
 
+
     let newTotalCost = transporterfee * km;
 
     if (totalCostField.value === null || totalCostField.value === undefined || totalCostField.value.trim() === '') {
@@ -371,32 +403,23 @@ function updateTotalCost(operation, km) {
         return;
     }
 
-    //totalCostField.value = parseFloat(totalCostField.value) + newTotalCost;
-
-    //totalCostField.value = sumOrSubtract(add, parseFloat(totalCostField.value), newTotalCost);
-
-
     if (operation === add) {
         totalCostField.value = parseFloat(totalCostField.value) + newTotalCost;
     } else if (operation === subtract) {
         totalCostField.value = parseFloat(totalCostField.value) - newTotalCost;
     }
+
+
 }
-
-
 
 function updateDistance(operation, km) {
     km = parseFloat(km);
 
     let distanceValue = parseFloat(distance.value); // Convert to a number if needed
 
-    console.log(`Distance: ${km}`);
-    console.log(`txtDistance: ${distanceValue}`);
-
 
 
     if (distance.value === null || distance.value === undefined || distance.value.trim() === '') {
-        console.log(`Is Empty: ${km}`);
         distance.value = km;
         return;
     }
@@ -406,11 +429,10 @@ function updateDistance(operation, km) {
     } else if (operation === subtract) {
         distance.value = distanceValue - km;
     }
-    //distance.value = distanceValue + km;
 }
 
 
-$("#EmployessAvalaible tbody").on("click", "input#btnAddEmployee", function () {
+$("#EmployessAvalaible tbody").on("click", "input#btnAddEmployee", async function () {
 
     let data = tableEmployessAvalaible.row($(this).parents("tr")).data();
     let Employee_ID = data[0];
@@ -423,25 +445,25 @@ $("#EmployessAvalaible tbody").on("click", "input#btnAddEmployee", function () {
         return;
     }
 
-    EmployeeTravelToday(Employee_ID)
-        .then(res => {
-            console.log(res);
-        })
-        .catch(error => {
-            console.error(error);
-        });
+    const employeeTravelToday = await EmployeeTravelToday(Employee_ID);
 
+
+    if (employeeTravelToday) {
+        alert("Este empleado ya tiene un viaje registrado el día de hoy!");
+        return;
+    }
 
 
     AddEmployeeToTravelPromise(Employee_ID)
         .then(response => {
 
-            console.log(response); // Data fetched from https://example.com/api/data
-
             updateTotalCost(add, Kilometers)
 
             updateDistance(add, Kilometers)
 
+            arrayEmployseesAdded.push([Employee_ID, Kilometers]);
+
+            console.log(arrayEmployseesAdded)
             //#DelSubsidiary
             data[4] = '<input name="id02" type="button" id="btnDelEmployee" value="&#9668; Quitar &nbsp;&nbsp;" class="btn btn-primary btn-xs">'
 
@@ -464,12 +486,7 @@ $("#EmployessAvalaible tbody").on("click", "input#btnAddEmployee", function () {
 
 function AddEmployeeToTravelPromise(id) {
     return new Promise((resolve, reject) => {
-        let TravelDetail = {
-            employee_ID: id
-        };
-
-
-        fetch("/Travel/AddEmployeestoTravel", {
+        fetch("/Travel/AddEmployeeTravel", {
             method: "POST",
             headers: {
                 "Content-Type": "application/json; charset=utf-8",
@@ -497,7 +514,7 @@ function AddEmployeeToTravelPromise(id) {
 
 
 
-$("#EmployessAdded tbody").on("click", "input#btnDelEmployee", function () {
+$("#EmployessAdded tbody").on("click", "input#btnDelEmployee", async function () {
     let data = tableEmployessAdded.row($(this).parents("tr")).data();
     let Employee_ID = data[0];
     let Kilometers = (data[3])
@@ -508,7 +525,13 @@ $("#EmployessAdded tbody").on("click", "input#btnDelEmployee", function () {
     RemoveEmployeeToTravelPromise(Employee_ID)
         .then(response => {
 
-            console.log(response); // Data fetched from https://example.com/api/data
+
+            arrayEmployseesAdded = arrayEmployseesAdded.filter(function (row) {
+                return row[0] !== Employee_ID;
+            });
+
+            console.log("New Array");
+            console.log(arrayEmployseesAdded);
 
 
             updateTotalCost(subtract, Kilometers)
@@ -524,16 +547,11 @@ $("#EmployessAdded tbody").on("click", "input#btnDelEmployee", function () {
             tableEmployessAdded.row($(this).parents("tr")).remove().draw();
 
             tableEmployessAvalaible.order([0, 'asc']).draw();
-
         })
         .catch(error => {
             console.error(error); // Request timed out
         });
 });
-
-
-
-
 
 function RemoveEmployeeToTravelPromise(id) {
 
@@ -545,7 +563,7 @@ function RemoveEmployeeToTravelPromise(id) {
         };
 
 
-        fetch("/Travel/RemoveEmployeestoTravel", {
+        fetch("/Travel/RemoveEmployeeTravel", {
             method: "POST",
             headers: {
                 "Content-Type": "application/json; charset=utf-8",
@@ -568,8 +586,4 @@ function RemoveEmployeeToTravelPromise(id) {
     });
 }
 
-//$("#EmployessAvalaible tbody").on("click", "input#addToTravel", function () {
 
-//    let data = tableNoAdded.row($(this).parents("tr")).data();
-//    console.log(data);
-//})

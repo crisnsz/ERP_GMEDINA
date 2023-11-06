@@ -30,6 +30,16 @@ namespace ERP_GMEDINA.Controllers
 
         #region ActionResult
 
+        public ActionResult ShowReport()
+        {
+            var reportData = GetReportData(); // Retrieve your data source
+            ReportViewer1.LocalReport.DataSources.Add(new ReportDataSource("DataSetName", reportData));
+
+            ReportViewer1.LocalReport.ReportPath = Server.MapPath("~/Reports/YourReport.rdlc");
+            ReportViewer1.LocalReport.Refresh();
+
+            return View();
+        }
 
         private void CleanVariables()
         {
@@ -68,6 +78,10 @@ namespace ERP_GMEDINA.Controllers
         {
 
             CleanVariables();
+            GetUserInformation();
+
+            ViewBag.employee_ID = EmployeeInfo.employee_ID;
+            ViewBag.employee_Name = EmployeeInfo.employee_Name;
 
             var tbtravels = db.tbTravels;
             return View(tbtravels.ToList());
@@ -135,7 +149,6 @@ namespace ERP_GMEDINA.Controllers
 
             if (!ModelState.IsValid || ListEmployees.Count <= 0)
             {
-                GetUserInformation();
 
                 ViewBag.employee_ID = EmployeeInfo.employee_ID;
                 ViewBag.employee_Name = EmployeeInfo.employee_Name;
@@ -216,9 +229,60 @@ namespace ERP_GMEDINA.Controllers
             {
                 return HttpNotFound();
             }
+            CleanVariables();
+
+            GetUserInformation();
+
+
+
+            ViewBag.employee_ID = EmployeeInfo.employee_ID;
+            ViewBag.employee_Name = EmployeeInfo.employee_Name;
+
             ViewBag.employee_ID = new SelectList(db.tbEmployees, "employee_ID", "employee_Name", tbTravel.employee_ID);
             ViewBag.subsidiary_ID = new SelectList(db.tbSubsidiaries, "subsidiary_ID", "subsidiary_Name", tbTravel.subsidiary_ID);
             ViewBag.transporter_ID = new SelectList(db.tbTransporters, "transporter_ID", "transporter_Name", tbTravel.transporter_ID);
+
+
+            ViewBag.transporter_Fee = tbTravel.tbTransporter.transporter_Fee;
+
+
+            ViewBag.subsidiaryAddress = db.tbSubsidiaries.Find(tbTravel.subsidiary_ID).subsidiary_Direction;
+
+
+            var travelDetails = from detail in db.tbTravelDetails
+                                where detail.travel_ID == id
+                                select detail;
+
+            ListTravelDetails = travelDetails.ToList();
+
+            ListEmployees = travelDetails.Select(detail => detail.employee_ID ?? 0).ToList();
+
+            var employeesAvaliable = from employeeSubsidiary in db.tbEmployeesSubsidiaries
+                        .Include(es => es.tbEmployee) // Include related entity tbSubsidiary
+                        .Include(es => es.tbSubsidiary)   // Include related entity tbEmployee
+                                                          // Add more .Include statements for other related entities as needed
+                                     join employee in db.tbEmployees on employeeSubsidiary.employee_ID equals employee.employee_ID
+                                     join travelDetail in travelDetails on employee.employee_ID equals travelDetail.employee_ID into travelDetailGroup
+                                     from travelDetail in travelDetailGroup.DefaultIfEmpty()
+                                     join travel in db.tbTravels on employeeSubsidiary.subsidiary_ID equals travel.subsidiary_ID
+                                     where travelDetail == null
+                                     select employeeSubsidiary;
+
+            ViewBag.EmployeesAvaliable = employeesAvaliable.ToList();
+
+            var employeesAdded = (from travelDetail in db.tbTravelDetails
+                                  .Include(es => es.tbEmployee) // Include related entity tbSubsidiary
+                                  .Include(es => es.tbTravel) // Include related entity tbSubsidiary
+                                  join employee in db.tbEmployees
+                                    on travelDetail.employee_ID equals employee.employee_ID
+                                  select travelDetail).ToList();
+
+
+
+
+            ViewBag.EmployeesAdded = employeesAdded;
+
+
             return View(tbTravel);
         }
 
@@ -231,16 +295,138 @@ namespace ERP_GMEDINA.Controllers
         [ValidateAntiForgeryToken]
         public ActionResult Edit([Bind(Include = "travel_ID,subsidiary_ID,transporter_ID,employee_ID,departure_Date_and_Time,distance_Kilometers,total_travel_Cost")] tbTravel tbTravel)
         {
-            if (ModelState.IsValid)
+            GetUserInformation();
+           
+            if (!ModelState.IsValid || ListEmployees.Count <= 0)
             {
-                db.Entry(tbTravel).State = EntityState.Modified;
-                db.SaveChanges();
-                return RedirectToAction("Index");
+                GetUserInformation();
+
+
+
+                ViewBag.employee_ID = EmployeeInfo.employee_ID;
+                ViewBag.employee_Name = EmployeeInfo.employee_Name;
+
+                ViewBag.employee_ID = new SelectList(db.tbEmployees, "employee_ID", "employee_Name", tbTravel.employee_ID);
+                ViewBag.subsidiary_ID = new SelectList(db.tbSubsidiaries, "subsidiary_ID", "subsidiary_Name", tbTravel.subsidiary_ID);
+                ViewBag.transporter_ID = new SelectList(db.tbTransporters, "transporter_ID", "transporter_Name", tbTravel.transporter_ID);
+
+
+                ViewBag.transporter_Fee = tbTravel.tbTransporter.transporter_Fee;
+
+
+                ViewBag.subsidiaryAddress = db.tbSubsidiaries.Find(tbTravel.subsidiary_ID).subsidiary_Direction;
+
+
+                var travelDetails = from detail in db.tbTravelDetails
+                                    where detail.travel_ID == tbTravel.travel_ID
+                                    select detail;
+
+                ListTravelDetails = travelDetails.ToList();
+
+                ListEmployees = travelDetails.Select(detail => detail.employee_ID ?? 0).ToList();
+
+                var employeesAvaliable = from employeeSubsidiary in db.tbEmployeesSubsidiaries
+                            .Include(es => es.tbEmployee) // Include related entity tbSubsidiary
+                            .Include(es => es.tbSubsidiary)   // Include related entity tbEmployee
+                                                              // Add more .Include statements for other related entities as needed
+                                         join employee in db.tbEmployees on employeeSubsidiary.employee_ID equals employee.employee_ID
+                                         join travelDetail in travelDetails on employee.employee_ID equals travelDetail.employee_ID into travelDetailGroup
+                                         from travelDetail in travelDetailGroup.DefaultIfEmpty()
+                                         join travel in db.tbTravels on employeeSubsidiary.subsidiary_ID equals travel.subsidiary_ID
+                                         where travelDetail == null
+                                         select employeeSubsidiary;
+
+                ViewBag.EmployeesAvaliable = employeesAvaliable.ToList();
+
+                var employeesAdded = (from travelDetail in db.tbTravelDetails
+                                      .Include(es => es.tbEmployee) // Include related entity tbSubsidiary
+                                      .Include(es => es.tbTravel) // Include related entity tbSubsidiary
+                                      join employee in db.tbEmployees
+                                        on travelDetail.employee_ID equals employee.employee_ID
+                                      select travelDetail).ToList();
+
+
+
+
+                ViewBag.EmployeesAdded = employeesAdded;
+
+                return View(tbTravel);
             }
-            ViewBag.employee_ID = new SelectList(db.tbEmployees, "employee_ID", "employee_Name", tbTravel.employee_ID);
-            ViewBag.subsidiary_ID = new SelectList(db.tbSubsidiaries, "subsidiary_ID", "subsidiary_Name", tbTravel.subsidiary_ID);
-            ViewBag.transporter_ID = new SelectList(db.tbTransporters, "transporter_ID", "transporter_Name", tbTravel.transporter_ID);
-            return View(tbTravel);
+
+            using (var transaction = db.Database.BeginTransaction())
+            {
+                try
+                {
+                    db.Entry(tbTravel).State = EntityState.Modified;
+
+                    db.SaveChanges();
+
+
+                    if (Modified)
+                    {
+
+                        if (ListTravelDetails is null)
+                        {
+                            return View(tbTravel);
+                        }
+
+
+                        var Transportists = db.tbTransporters.Find(tbTravel.transporter_ID);
+
+                        if (Transportists == null)
+                        {
+                            return HttpNotFound();
+                        }
+
+                        var tbTravelDetails = db.tbTravelDetails.Where(x => x.travel_ID == tbTravel.travel_ID);
+
+                        foreach (var travelDetail in tbTravelDetails)
+                        {
+                            var existingInList = ListTravelDetails.Find(x => x.travel_Detail_ID == travelDetail.travel_Detail_ID);
+                            //var existingInListEmp = ListEmployees.Find(x => x. == travelDetail.travel_Detail_ID);
+
+                            if (existingInList == null)
+                            {
+                                //Eliminar
+                                db.tbTravelDetails.Remove(travelDetail);
+                            }
+                        }
+
+                        foreach (var travelDetail in ListTravelDetails)
+                        {
+                            var existingEntity = db.tbTravelDetails.Find(travelDetail.travel_Detail_ID);
+
+                            if (existingEntity != null)
+                            {
+                                db.Entry(existingEntity).State = EntityState.Modified;
+                            }
+                            else
+                            {
+                                var EmployeesSubsidiariesInfo = db.tbEmployeesSubsidiaries.Where(x => x.employee_ID == travelDetail.employee_ID && x.subsidiary_ID == tbTravel.subsidiary_ID).SingleOrDefault();
+                                //employeesSubsidiary.employee_ID = tbEmployee.employee_ID;
+
+                                travelDetail.travel_ID = tbTravel.travel_ID;
+                                travelDetail.distance_Kilometers = (decimal)EmployeesSubsidiariesInfo.employeeSubsidiary_DistanceKM;
+                                db.tbTravelDetails.Add(travelDetail);
+                            }
+                        }
+                    }
+
+                    var th = db.tbTravelDetails.ToList();
+
+                    db.SaveChanges();
+
+                    transaction.Commit();
+
+                 
+                    return RedirectToAction("Index");
+                }
+                catch (Exception)
+                {
+                    return View(tbTravel);
+                }
+            }
+
         }
 
         // GET: /Travel/Delete/5
@@ -357,6 +543,8 @@ namespace ERP_GMEDINA.Controllers
             {
                 ListEmployees.Add(Employee);
 
+                ListTravelDetails.Add(new tbTravelDetail { employee_ID = Employee });
+
                 Modified = true;
 
                 return Json(true, JsonRequestBehavior.AllowGet);
@@ -397,6 +585,8 @@ namespace ERP_GMEDINA.Controllers
 
                 ListEmployees.RemoveAll(item => item == Employee);
 
+                ListTravelDetails.RemoveAll(employee => employee.employee_ID == Employee);
+
                 Modified = true;
 
                 return Json(true, JsonRequestBehavior.AllowGet);
@@ -406,15 +596,15 @@ namespace ERP_GMEDINA.Controllers
                 return Json(false, JsonRequestBehavior.DenyGet);
             }
 
-        } 
+        }
 
-        
+
         [HttpPost]
         public JsonResult GetTransporterInfo(int Transporter)
         {
             try
             {
-                var response = db.tbTransporters.Where(x => x.transporter_ID == Transporter).Select(x => new 
+                var response = db.tbTransporters.Where(x => x.transporter_ID == Transporter).Select(x => new
                 {
                     x.transporter_ID,
                     x.transporter_Name,
@@ -444,9 +634,9 @@ namespace ERP_GMEDINA.Controllers
 
                 var query = from travelDetail in db.tbTravelDetails
                             join travel in db.tbTravels on travelDetail.travel_ID equals travel.travel_ID
-                           where travelDetail.employee_ID == Employee
-                              && DbFunctions.TruncateTime(travel.departure_Date_and_Time) == today
-                          select travelDetail.travel_ID;
+                            where travelDetail.employee_ID == Employee
+                               && DbFunctions.TruncateTime(travel.departure_Date_and_Time) == today
+                            select travelDetail.travel_ID;
 
                 hasRowsToday = query.Any();
 
@@ -461,7 +651,7 @@ namespace ERP_GMEDINA.Controllers
 
         }
 
-         #endregion
+        #endregion
         protected override void Dispose(bool disposing)
         {
             if (disposing)

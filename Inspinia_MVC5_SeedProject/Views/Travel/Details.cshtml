@@ -7,18 +7,14 @@
 
 <div class="row wrapper border-bottom white-bg page-heading">
     <div class="col-sm-4">
-        <h2>Details</h2>
-        <ol class="breadcrumb">
-            <li>
-                @Html.ActionLink("List", "Index")
-            </li>
-            <li class="active">
-                <strong>Details</strong>
-            </li>
-        </ol>
+        <h2>Detalles Viaje</h2>
+    </div>
+    <div class="col-sm-8">
+        <div class="title-action">
+            @Html.ActionLink("Volver al listado", "Index", null, new { @class = "btn btn-primary" })
+        </div>
     </div>
 </div>
-
 
 
 
@@ -32,66 +28,72 @@
                 <div class="ibox-content">
 
 
-				    <dl class="dl-horizontal">
-        <dt>
-            @Html.DisplayNameFor(model => model.departure_Date_and_Time)
-        </dt>
+                    <dl class="dl-horizontal">
+                        <dt>
+                            @Html.DisplayNameFor(model => model.departure_Date_and_Time)
+                        </dt>
 
-        <dd>
-            @Html.DisplayFor(model => model.departure_Date_and_Time)
-        </dd>
+                        <dd>
+                            @Html.DisplayFor(model => model.departure_Date_and_Time)
+                        </dd>
 
-        <dt>
-            @Html.DisplayNameFor(model => model.distance_Kilometers)
-        </dt>
+                        <dt>
+                            @Html.DisplayNameFor(model => model.distance_Kilometers)
+                        </dt>
 
-        <dd>
-            @Html.DisplayFor(model => model.distance_Kilometers)
-        </dd>
+                        <dd>
+                            @Html.DisplayFor(model => model.distance_Kilometers)
+                        </dd>
 
-        <dt>
-            @Html.DisplayNameFor(model => model.total_travel_Cost)
-        </dt>
+                        <dt>
+                            @Html.DisplayNameFor(model => model.total_travel_Cost)
+                        </dt>
 
-        <dd>
-            @Html.DisplayFor(model => model.total_travel_Cost)
-        </dd>
+                        <dd>
+                            @Html.DisplayFor(model => model.total_travel_Cost)
+                        </dd>
 
-        <dt>
-            @Html.DisplayNameFor(model => model.tbEmployee.employee_Name)
-        </dt>
+                        <dt>
+                            @Html.DisplayNameFor(model => model.tbEmployee.employee_Name)
+                        </dt>
 
-        <dd>
-            @Html.DisplayFor(model => model.tbEmployee.employee_Name)
-        </dd>
+                        <dd>
+                            @Html.DisplayFor(model => model.tbEmployee.employee_Name)
+                        </dd>
 
-        <dt>
-            @Html.DisplayNameFor(model => model.tbSubsidiary.subsidiary_Name)
-        </dt>
+                        <dt>
+                            @Html.DisplayNameFor(model => model.tbSubsidiary.subsidiary_Name)
+                        </dt>
 
-        <dd>
-            @Html.DisplayFor(model => model.tbSubsidiary.subsidiary_Name)
-        </dd>
+                        <dd>
+                            @Html.DisplayFor(model => model.tbSubsidiary.subsidiary_Name)
+                        </dd>
 
-        <dt>
-            @Html.DisplayNameFor(model => model.tbTransporter.transporter_Name)
-        </dt>
+                        <dt>
+                            @Html.DisplayNameFor(model => model.tbTransporter.transporter_Name)
+                        </dt>
 
-        <dd>
-            @Html.DisplayFor(model => model.tbTransporter.transporter_Name)
-        </dd>
+                        <dd>
+                            @Html.DisplayFor(model => model.tbTransporter.transporter_Name)
+                        </dd>
 
-    </dl>
+                    </dl>
 
+                    <div class="form-horizontal">
+                        <fieldset class="box-border">
+                            <div class="col-md-offset-5 col-md-10">
 
-	    @Html.ActionLink("Edit", "Edit", new { id = Model.travel_ID }, new { @class = "btn btn-primary"})
-    @Html.ActionLink("Back to List", "Index", null, new { @class = "btn btn-white"})
+                                @Html.ActionLink("Editar", "Edit", new { id = Model.travel_ID }, new { @class = "btn btn-primary" })
+                                @Html.ActionLink("Volver", "Index", null, new { @class = "btn btn-white" })
+                            </div>
+                        </fieldset>
+                    </div>
 
                 </div>
             </div>
         </div>
     </div>
- </div>
+</div>
 
 
 

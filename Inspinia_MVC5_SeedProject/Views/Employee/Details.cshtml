@@ -5,17 +5,15 @@
     Layout = "~/Views/Shared/_Layout.cshtml";
 }
 
+
 <div class="row wrapper border-bottom white-bg page-heading">
     <div class="col-sm-4">
-        <h2>Detattles del Empleado </h2>
-        <ol class="breadcrumb">
-            <li>
-                @Html.ActionLink("Volver", "Index")
-            </li>
-            <li class="active">
-                <strong>Detalles</strong>
-            </li>
-        </ol>
+        <h2>Detalles del Empleado</h2>
+    </div>
+    <div class="col-sm-8">
+        <div class="title-action">
+            @Html.ActionLink("Volver al listado", "Index", null, new { @class = "btn btn-primary" })
+        </div>
     </div>
 </div>
 
@@ -95,9 +93,14 @@
 
                     </div>
 
-
-                    @Html.ActionLink("Editar", "Edit", new { id = Model.employee_ID }, new { @class = "btn btn-primary" })
-                    @Html.ActionLink("Volver al Listado", "Index", null, new { @class = "btn btn-white" })
+                    <div class="form-horizontal">
+                        <fieldset class="box-border">
+                            <div class="col-md-offset-5 col-md-10">
+                                @Html.ActionLink("Editar", "Edit", new { id = Model.employee_ID }, new { @class = "btn btn-primary" })
+                                @Html.ActionLink("Volver", "Index", null, new { @class = "btn btn-white" })
+                            </div>
+                        </fieldset>
+                    </div>
 
                 </div>
             </div>

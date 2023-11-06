@@ -2,10 +2,15 @@
 
 let tableEmployessAdded;
 
-const dropdown = document.getElementById("transporter_ID");
+
+let tableEmployessAddedNew = document.getElementById("EmployessAdded")
+
+
+
+const dropdownTransporter_ID = document.getElementById("transporter_ID");
 const transporterFee = document.getElementById("transporter_fee");
 
-const dropdownBlocked = document.getElementById("subsidiary_ID");
+const dropdownSubsidiary_ID = document.getElementById("subsidiary_ID");
 
 const date = document.getElementById("departure_Date_and_Time");
 
@@ -91,9 +96,8 @@ document.addEventListener("DOMContentLoaded", function () {
 });
 
 
-// Add an event listener to the dropdown list
-dropdown.addEventListener("change", async function () {
-    const selectedOption = dropdown.options[dropdown.selectedIndex];
+dropdownTransporter_ID.addEventListener("change", async function () {
+    const selectedOption = dropdownTransporter_ID.options[dropdownTransporter_ID.selectedIndex];
     const transporter_ID = selectedOption.value;
     let fee = transporterFee.value;
 
@@ -118,14 +122,18 @@ dropdown.addEventListener("change", async function () {
         totalCostField.value = distance.value * fee
     }
 
-    // Check if the selected value is not an empty string
-    if (dropdown.value !== "") {
-        // Enable the input field
-        dropdownBlocked.disabled = false;
-    } else {
-        // Disable the input field
-        dropdownBlocked.disabled = true;
+    if (checkTables()) {
+        return;
     }
+
+    // Check if the selected value is not an empty string
+    //if (dropdownTransporter_ID.value !== "") {
+    //    // Enable the input field
+    //    dropdownSubsidiary_ID.disabled = false;
+    //} else {
+    //    // Disable the input field
+    //    dropdownSubsidiary_ID.disabled = true;
+    //}
 
 });
 
@@ -313,26 +321,6 @@ function getAddressPromise(id) {
     });
 }
 
-function getAddressPromiseOld(id) {
-    return new Promise((resolve, reject) => {
-
-        $.ajax({
-            url: "/Travel/GetAddress",
-            method: "POST",
-            dataType: 'json',
-            contentType: "application/json; charset=utf-8",
-            data: JSON.stringify({ subsidiary_ID: id }),
-        })
-            .done(function (res) {
-                resolve(res)
-            })
-            .fail(function (jqXHR, textStatus, errorThrown) {
-                // Error handling
-                reject(new Error("Request timed out"));
-            });
-    });
-}
-
 function getEmployeesBySubsidiaryPromise(id) {
     if (id == null || id === undefined) {
         // TODO document why this block is empty
@@ -362,6 +350,27 @@ function getEmployeesBySubsidiaryPromise(id) {
             });
     });
 }
+
+function getAddressPromiseOld(id) {
+    return new Promise((resolve, reject) => {
+
+        $.ajax({
+            url: "/Travel/GetAddress",
+            method: "POST",
+            dataType: 'json',
+            contentType: "application/json; charset=utf-8",
+            data: JSON.stringify({ subsidiary_ID: id }),
+        })
+            .done(function (res) {
+                resolve(res)
+            })
+            .fail(function (jqXHR, textStatus, errorThrown) {
+                // Error handling
+                reject(new Error("Request timed out"));
+            });
+    });
+}
+
 
 function sumOrSubtract(operation, firstValue, secondValue) {
     if (operation === add) {
@@ -426,6 +435,21 @@ function updateDistance(operation, km) {
 }
 
 
+function tableHasRows(table) {
+    return table.rows().count() !== 0;
+}
+
+async function checkTables() {
+    if (tableEmployessAdded.rows().count() === 0) {
+        //dropdownSubsidiary_ID.disabled = false;
+        return dropdownSubsidiary_ID.disabled;
+    } else {
+        //dropdownSubsidiary_ID.disabled = true;
+        return dropdownSubsidiary_ID.disabled;
+    }
+}
+
+
 $("#EmployessAvalaible tbody").on("click", "input#btnAddEmployee", async function () {
 
     let data = tableEmployessAvalaible.row($(this).parents("tr")).data();
@@ -435,7 +459,7 @@ $("#EmployessAvalaible tbody").on("click", "input#btnAddEmployee", async functio
     let futureKM = parseFloat(Kilometers) + parseFloat(distance.value)
 
     if (futureKM > 100) {
-        alert("Limite de distancia excedida!");
+        alert("No se puede agregar este empleado al viaje porque excederia el limite de distancia del viaje!");
         return;
     }
 
@@ -451,12 +475,12 @@ $("#EmployessAvalaible tbody").on("click", "input#btnAddEmployee", async functio
     AddEmployeeToTravelPromise(Employee_ID)
         .then(response => {
 
-            updateTotalCost(add, Kilometers)
+            updateTotalCost(add, Kilometers);
 
-            updateDistance(add, Kilometers)
+            updateDistance(add, Kilometers);
 
             //#DelSubsidiary
-            data[4] = '<input name="id02" type="button" id="btnDelEmployee" value="&#9668; Quitar &nbsp;&nbsp;" class="btn btn-primary btn-xs">'
+            data[4] = '<input name="id02" type="button" id="btnDelEmployee" value="&#9668; Quitar &nbsp;&nbsp;" class="btn btn-primary btn-xs">';
 
 
             // Mueve la fila a tabla2
@@ -466,6 +490,7 @@ $("#EmployessAvalaible tbody").on("click", "input#btnAddEmployee", async functio
             tableEmployessAvalaible.row($(this).parents("tr")).remove().draw();
 
 
+            checkTables();
         })
         .catch(error => {
             console.error(error); // Request timed out
@@ -501,10 +526,6 @@ function AddEmployeeToTravelPromise(id) {
 }
 
 
-
-
-
-
 $("#EmployessAdded tbody").on("click", "input#btnDelEmployee", async function () {
     let data = tableEmployessAdded.row($(this).parents("tr")).data();
     let Employee_ID = data[0];
@@ -517,11 +538,11 @@ $("#EmployessAdded tbody").on("click", "input#btnDelEmployee", async function ()
         .then(response => {
 
 
-            updateTotalCost(subtract, Kilometers)
+            updateTotalCost(subtract, Kilometers);
 
-            updateDistance(subtract, Kilometers)
+            updateDistance(subtract, Kilometers);
             //Cambiar id de #btnDelEmployee a #btnAddEmployee
-            data[4] = '<input name="id02" type="button" id="btnAddEmployee" value="&nbsp;Agregar &#9658" class="btn btn-primary btn-xs">'
+            data[4] = '<input name="id02" type="button" id="btnAddEmployee" value="&nbsp;Agregar &#9658" class="btn btn-primary btn-xs">';
 
             // Mueve la fila a tabla1
             tableEmployessAvalaible.row.add(data).draw();
@@ -530,6 +551,10 @@ $("#EmployessAdded tbody").on("click", "input#btnDelEmployee", async function ()
             tableEmployessAdded.row($(this).parents("tr")).remove().draw();
 
             tableEmployessAvalaible.order([0, 'asc']).draw();
+
+
+
+            checkTables();
         })
         .catch(error => {
             console.error(error); // Request timed out

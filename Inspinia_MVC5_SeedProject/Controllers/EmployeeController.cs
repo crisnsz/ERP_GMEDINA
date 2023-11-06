@@ -214,6 +214,8 @@ namespace ERP_GMEDINA.Controllers
                             }
 
                         }
+
+
                         foreach (var employeesSubsidiary in ListEmployeesSubsidiaries)
                         {
                             var existingEntity = db.tbEmployeesSubsidiaries.Find(employeesSubsidiary.employeeSubsidiary_ID);
@@ -224,7 +226,9 @@ namespace ERP_GMEDINA.Controllers
                             }
                             else
                             {
+
                                 employeesSubsidiary.employee_ID = tbEmployee.employee_ID;
+
                                 db.tbEmployeesSubsidiaries.Add(employeesSubsidiary);
                             }
                         }

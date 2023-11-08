@@ -27,6 +27,7 @@
                 <div class="ibox-title">
                     <h5>Listado de Viajes</h5>
                     <div class="ibox-tools">
+                        <input type="button" class="btn btn-primary" data-toggle="modal" data-target="#ModalGenReporte" value="Generar Reporte" />
                         @Html.ActionLink("Registrar Viaje", "Create", null, new { @class = "btn btn-primary " })
                     </div>
                 </div>
@@ -94,15 +95,43 @@
             </div>
         </div>
     </div>
+
+
 </div>
 
 
+<div class="modal fade" id="ModalGenReporte" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
+    <div class="modal-dialog modal-lg" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+                <h4 class="modal-title" id="myModalLabel">Reporte de Viajes por Transportista</h4>
+            </div>
+            <div id="GenerarReporte" class="modal-body">
+                @Html.Partial("_ReportTravel", new ERP_GMEDINA.Models.tbTravel())
+            </div>
+        </div>
+    </div>
+</div>
+
+<style>
+    .full-width-paragraph {
+        width: 100%;
+    }
+
+    .modal-lg {
+        max-width: 90%; /* Adjust the width percentage as needed */
+    }
+</style>
 
 @section scripts{
     <script src="~/Scripts/app/DataTable.js"></script>
     <script src="~/Scripts/DataTables/jquery.dataTables.js"></script>
     <script src="~/Scripts/DataTables/dataTables.responsive.js"></script>
     <script src="~/Scripts/DataTables/dataTables.bootstrap.js"></script>
+    <script src="~/Scripts/app/Travel/IndexTravel.js"></script>
 
     <script>
         $(document).ready(function () {

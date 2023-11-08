@@ -30,15 +30,87 @@ namespace ERP_GMEDINA.Controllers
 
         #region ActionResult
 
-        public ActionResult ShowReport()
+        public ActionResult GenerateReport(tbTravel tbTravel, string InitialDate, string FinalDate)
         {
-            var reportData = GetReportData(); // Retrieve your data source
-            ReportViewer1.LocalReport.DataSources.Add(new ReportDataSource("DataSetName", reportData));
+            var vInitialDate = DateTime.SpecifyKind(Convert.ToDateTime(InitialDate), DateTimeKind.Local);
+            var vFinalDate = DateTime.SpecifyKind(Convert.ToDateTime(FinalDate), DateTimeKind.Local);
 
-            ReportViewer1.LocalReport.ReportPath = Server.MapPath("~/Reports/YourReport.rdlc");
-            ReportViewer1.LocalReport.Refresh();
+            var DateOne = new DateTime(2023, 11, 1, 0, 0, 0, DateTimeKind.Local);
+            var DateTwo = new DateTime(2023, 11, 10, 0, 0, 0, DateTimeKind.Local);
 
-            return View();
+
+            var query = from travel in db.tbTravels
+                        where travel.transporter_ID == tbTravel.transporter_ID &&
+                              travel.departure_Date_and_Time >= vInitialDate &&
+                              travel.departure_Date_and_Time <= vFinalDate
+                        let totalTravelCost = db.tbTravels.Sum(t => t.total_travel_Cost)
+                        from travelDetail in db.tbTravelDetails
+                        where travel.travel_ID == travelDetail.travel_ID
+                        from employee in db.tbEmployees
+                        where travelDetail.employee_ID == employee.employee_ID
+                        from subsidiary in db.tbSubsidiaries
+                        where travel.subsidiary_ID == subsidiary.subsidiary_ID
+                        from transporter in db.tbTransporters
+                        where travel.transporter_ID == transporter.transporter_ID
+                        select new TravelReportDataModel
+                        {
+                            Travel_ID = travel.travel_ID,
+                            Departure_Date_and_Time = travel.departure_Date_and_Time,
+                            Total_distance_Kilometers = travel.distance_Kilometers,
+                            Total_travel_Cost_per_Date = totalTravelCost,
+                            TotalTravelCost = travel.total_travel_Cost,
+                            Subsidiary_Name = subsidiary.subsidiary_Name,
+                            Subsidiary_Direction = subsidiary.subsidiary_Direction,
+                            Employee_Name = employee.employee_Name,
+                            Employee_Direction = employee.employee_Direction,
+                            Distance_Kilometers = travelDetail.distance_Kilometers,
+                            Transporter_Name = transporter.transporter_Name,
+                            Transporter_Fee = transporter.transporter_Fee
+                        };
+
+            List<TravelReportDataModel> reportData = query.ToList();
+
+            return View(reportData);
+        }
+        public List<TravelReportDataModel> GetReportData(int transporter_ID, string InitialDate, string FinalDate)
+        {
+
+            var vInitialDate = DateTime.SpecifyKind(Convert.ToDateTime(InitialDate), DateTimeKind.Local);
+            var vFinalDate = DateTime.SpecifyKind(Convert.ToDateTime(FinalDate), DateTimeKind.Local);
+
+
+            var query = from travel in db.tbTravels
+                        where travel.transporter_ID == transporter_ID &&
+                              travel.departure_Date_and_Time >= vInitialDate &&
+                              travel.departure_Date_and_Time <= vFinalDate
+                        let totalTravelCost = db.tbTravels.Sum(t => t.total_travel_Cost)
+                        from travelDetail in db.tbTravelDetails
+                        where travel.travel_ID == travelDetail.travel_ID
+                        from employee in db.tbEmployees
+                        where travelDetail.employee_ID == employee.employee_ID
+                        from subsidiary in db.tbSubsidiaries
+                        where travel.subsidiary_ID == subsidiary.subsidiary_ID
+                        from transporter in db.tbTransporters
+                        where travel.transporter_ID == transporter.transporter_ID
+                        select new TravelReportDataModel
+                        {
+                            Travel_ID = travel.travel_ID,
+                            Departure_Date_and_Time = travel.departure_Date_and_Time,
+                            Total_distance_Kilometers = travel.distance_Kilometers,
+                            Total_travel_Cost_per_Date = totalTravelCost,
+                            TotalTravelCost = travel.total_travel_Cost,
+                            Subsidiary_Name = subsidiary.subsidiary_Name,
+                            Subsidiary_Direction = subsidiary.subsidiary_Direction,
+                            Employee_Name = employee.employee_Name,
+                            Employee_Direction = employee.employee_Direction,
+                            Distance_Kilometers = travelDetail.distance_Kilometers,
+                            Transporter_Name = transporter.transporter_Name,
+                            Transporter_Fee = transporter.transporter_Fee
+                        };
+
+            List<TravelReportDataModel> reportData = query.ToList();
+
+            return reportData;
         }
 
         private void CleanVariables()
@@ -82,6 +154,10 @@ namespace ERP_GMEDINA.Controllers
 
             ViewBag.employee_ID = EmployeeInfo.employee_ID;
             ViewBag.employee_Name = EmployeeInfo.employee_Name;
+
+
+            ViewBag.transporter_ID = new SelectList(db.tbTransporters, "transporter_ID", "transporter_Name");
+
 
             var tbtravels = db.tbTravels;
             return View(tbtravels.ToList());
@@ -296,7 +372,7 @@ namespace ERP_GMEDINA.Controllers
         public ActionResult Edit([Bind(Include = "travel_ID,subsidiary_ID,transporter_ID,employee_ID,departure_Date_and_Time,distance_Kilometers,total_travel_Cost")] tbTravel tbTravel)
         {
             GetUserInformation();
-           
+
             if (!ModelState.IsValid || ListEmployees.Count <= 0)
             {
                 GetUserInformation();
@@ -418,7 +494,7 @@ namespace ERP_GMEDINA.Controllers
 
                     transaction.Commit();
 
-                 
+
                     return RedirectToAction("Index");
                 }
                 catch (Exception)
@@ -463,6 +539,58 @@ namespace ERP_GMEDINA.Controllers
 
         #region JsonResult
 
+        [HttpPost]
+        public JsonResult GenerateReportJS(int transporter_ID, string InitialDate, string FinalDate)
+        {
+            try
+            {
+
+
+
+                var vInitialDate = DateTime.SpecifyKind(Convert.ToDateTime(InitialDate), DateTimeKind.Local);
+                var vFinalDate = DateTime.SpecifyKind(Convert.ToDateTime(FinalDate), DateTimeKind.Local);
+
+                var query = from travel in db.tbTravels
+                            where travel.transporter_ID == transporter_ID &&
+                                  travel.departure_Date_and_Time >= vInitialDate &&
+                                  travel.departure_Date_and_Time <= vFinalDate
+                            let totalTravelCost = db.tbTravels.Sum(t => t.total_travel_Cost)
+                            from travelDetail in db.tbTravelDetails
+                            where travel.travel_ID == travelDetail.travel_ID
+                            from employee in db.tbEmployees
+                            where travelDetail.employee_ID == employee.employee_ID
+                            from subsidiary in db.tbSubsidiaries
+                            where travel.subsidiary_ID == subsidiary.subsidiary_ID
+                            from transporter in db.tbTransporters
+                            where travel.transporter_ID == transporter.transporter_ID
+                            select new TravelReportDataModel
+                            {
+                                Travel_ID = travel.travel_ID,
+                                Departure_Date_and_Time = travel.departure_Date_and_Time,
+                                Total_distance_Kilometers = travel.distance_Kilometers,
+                                Total_travel_Cost_per_Date = totalTravelCost,
+                                TotalTravelCost = travel.total_travel_Cost,
+                                Subsidiary_Name = subsidiary.subsidiary_Name,
+                                Subsidiary_Direction = subsidiary.subsidiary_Direction,
+                                Employee_Name = employee.employee_Name,
+                                Employee_Direction = employee.employee_Direction,
+                                Distance_Kilometers = travelDetail.distance_Kilometers,
+                                Transporter_Name = transporter.transporter_Name,
+                                Transporter_Fee = transporter.transporter_Fee
+                            };
+
+                List<TravelReportDataModel> reportData = query.ToList();
+
+                return Json(reportData, JsonRequestBehavior.AllowGet);
+
+            }
+            catch (Exception Ex)
+            {
+                return Json(Ex.Message.ToString(), JsonRequestBehavior.DenyGet);
+            }
+
+        }
+        
         [HttpPost]
         public JsonResult GetAddress(int? subsidiary_ID)
         {

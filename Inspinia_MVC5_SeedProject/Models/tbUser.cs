@@ -15,9 +15,10 @@ namespace ERP_GMEDINA.Models
     public partial class tbUser
     {
         public int user_ID { get; set; }
-        public Nullable<int> employee_ID { get; set; }
+        public int employee_ID { get; set; }
         public string user_Username { get; set; }
-        public string user_Password { get; set; }
+        public byte[] user_Password { get; set; }
+        public System.Guid user_Token { get; set; }
         public bool user_IsActive { get; set; }
         public bool user_IsAdmin { get; set; }
     

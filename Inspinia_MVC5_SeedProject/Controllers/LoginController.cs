@@ -1,6 +1,8 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Security.Cryptography;
+using System.Text;
 using System.Web;
 using System.Web.Mvc;
 using ERP_GMEDINA.Models;
@@ -13,7 +15,7 @@ namespace ERP_GMEDINA.Controllers
     {
         FARSIMANEntities db = new FARSIMANEntities();
 
-        Helpers Help = new Helpers();
+        readonly Helpers Help = new Helpers();
 
         // GET: Login
         public ActionResult Index()
@@ -27,72 +29,73 @@ namespace ERP_GMEDINA.Controllers
         {
             try
             {
-                var UserExist = db.tbUsers.Where(x => x.user_Username == tbUser.user_Username && x.user_Password == txtPassword).ToList();
+                byte[] hashBytes = Help.ComputeSHA512Hash(txtPassword);
+
+                var UserData = db.UDP_Sec_Login(tbUser.user_Username, txtPassword).FirstOrDefault();
 
                 //Paso 1: Validar si el usuario existe.
-                if (UserExist.Count > 0)
-                {
-                    foreach (tbUser UserLogin in UserExist)
-                    {
-                        //Paso 2: Validar que el usuario esté activo.
-                        if (UserLogin.user_IsActive)
-                        {
-
-                            //Si esta bien, recuperar la informacion del usuario.
-                            //var Listado = db.SDP_Acce_GetUserRols(UserLogin.usu_Id, "").ToList(); //Accesos
-                            //var ListadoRol = db.SDP_Acce_GetRolesAsignados(UserLogin.usu_Id).ToList(); //Rol
-                            Session["UserNombreUsuario"] = UserLogin.user_Username;
-                            Session["UserNombresApellidos"] = UserLogin.tbEmployee.employee_Name;
-                            Session["UserLogin"] = UserLogin.user_ID;
-                            Session["UserLoginEsAdmin"] = UserLogin.user_IsAdmin;
-                            Session["UserEstado"] = UserLogin.user_IsActive;
-
-
-
-                            //Si el usuario no es admin, recuperar la información del rol y sus accesos
-                            if (!UserLogin.user_IsAdmin)
-                            {
-
-                                var UserPosition = (from user in db.tbUsers
-                                                 where user.user_ID == UserLogin.user_ID
-                                                  join employee in db.tbEmployees
-                                                    on user.employee_ID equals employee.employee_ID
-                                                  join position in db.tbPositions
-                                                    on employee.position_ID equals position.position_ID
-                                                select new
-                                                    {
-                                                        user.user_Username,
-                                                        user.user_Password,
-                                                        employee.employee_Name,
-                                                        position.position_ID,
-                                                        position.position_Name
-                                                    }).FirstOrDefault();
-
-                                Session["UserPosition"] = UserPosition.position_ID;
-                            }
-
-                        }
-                        else
-                        {
-                            //Si el usuario no es activo que muestre mensaje y retorne al login una vez mas.
-                            ModelState.AddModelError("user_Username", "Usuario inactivo, contacte al Administrador");
-                            return View(tbUser);
-                        }
-
-                    }
-                    return RedirectToAction("Index", "Employee");
-                }
-                else
+                if (UserData is null)
                 {
                     ModelState.AddModelError("user_Username", "Usuario o Password incorrecto");
                     return View(tbUser);
                 }
+
+                if (!UserData.user_IsActive)
+                {
+                    //Si el usuario no es activo que muestre mensaje y retorne al login una vez mas.
+                    ModelState.AddModelError("user_Username", "Usuario inactivo, contacte al Administrador");
+                    return View(tbUser);
+                }
+
+                var das = db.tbEmployees.Find(UserData.employee_ID).employee_Name;
+                Session["UserNombreUsuario"] = UserData.user_Username;
+                Session["UserNombresApellidos"] = db.tbEmployees.Find(UserData.employee_ID).employee_Name;
+                Session["UserLogin"] = UserData.user_ID;
+                Session["UserLoginIsAdmin"] = UserData.user_IsAdmin;
+                Session["UserState"] = UserData.user_IsActive;
+
+
+                //Si el usuario no es admin, recuperar la información del rol y sus accesos
+                if (!UserData.user_IsAdmin)
+                {
+
+                    var UserPosition = (from user in db.tbUsers
+                                        where user.user_ID == UserData.user_ID
+                                        join employee in db.tbEmployees
+                                          on user.employee_ID equals employee.employee_ID
+                                        join position in db.tbPositions
+                                          on employee.position_ID equals position.position_ID
+                                        select new
+                                        {
+                                            user.user_Username,
+                                            user.user_Password,
+                                            employee.employee_Name,
+                                            position.position_ID,
+                                            position.position_Name
+                                        }).FirstOrDefault();
+
+
+
+                    if (UserPosition is null)
+                    {
+                        //Si el usuario no es activo que muestre mensaje y retorne al login una vez mas.
+                        ModelState.AddModelError("user_Username", "No se pudo obtener al posicion del usuario, contacte con el administrador");
+                        return View(tbUser);
+                    }
+
+                    Session["UserPosition"] = UserPosition.position_ID;
+                }
+
+                return RedirectToAction("Index", "Employee");
             }
             catch (Exception)
             {
                 return View(tbUser);
             }
         }
+
+
+
 
         public ActionResult CerrarSesion()
         {

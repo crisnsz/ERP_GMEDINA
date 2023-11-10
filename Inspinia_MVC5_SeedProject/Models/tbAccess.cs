@@ -15,10 +15,10 @@ namespace ERP_GMEDINA.Models
     public partial class tbAccess
     {
         public int access_ID { get; set; }
-        public Nullable<int> position_ID { get; set; }
-        public Nullable<int> object_ID { get; set; }
+        public int position_ID { get; set; }
+        public int object_ID { get; set; }
     
-        public virtual tbObject tbObject { get; set; }
         public virtual tbPosition tbPosition { get; set; }
+        public virtual tbObject tbObject { get; set; }
     }
 }

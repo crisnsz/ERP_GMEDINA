@@ -1,6 +1,8 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Security.Cryptography;
+using System.Text;
 using System.Web;
 using Microsoft.Owin.Security;
 
@@ -31,17 +33,17 @@ namespace ERP_GMEDINA.Models
             HttpContext.Current.Session["UserNombreUsuario"] = null;
             HttpContext.Current.Session["UserNombresApellidos"] = null;
             HttpContext.Current.Session["UserLogin"] = null;
-            HttpContext.Current.Session["UserLoginEsAdmin"] = null;
+            HttpContext.Current.Session["UserLoginIsAdmin"] = null;
             HttpContext.Current.Session["UserLoginSesion"] = null;
             HttpContext.Current.Session["UserLoginRols"] = null;
             HttpContext.Current.Session["UserRol"] = null;
             HttpContext.Current.Session["UserRolEstado"] = null;
-            HttpContext.Current.Session["UserEstado"] = null;
+            HttpContext.Current.Session["UserState"] = null;
         }
 
         public void ValidateUser(string sPantalla, out bool UserState, out bool IsAdmin, out int UserPosition, out bool AccessPantalla)
         {
-            UserState = Convert.ToBoolean(HttpContext.Current.Session["UserEstado"]);
+            UserState = Convert.ToBoolean(HttpContext.Current.Session["UserState"]);
             IsAdmin = Convert.ToBoolean(HttpContext.Current.Session["UserLoginIsAdmin"]);
             UserPosition = Convert.ToInt32(HttpContext.Current.Session["UserPosition"]);
             AccessPantalla = GetUserAccessPosition(sPantalla);
@@ -54,7 +56,7 @@ namespace ERP_GMEDINA.Models
         {
             bool Retorno = false;
             int UserPositionID = Convert.ToInt32(HttpContext.Current.Session["UserPosition"]);
-            if (!Convert.ToBoolean(HttpContext.Current.Session["UserLoginEsAdmin"]))
+            if (!Convert.ToBoolean(HttpContext.Current.Session["UserLoginIsAdmin"]))
             {
 
 
@@ -134,5 +136,13 @@ namespace ERP_GMEDINA.Models
             return dt;
         }
 
+        public byte[] ComputeSHA512Hash(string input)
+        {
+            using (SHA512 sha512 = SHA512.Create())
+            {
+                byte[] inputBytes = Encoding.UTF8.GetBytes(input);
+                return sha512.ComputeHash(inputBytes);
+            }
+        }
     }
 }

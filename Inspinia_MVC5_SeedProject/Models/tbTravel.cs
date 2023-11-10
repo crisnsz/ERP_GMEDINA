@@ -21,9 +21,9 @@ namespace ERP_GMEDINA.Models
         }
     
         public int travel_ID { get; set; }
-        public Nullable<int> subsidiary_ID { get; set; }
-        public Nullable<int> transporter_ID { get; set; }
-        public Nullable<int> employee_ID { get; set; }
+        public int subsidiary_ID { get; set; }
+        public int transporter_ID { get; set; }
+        public int employee_ID { get; set; }
         public System.DateTime departure_Date_and_Time { get; set; }
         public decimal distance_Kilometers { get; set; }
         public decimal total_travel_Cost { get; set; }

@@ -19,7 +19,6 @@
 
 
 
-
 <div class="wrapper wrapper-content animated fadeInRight">
     <div class="row">
         <div class="col-lg-12">
@@ -29,68 +28,92 @@
                 </div>
                 <div class="ibox-content">
 
-                    <div class="form-horizontal">
-                        <dl class="col-md-8">
-                            <dt class="form-group">
-                                @Html.DisplayNameFor(model => model.employee_Name)
-                            </dt>
 
-                            <dd class="form-group">
-                                @Html.DisplayFor(model => model.employee_Name)
-                            </dd>
-
-                            <dt class="form-group">
-                                @Html.DisplayNameFor(model => model.employee_Direction)
-                            </dt>
-
-                            <dd class="form-group">
-                                @Html.DisplayFor(model => model.employee_Direction)
-                            </dd>
+                    <dl class="dl-horizontal">
+                        <dt>
+                            @Html.DisplayNameFor(model => model.employee_Name)
+                        </dt>
+                        <dd class="form-group">
+                            @Html.DisplayFor(model => model.employee_Name)
+                        </dd>
 
 
-                        </dl>
+                        <dt class="form-group">
+                            @Html.DisplayNameFor(model => model.employee_Direction)
+                        </dt>
 
-                        <div class="form-group ">
+                        <dd class="form-group">
+                            @Html.DisplayFor(model => model.employee_Direction)
+                        </dd>
 
-                            <div class="col-md-6 center">
-                                <label class="col-md-10" style="text-align:center">Sucursales Asignadas</label>
-                                <table id="Added" class="table table table-striped table-bordered dataTable no-footer" style="width:100%">
-                                    <thead>
-                                        <tr>
-                                            <th hidden style="background-color:#1ab394;color:white">ID</th>
-                                            <th id="Assign" style="background-color:#1ab394;color:white">Nombre</th>
-                                            <th style="background-color: #1ab394; color: white">Direccion</th>
-                                            <th style="background-color:#1ab394;color:white">Distancia(KM)</th>
-                                        </tr>
-                                    </thead>
-                                    <tbody>
-                                        @foreach (var item in (List<ERP_GMEDINA.Models.tbEmployeesSubsidiary>)ViewBag.tbEmployeesSubsidiaries)
-                                        {
-                                            <tr data-id="@item.subsidiary_ID">
-                                                <td hidden>
-                                                    @Html.DisplayFor(modelItem => item.subsidiary_ID)
-                                                </td>
-                                                <td>
-                                                    @Html.DisplayFor(modelItem => item.tbSubsidiary.subsidiary_Name)
-                                                </td>
-                                                <td>
-                                                    @Html.DisplayFor(modelItem => item.tbSubsidiary.subsidiary_Direction)
-                                                </td>
-                                                <td>
-                                                    @Html.DisplayFor(modelItem => item.employeeSubsidiary_DistanceKM)
-                                                </td>
-                                            </tr>
-                                        }
-                                    </tbody>
-                                </table>
+                        <dt class="form-group">
+                            @Html.DisplayNameFor(model => model.tbPosition.position_Name)
+                        </dt>
+                        <dd class="form-group">
+                            @Html.DisplayFor(model => model.tbPosition.position_Name)
+                        </dd>
 
+                        <dt class="form-group">
+                            @Html.DisplayNameFor(model => model.tbUsers.FirstOrDefault().user_IsAdmin)
+                        </dt>
+
+                        <dd class="form-group">
+                            @Html.DisplayFor(model => model.tbUsers.FirstOrDefault().user_IsAdmin)
+                        </dd>
+
+                        <dt class="form-group">
+                            @Html.DisplayNameFor(model => model.tbUsers.FirstOrDefault().user_IsActive)
+                        </dt>
+                        <dd class="form-group">
+                            @Html.DisplayFor(model => model.tbUsers.FirstOrDefault().user_IsActive)
+                        </dd>
+                    </dl>
+
+                    <div class="wrapper wrapper-content animated fadeInRight">
+                        <div class="row">
+                            <div class="col-lg-12">
+                                <div class="ibox float-e-margins">
+                                    <div class="ibox float-e-margins">
+                                        <div class="ibox-title">
+                                            <h5>Sucursales Asignadas</h5>
+                                        </div>
+                                        <div class="ibox-content">
+                                            <div class="form-horizontal">
+                                                <table id="Added" class="table table table-striped table-bordered dataTable no-footer" style="width:100%">
+                                                    <thead>
+                                                        <tr>
+                                                            <th hidden style="background-color:#1ab394;color:white">ID</th>
+                                                            <th id="Assign" style="background-color:#1ab394;color:white">Nombre</th>
+                                                            <th style="background-color: #1ab394; color: white">Direccion</th>
+                                                            <th style="background-color:#1ab394;color:white">Distancia(KM)</th>
+                                                        </tr>
+                                                    </thead>
+                                                    <tbody>
+                                                        @foreach (var item in (List<ERP_GMEDINA.Models.tbEmployeesSubsidiary>)ViewBag.tbEmployeesSubsidiaries)
+                                                        {
+                                                            <tr data-id="@item.subsidiary_ID">
+                                                                <td hidden>
+                                                                    @Html.DisplayFor(modelItem => item.subsidiary_ID)
+                                                                </td>
+                                                                <td>
+                                                                    @Html.DisplayFor(modelItem => item.tbSubsidiary.subsidiary_Name)
+                                                                </td>
+                                                                <td>
+                                                                    @Html.DisplayFor(modelItem => item.tbSubsidiary.subsidiary_Direction)
+                                                                </td>
+                                                                <td>
+                                                                    @Html.DisplayFor(modelItem => item.employeeSubsidiary_DistanceKM)
+                                                                </td>
+                                                            </tr>
+                                                        }
+                                                    </tbody>
+                                                </table>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
                             </div>
-
-
                         </div>
-
-
-
                     </div>
 
                     <div class="form-horizontal">
@@ -107,10 +130,6 @@
         </div>
     </div>
 </div>
-
-
-
-
 
 
 @section scripts{

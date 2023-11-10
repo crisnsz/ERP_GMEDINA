@@ -29,7 +29,7 @@ namespace ERP_GMEDINA
 
             // SlimScroll
             bundles.Add(new ScriptBundle("~/plugins/slimScroll").Include(
-                      "~/Scripts/plugins/slimScroll/jquery.slimscroll.min.js"));
+                      "~/Scripts/plugins/slimscroll/jquery.slimscroll.min.js"));
 
             // jQuery plugins
             bundles.Add(new ScriptBundle("~/plugins/Menu").Include(
@@ -64,7 +64,7 @@ namespace ERP_GMEDINA
             ));
 
             bundles.Add(new ScriptBundle("~/Scripts/picker").Include(
-                "~/Scripts/jquery-ui-1.12.1.min.js"
+                "~/Scripts/jquery-ui-1.13.2.min.js"
                 ));
 
         }

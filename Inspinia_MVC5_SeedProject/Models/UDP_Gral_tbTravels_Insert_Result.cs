@@ -10,16 +10,9 @@
 namespace ERP_GMEDINA.Models
 {
     using System;
-    using System.Collections.Generic;
     
-    public partial class tbEmployeesSubsidiary
+    public partial class UDP_Gral_tbTravels_Insert_Result
     {
-        public int employeeSubsidiary_ID { get; set; }
-        public int employee_ID { get; set; }
-        public int subsidiary_ID { get; set; }
-        public Nullable<decimal> employeeSubsidiary_DistanceKM { get; set; }
-    
-        public virtual tbEmployee tbEmployee { get; set; }
-        public virtual tbSubsidiary tbSubsidiary { get; set; }
+        public string ErrorMessage { get; set; }
     }
 }

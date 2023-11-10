@@ -6,7 +6,10 @@ using System.Data.Entity;
 using System.IdentityModel.Metadata;
 using System.Linq;
 using System.Net;
+using System.Transactions;
 using System.Web.Mvc;
+using System.Web;
+
 
 namespace ERP_GMEDINA.Controllers
 {
@@ -16,15 +19,14 @@ namespace ERP_GMEDINA.Controllers
 
         private static List<tbEmployeesSubsidiary> ListEmployeesSubsidiaries { get; set; } = new List<tbEmployeesSubsidiary>();
 
-
         public static bool Modified { get; set; }
 
         private void CleanVariables()
         {
 
             Modified = false;
-
-            ListEmployeesSubsidiaries.Clear();
+            Session["employeesSubsidiary"] = null;
+            //ListEmployeesSubsidiaries.Clear();
 
         }
         // GET: /Employee/
@@ -87,6 +89,8 @@ namespace ERP_GMEDINA.Controllers
         {
 
             CleanVariables();
+            Session["employeesSubsidiary"] = null;
+
 
             ViewBag.Positions = new SelectList(db.tbPositions, "position_ID", "position_Name");
 
@@ -101,30 +105,52 @@ namespace ERP_GMEDINA.Controllers
         [SessionManager("Employee/Create")]
         public ActionResult Create([Bind(Include = "employee_ID,employee_Name,employee_Direction,position_ID")] tbEmployee tbEmployee)
         {
+
+            ViewBag.Positions = new SelectList(db.tbPositions, "position_ID", "position_Name");
             if (!ModelState.IsValid)
             {
-                ViewBag.Positions = new SelectList(db.tbPositions, "position_ID", "position_Name");
                 return View(tbEmployee);
             }
-            using (var transaction = db.Database.BeginTransaction())
+            using (TransactionScope Tran = new TransactionScope())
             {
                 try
                 {
-                    db.tbEmployees.Add(tbEmployee);
+                    var EmployeeInsert = db.UDP_Gral_tbEmployees_Insert(tbEmployee.employee_Name, tbEmployee.employee_Direction, tbEmployee.position_ID).FirstOrDefault();
 
-                    db.SaveChanges();
+                    var listEmployeesSubsidiarySession = (List<tbEmployeesSubsidiary>)Session["employeesSubsidiary"];
 
-
-                    foreach (var employeesSubsidiary in ListEmployeesSubsidiaries)
+                    if (EmployeeInsert is null || EmployeeInsert.ErrorMessage.StartsWith("-1"))
                     {
-                        employeesSubsidiary.employee_ID = tbEmployee.employee_ID;
-                        db.tbEmployeesSubsidiaries.Add(employeesSubsidiary);
+                        ModelState.AddModelError("", "Error al resgistrar el empleado");
+                        return View(tbEmployee);
                     }
 
-                    db.SaveChanges();
+                    var idOrError = Convert.ToInt32(EmployeeInsert.ErrorMessage);
 
-                    transaction.Commit();
+                    if (idOrError <= 0)
+                    {
+                        ModelState.AddModelError("", "Error al resgistrar el empleado");
+                        Session["employeesSubsidiary"] = null;
+                        return View(tbEmployee);
+                    }
 
+                    if (ListEmployeesSubsidiaries != null && ListEmployeesSubsidiaries.Any())
+                    {
+                        foreach (tbEmployeesSubsidiary employeesSubsidiary in ListEmployeesSubsidiaries)
+                        {
+                            var EmployeesSubsidaries = db.UDP_Gral_tbEmployeesSubsidiaries_Insert(
+                                idOrError, employeesSubsidiary.subsidiary_ID, employeesSubsidiary.employeeSubsidiary_DistanceKM)
+                                .FirstOrDefault();
+
+                            if (EmployeesSubsidaries is null || EmployeesSubsidaries.ErrorMessage.StartsWith("-1"))
+                            {
+                                ModelState.AddModelError("", "No se pudo agregar el registro detalle");
+                                return View(tbEmployee);
+                            }
+                        }
+                    }
+
+                    Tran.Complete();
                     return RedirectToAction("Index");
                 }
                 catch (Exception)
@@ -132,6 +158,7 @@ namespace ERP_GMEDINA.Controllers
                     return View(tbEmployee);
                 }
             }
+
         }
 
         // GET: /Employee/Edit/5
@@ -254,40 +281,64 @@ namespace ERP_GMEDINA.Controllers
         [HttpPost]
         public JsonResult AddSubsidiary(tbEmployeesSubsidiary tbEmployeesSubsidiary)
         {
-            bool response;
             try
             {
-                ListEmployeesSubsidiaries.Add(tbEmployeesSubsidiary);
+                if (!ModelState.IsValid)
+                {
+                    return Json(new { success = false, errors = ModelState.Values.SelectMany(v => v.Errors).Select(e => e.ErrorMessage) });
+                }
 
+                var listEmployeesSubsidiarySession = (List<tbEmployeesSubsidiary>)Session["employeesSubsidiary"];
+
+                if (listEmployeesSubsidiarySession == null)
+                {
+                    listEmployeesSubsidiarySession = new List<tbEmployeesSubsidiary>();
+                    Session["employeesSubsidiary"] = listEmployeesSubsidiarySession;
+                }
+
+                listEmployeesSubsidiarySession.Add(tbEmployeesSubsidiary);
                 Modified = true;
 
-                response = true;
+                return Json(new { success = true }, JsonRequestBehavior.AllowGet);
             }
-            catch (Exception)
+            catch (Exception ex)
             {
-                response = false;
-            }
+                // Log the exception for debugging purposes
+                // logger.LogError($"Error in AddSubsidiary: {ex.Message}");
 
-            return Json(response, JsonRequestBehavior.AllowGet);
+                return Json(new { success = false, error = $"No se pudo asignar el empleado a la subsidiaria {tbEmployeesSubsidiary.tbSubsidiary.subsidiary_Name}." }, JsonRequestBehavior.AllowGet);
+            }
         }
+
 
         [HttpPost]
         public JsonResult RemoveSubsidiary(tbEmployeesSubsidiary tbEmployeesSubsidiary)
         {
-            bool response;
             try
             {
-                ListEmployeesSubsidiaries.RemoveAll(item => item.subsidiary_ID == tbEmployeesSubsidiary.subsidiary_ID);
-                Modified = true;
-                response = true;
-            }
-            catch (Exception)
-            {
-                response = false;
-            }
+                var listEmployeesSubsidiarySession = (List<tbEmployeesSubsidiary>)Session["employeesSubsidiary"];
 
-            return Json(response, JsonRequestBehavior.AllowGet);
+                if (listEmployeesSubsidiarySession != null)
+                {
+                    listEmployeesSubsidiarySession.RemoveAll(item => item.subsidiary_ID == tbEmployeesSubsidiary.subsidiary_ID);
+                    Modified = true;
+                    return Json(new { success = true }, JsonRequestBehavior.AllowGet);
+                }
+                else
+                {
+                    // Handle the case where the session list is null
+                    return Json(new { success = false, error = "Session list is null." }, JsonRequestBehavior.AllowGet);
+                }
+            }
+            catch (Exception ex)
+            {
+                // Log the exception for debugging purposes
+                // logger.LogError($"Error in RemoveSubsidiary: {ex.Message}");
+
+                return Json(new { success = false, error = $"No se pudo eliminar la subsidiaria asiganda: {tbEmployeesSubsidiary.tbSubsidiary.subsidiary_Name}." }, JsonRequestBehavior.AllowGet);
+            }
         }
+
 
         public List<tbPosition> GetPositions()
         {

@@ -10,16 +10,15 @@
 namespace ERP_GMEDINA.Models
 {
     using System;
-    using System.Collections.Generic;
     
-    public partial class tbEmployeesSubsidiary
+    public partial class UDP_Sec_Login_Result
     {
-        public int employeeSubsidiary_ID { get; set; }
+        public int user_ID { get; set; }
         public int employee_ID { get; set; }
-        public int subsidiary_ID { get; set; }
-        public Nullable<decimal> employeeSubsidiary_DistanceKM { get; set; }
-    
-        public virtual tbEmployee tbEmployee { get; set; }
-        public virtual tbSubsidiary tbSubsidiary { get; set; }
+        public string user_Username { get; set; }
+        public byte[] user_Password { get; set; }
+        public System.Guid user_Token { get; set; }
+        public bool user_IsActive { get; set; }
+        public bool user_IsAdmin { get; set; }
     }
 }

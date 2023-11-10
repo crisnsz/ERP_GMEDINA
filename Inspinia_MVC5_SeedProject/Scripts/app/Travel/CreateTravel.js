@@ -323,7 +323,6 @@ function getAddressPromise(id) {
 
 function getEmployeesBySubsidiaryPromise(id) {
     if (id == null || id === undefined) {
-        // TODO document why this block is empty
         return;
     }
 

@@ -299,13 +299,25 @@
     <Compile Include="Models\tbTravelDetail.cs">
       <DependentUpon>FARSIMAN.tt</DependentUpon>
     </Compile>
-    <Compile Include="Models\tbTravelHistory.cs">
-      <DependentUpon>FARSIMAN.tt</DependentUpon>
-    </Compile>
     <Compile Include="Models\tbUser.cs">
       <DependentUpon>FARSIMAN.tt</DependentUpon>
     </Compile>
     <Compile Include="Models\TravelReportDataModel.cs" />
+    <Compile Include="Models\UDP_Gral_tbEmployeesSubsidiaries_Insert_Result.cs">
+      <DependentUpon>FARSIMAN.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\UDP_Gral_tbEmployees_Insert_Result.cs">
+      <DependentUpon>FARSIMAN.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\UDP_Gral_tbTravelDetail_Insert_Result.cs">
+      <DependentUpon>FARSIMAN.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\UDP_Gral_tbTravels_Insert_Result.cs">
+      <DependentUpon>FARSIMAN.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\UDP_Sec_Login_Result.cs">
+      <DependentUpon>FARSIMAN.tt</DependentUpon>
+    </Compile>
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Properties\Settings.Designer.cs">
       <AutoGen>True</AutoGen>
@@ -562,6 +574,8 @@
     </Content>
     <Content Include="ReportTravel.aspx" />
     <Content Include="Scripts\app\Employees\EditEmployee.js" />
+    <Content Include="Scripts\app\inspinia.js" />
+    <Content Include="Scripts\app\jquery.inputmask.bundle.js" />
     <Content Include="Scripts\app\Travel\CreateTravel.js" />
     <Content Include="Scripts\app\Travel\EditTravel.js" />
     <Content Include="Scripts\app\Travel\IndexTravel.js" />

@@ -15,8 +15,8 @@ namespace ERP_GMEDINA.Models
     public partial class tbTravelDetail
     {
         public int travel_Detail_ID { get; set; }
-        public Nullable<int> travel_ID { get; set; }
-        public Nullable<int> employee_ID { get; set; }
+        public int travel_ID { get; set; }
+        public int employee_ID { get; set; }
         public decimal distance_Kilometers { get; set; }
         public decimal travel_Cost { get; set; }
     

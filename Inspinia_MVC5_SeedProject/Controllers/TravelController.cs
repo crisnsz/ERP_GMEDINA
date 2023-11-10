@@ -6,6 +6,7 @@ using System.Data.Entity.Core.Objects;
 using System.Linq;
 using System.Net;
 using System.Net.PeerToPeer;
+using System.Transactions;
 using System.Web;
 using System.Web.Mvc;
 using ERP_GMEDINA.Attribute;
@@ -34,10 +35,6 @@ namespace ERP_GMEDINA.Controllers
         {
             var vInitialDate = DateTime.SpecifyKind(Convert.ToDateTime(InitialDate), DateTimeKind.Local);
             var vFinalDate = DateTime.SpecifyKind(Convert.ToDateTime(FinalDate), DateTimeKind.Local);
-
-            var DateOne = new DateTime(2023, 11, 1, 0, 0, 0, DateTimeKind.Local);
-            var DateTwo = new DateTime(2023, 11, 10, 0, 0, 0, DateTimeKind.Local);
-
 
             var query = from travel in db.tbTravels
                         where travel.transporter_ID == tbTravel.transporter_ID &&
@@ -187,6 +184,8 @@ namespace ERP_GMEDINA.Controllers
         [SessionManager("TravelHistory/Create")]
         public ActionResult Create()
         {
+
+            Session["travelDetail"] = null;
             CleanVariables();
 
             GetUserInformation();
@@ -219,77 +218,74 @@ namespace ERP_GMEDINA.Controllers
         [SessionManager("TravelHistory/Create")]
         public ActionResult Create([Bind(Include = "travel_ID,subsidiary_ID,transporter_ID,employee_ID,departure_Date_and_Time,distance_Kilometers,total_travel_Cost")] tbTravel tbTravel)
         {
-
-
-            GetUserInformation();
-
-            if (!ModelState.IsValid || ListEmployees.Count <= 0)
+            try
             {
+                GetUserInformation();
 
-                ViewBag.employee_ID = EmployeeInfo.employee_ID;
-                ViewBag.employee_Name = EmployeeInfo.employee_Name;
-
-                ViewBag.subsidiary_ID = new SelectList(db.tbSubsidiaries, "subsidiary_ID", "subsidiary_Name");
-                ViewBag.transporter_ID = new SelectList(db.tbTransporters, "transporter_ID", "transporter_Name");
-
-                return View(tbTravel);
-            }
-
-            using (var transaction = db.Database.BeginTransaction())
-            {
-                try
+                if (!ModelState.IsValid || ListEmployees.Count <= 0)
                 {
-                    db.tbTravels.Add(tbTravel);
+                    ViewBag.employee_ID = EmployeeInfo.employee_ID;
+                    ViewBag.employee_Name = EmployeeInfo.employee_Name;
+                    ViewBag.subsidiary_ID = new SelectList(db.tbSubsidiaries, "subsidiary_ID", "subsidiary_Name");
+                    ViewBag.transporter_ID = new SelectList(db.tbTransporters, "transporter_ID", "transporter_Name");
+                    return View(tbTravel);
+                }
 
-                    db.SaveChanges();
+                using (TransactionScope Tran = new TransactionScope())
+                {
+                    var listTravel = db.UDP_Gral_tbTravels_Insert(
+                        tbTravel.subsidiary_ID, tbTravel.transporter_ID, tbTravel.employee_ID,
+                        tbTravel.departure_Date_and_Time, tbTravel.distance_Kilometers, tbTravel.total_travel_Cost)
+                        .FirstOrDefault();
 
+                    var list = (List<tbTravelDetail>)Session["travelDetail"];
 
-                    if (ListTravelDetails is null)
+                    if (listTravel is null || listTravel.ErrorMessage.StartsWith("-1"))
                     {
+                        ModelState.AddModelError("", "No se pudo agregar el registro");
                         return View(tbTravel);
                     }
 
+                    var errorMessage = Convert.ToInt32(listTravel.ErrorMessage);
 
-                    var Transportists = db.tbTransporters.Find(tbTravel.transporter_ID);
-
-                    if (Transportists == null)
+                    if (errorMessage <= 0)
                     {
-                        return HttpNotFound();
+                        ModelState.AddModelError("", "No se pudo agregar el registro");
+                        Session["travelDetail"] = null;
+                        return View(tbTravel);
                     }
 
-
-                    foreach (var employee in ListEmployees)
+                    if (list != null && list.Any())
                     {
-                        var EmployeesSubsidiariesInfo = db.tbEmployeesSubsidiaries.Where(x => x.employee_ID == employee && x.subsidiary_ID == tbTravel.subsidiary_ID).SingleOrDefault();
-
-                        if (EmployeesSubsidiariesInfo is null)
+                        foreach (tbTravelDetail travelDetail in list)
                         {
-                            return View(tbTravel);
+                            var listTravelDetalle = db.UDP_Gral_tbTravelDetail_Insert(
+                                errorMessage, travelDetail.employee_ID, travelDetail.distance_Kilometers, travelDetail.travel_Cost)
+                                .FirstOrDefault();
+
+                            if (listTravelDetalle is null || listTravelDetalle.ErrorMessage.StartsWith("-1"))
+                            {
+                                ModelState.AddModelError("", "No se pudo agregar el registro detalle");
+                                return View(tbTravel);
+                            }
                         }
-
-                        tbTravelDetail TravelDetail = new tbTravelDetail
-                        {
-                            travel_ID = tbTravel.travel_ID,
-                            employee_ID = employee,
-                            distance_Kilometers = (decimal)EmployeesSubsidiariesInfo.employeeSubsidiary_DistanceKM,
-                            travel_Cost = Transportists.transporter_Fee * (decimal)EmployeesSubsidiariesInfo.employeeSubsidiary_DistanceKM
-                        };
-
-                        db.tbTravelDetails.Add(TravelDetail);
                     }
 
-                    db.SaveChanges();
-
-                    transaction.Commit();
-
-                    return RedirectToAction("Index");
-                }
-                catch (Exception)
-                {
-                    return View(tbTravel);
+                    Tran.Complete();
                 }
             }
+            catch (Exception ex)
+            {
+                ModelState.AddModelError("", $"No se pudo agregar el registro. Error: {ex.Message}");
+                throw;
+            }
+
+            Session["travelDetail"] = null;
+            return RedirectToAction("Index");
         }
+
+
+
 
         // GET: /Travel/Edit/5
 
@@ -331,7 +327,8 @@ namespace ERP_GMEDINA.Controllers
 
             ListTravelDetails = travelDetails.ToList();
 
-            ListEmployees = travelDetails.Select(detail => detail.employee_ID ?? 0).ToList();
+            ListEmployees = travelDetails.Select(detail => detail.employee_ID).ToList();
+
 
             var employeesAvaliable = from employeeSubsidiary in db.tbEmployeesSubsidiaries
                         .Include(es => es.tbEmployee) // Include related entity tbSubsidiary
@@ -362,11 +359,15 @@ namespace ERP_GMEDINA.Controllers
             return View(tbTravel);
         }
 
+
+
+
         // POST: /Travel/Edit/5
         // To protect from overposting attacks, enable the specific properties you want to bind to, for 
         // more details see https://go.microsoft.com/fwlink/?LinkId=317598.
 
-        [SessionManager("TravelHistory/Edit")]
+
+        [SessionManager("Travel/Edit")]
         [HttpPost]
         [ValidateAntiForgeryToken]
         public ActionResult Edit([Bind(Include = "travel_ID,subsidiary_ID,transporter_ID,employee_ID,departure_Date_and_Time,distance_Kilometers,total_travel_Cost")] tbTravel tbTravel)
@@ -375,9 +376,6 @@ namespace ERP_GMEDINA.Controllers
 
             if (!ModelState.IsValid || ListEmployees.Count <= 0)
             {
-                GetUserInformation();
-
-
 
                 ViewBag.employee_ID = EmployeeInfo.employee_ID;
                 ViewBag.employee_Name = EmployeeInfo.employee_Name;
@@ -399,7 +397,7 @@ namespace ERP_GMEDINA.Controllers
 
                 ListTravelDetails = travelDetails.ToList();
 
-                ListEmployees = travelDetails.Select(detail => detail.employee_ID ?? 0).ToList();
+                ListEmployees = travelDetails.Select(detail => detail.employee_ID).ToList();
 
                 var employeesAvaliable = from employeeSubsidiary in db.tbEmployeesSubsidiaries
                             .Include(es => es.tbEmployee) // Include related entity tbSubsidiary
@@ -459,7 +457,6 @@ namespace ERP_GMEDINA.Controllers
                         foreach (var travelDetail in tbTravelDetails)
                         {
                             var existingInList = ListTravelDetails.Find(x => x.travel_Detail_ID == travelDetail.travel_Detail_ID);
-                            //var existingInListEmp = ListEmployees.Find(x => x. == travelDetail.travel_Detail_ID);
 
                             if (existingInList == null)
                             {
@@ -478,17 +475,25 @@ namespace ERP_GMEDINA.Controllers
                             }
                             else
                             {
-                                var EmployeesSubsidiariesInfo = db.tbEmployeesSubsidiaries.Where(x => x.employee_ID == travelDetail.employee_ID && x.subsidiary_ID == tbTravel.subsidiary_ID).SingleOrDefault();
-                                //employeesSubsidiary.employee_ID = tbEmployee.employee_ID;
+                                var EmployeesSubsidiariesInfo = db.tbEmployeesSubsidiaries
+                                                                .Where(x => x.employee_ID == travelDetail.employee_ID && x.subsidiary_ID == tbTravel.subsidiary_ID)
+                                                                .SingleOrDefault();
 
-                                travelDetail.travel_ID = tbTravel.travel_ID;
-                                travelDetail.distance_Kilometers = (decimal)EmployeesSubsidiariesInfo.employeeSubsidiary_DistanceKM;
-                                db.tbTravelDetails.Add(travelDetail);
+                                if (EmployeesSubsidiariesInfo != null)  // Check if EmployeesSubsidiariesInfo is not null
+                                {
+                                    travelDetail.travel_ID = tbTravel.travel_ID;
+                                    travelDetail.distance_Kilometers = (decimal)EmployeesSubsidiariesInfo.employeeSubsidiary_DistanceKM;
+                                    db.tbTravelDetails.Add(travelDetail);
+                                }
+                                else
+                                {
+                                    // Handle the case where EmployeesSubsidiariesInfo is null, for example:
+                                    Console.WriteLine("EmployeesSubsidiariesInfo is null for employee_ID: " + travelDetail.employee_ID);
+                                    // You can also decide to skip adding the travelDetail or handle it differently.
+                                }
                             }
                         }
                     }
-
-                    var th = db.tbTravelDetails.ToList();
 
                     db.SaveChanges();
 
@@ -590,7 +595,7 @@ namespace ERP_GMEDINA.Controllers
             }
 
         }
-        
+
         [HttpPost]
         public JsonResult GetAddress(int? subsidiary_ID)
         {

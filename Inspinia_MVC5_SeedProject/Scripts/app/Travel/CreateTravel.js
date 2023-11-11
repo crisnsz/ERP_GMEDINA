@@ -97,44 +97,49 @@ document.addEventListener("DOMContentLoaded", function () {
 
 
 dropdownTransporter_ID.addEventListener("change", async function () {
-    const selectedOption = dropdownTransporter_ID.options[dropdownTransporter_ID.selectedIndex];
-    const transporter_ID = selectedOption.value;
-    let fee = transporterFee.value;
+    try {
+        const selectedOption = dropdownTransporter_ID.options[dropdownTransporter_ID.selectedIndex];
+        const transporter_ID = selectedOption.value;
+        //let fee = transporterFee.value;
 
 
-    if (transporter_ID === '') {
-        cleanValue();
-        return;
+        if (transporter_ID === '') {
+            cleanValue();
+            return;
+        }
+
+        const res = await getTransporterInfo(transporter_ID);
+
+        if (!res || res.error) {
+            // Handle null response or specific error case
+            console.error(res ? res.errorMessage : "Response is null");
+            return;
+        }
+
+        // Handle successful response
+        transporterFee.value = res.transporter_Fee;
+        let fee = res.transporter_Fee;
+
+        if (tableEmployessAdded.rows().count() > 0) {
+            totalCostField.value = distance.value * fee
+        }
+
+        if (checkTables()) {
+            return;
+        }
+
+        // Check if the selected value is not an empty string
+        //if (dropdownTransporter_ID.value !== "") {
+        //    // Enable the input field
+        //    dropdownSubsidiary_ID.disabled = false;
+        //} else {
+        //    // Disable the input field
+        //    dropdownSubsidiary_ID.disabled = true;
+        //}
+
+    } catch (e) {
+        console.error("An error occurred:", e);
     }
-
-
-    await getTransporterInfo(transporter_ID)
-        .then(res => {
-            transporterFee.value = res.transporter_Fee;
-            fee = res.transporter_Fee;
-        })
-        .catch(error => {
-            console.error(error);
-        });
-
-
-    if (tableEmployessAdded.rows().count() > 0) {
-        totalCostField.value = distance.value * fee
-    }
-
-    if (checkTables()) {
-        return;
-    }
-
-    // Check if the selected value is not an empty string
-    //if (dropdownTransporter_ID.value !== "") {
-    //    // Enable the input field
-    //    dropdownSubsidiary_ID.disabled = false;
-    //} else {
-    //    // Disable the input field
-    //    dropdownSubsidiary_ID.disabled = true;
-    //}
-
 });
 
 function cleanValue() {
@@ -167,56 +172,50 @@ function validate_Form() {
     return true;
 }
 
-function getTransporterInfo(id) {
-    return new Promise((resolve, reject) => {
-        fetch("/Travel/GetTransporterInfo", {
+async function getTransporterInfo(id) {
+    try {
+        const response = await fetch("/Travel/GetTransporterInfo", {
             method: "POST",
             headers: {
                 "Content-Type": "application/json; charset=utf-8",
             },
             body: JSON.stringify({ Transporter: id }),
-        })
-            .then(response => {
-                if (response.ok) {
-                    return response.json();
-                } else {
-                    throw new Error("Request failed with status: " + response.status);
-                }
-            })
-            .then(data => {
-                resolve(data);
-            })
-            .catch(error => {
-                reject(error);
-            });
-    });
+        });
+
+        if (!response.ok) {
+            throw new Error("Request failed with status: " + response.status);
+        }
+
+        const data = await response.json();
+        return data;
+    } catch (error) {
+        // You can handle errors here if needed
+        console.error(error);
+        throw error;
+    }
 }
 
-function EmployeeTravelToday(employee_ID) {
-    return new Promise((resolve, reject) => {
-        fetch("/Travel/EmployeeTravelToday", {
+async function EmployeeTravelToday(employee_ID) {
+    try {
+        const response = await fetch("/Travel/EmployeeTravelToday", {
             method: "POST",
             headers: {
                 "Content-Type": "application/json; charset=utf-8",
             },
             body: JSON.stringify({ Employee: employee_ID }),
-        })
-            .then(response => {
-                if (response.ok) {
-                    return response.json();
-                } else {
-                    throw new Error("Request failed with status: " + response.status);
-                }
-            })
-            .then(data => {
-                resolve(data);
-            })
-            .catch(error => {
-                reject(error);
-            });
-    });
+        });
 
+        if (!response.ok) {
+            throw new Error("Request failed with status: " + response.status);
+        }
 
+        const data = await response.json();
+        return data;
+    } catch (error) {
+        // Handle errors or rethrow for higher-level error handling
+        console.error("An error occurred:", error);
+        throw error;
+    }
 }
 
 function setDate() {
@@ -296,78 +295,55 @@ function loadSubsidaryInfo(subsidiary_ID) {
         });
 
 }
-function getAddressPromise(id) {
-    return new Promise((resolve, reject) => {
-        fetch("/Travel/GetAddress", {
+
+async function getAddressPromise(id) {
+    try {
+        const response = await fetch("/Travel/GetAddress", {
             method: "POST",
             headers: {
                 "Content-Type": "application/json; charset=utf-8",
             },
             body: JSON.stringify({ subsidiary_ID: id }),
-        })
-            .then(response => {
-                if (response.ok) {
-                    return response.json();
-                } else {
-                    throw new Error("Request failed with status: " + response.status);
-                }
-            })
-            .then(data => {
-                resolve(data);
-            })
-            .catch(error => {
-                reject(error);
-            });
-    });
-}
+        });
 
-function getEmployeesBySubsidiaryPromise(id) {
-    if (id == null || id === undefined) {
-        return;
+        if (!response.ok) {
+            throw new Error("Request failed with status: " + response.status);
+        }
+
+        const data = await response.json();
+        return data;
+    } catch (error) {
+        // Handle errors or rethrow for higher-level error handling
+        console.error("An error occurred:", error);
+        throw error;
     }
+}
 
-    return new Promise((resolve, reject) => {
-        fetch("/Travel/GetEmployeesBySubsidiary", {
+async function getEmployeesBySubsidiaryPromise(id) {
+    try {
+        if (id == null || id === undefined) {
+            return;
+        }
+
+        const response = await fetch("/Travel/GetEmployeesBySubsidiary", {
             method: "POST",
             headers: {
                 "Content-Type": "application/json; charset=utf-8",
             },
             body: JSON.stringify({ subsidiary_ID: id }),
-        })
-            .then(response => {
-                if (response.ok) {
-                    return response.json();
-                } else {
-                    throw new Error("Request failed with status: " + response.status);
-                }
-            })
-            .then(data => {
-                resolve(data);
-            })
-            .catch(error => {
-                reject(error);
-            });
-    });
-}
+        });
 
-function getAddressPromiseOld(id) {
-    return new Promise((resolve, reject) => {
+        if (!response.ok) {
+            throw new Error("Request failed with status: " + response.status);
+        }
 
-        $.ajax({
-            url: "/Travel/GetAddress",
-            method: "POST",
-            dataType: 'json',
-            contentType: "application/json; charset=utf-8",
-            data: JSON.stringify({ subsidiary_ID: id }),
-        })
-            .done(function (res) {
-                resolve(res)
-            })
-            .fail(function (jqXHR, textStatus, errorThrown) {
-                // Error handling
-                reject(new Error("Request timed out"));
-            });
-    });
+        const data = await response.json();
+        return data;
+    } catch (error) {
+        // Handle errors or rethrow for higher-level error handling
+        console.error("An error occurred:", error);
+        throw error;
+    }
 }
 
 
@@ -470,121 +446,113 @@ $("#EmployessAvalaible tbody").on("click", "input#btnAddEmployee", async functio
         return;
     }
 
+    const res = await addEmployeeToTravel(Employee_ID);
 
-    AddEmployeeToTravelPromise(Employee_ID)
-        .then(response => {
+    if (!res || res.error) {
+        // Handle null response or specific error case
+        console.error(res ? res.errorMessage : "Response is null");
+        return;
+    }
 
-            updateTotalCost(add, Kilometers);
+    updateTotalCost(add, Kilometers);
 
-            updateDistance(add, Kilometers);
+    updateDistance(add, Kilometers);
 
-            //#DelSubsidiary
-            data[4] = '<input name="id02" type="button" id="btnDelEmployee" value="&#9668; Quitar &nbsp;&nbsp;" class="btn btn-primary btn-xs">';
+    //#DelSubsidiary
+    data[4] = '<input name="id02" type="button" id="btnDelEmployee" value="&#9668; Quitar &nbsp;&nbsp;" class="btn btn-primary btn-xs">';
 
+    // Mueve la fila a tabla2
+    tableEmployessAdded.row.add(data).draw();
 
-            // Mueve la fila a tabla2
-            tableEmployessAdded.row.add(data).draw();
+    // Elimina la fila de tabla1
+    tableEmployessAvalaible.row($(this).parents("tr")).remove().draw();
 
-            // Elimina la fila de tabla1
-            tableEmployessAvalaible.row($(this).parents("tr")).remove().draw();
-
-
-            checkTables();
-        })
-        .catch(error => {
-            console.error(error); // Request timed out
-        });
+    checkTables();
 
 
 })
 
-
-function AddEmployeeToTravelPromise(id) {
-    return new Promise((resolve, reject) => {
-        fetch("/Travel/AddEmployeeTravel", {
+async function addEmployeeToTravel(id) {
+    try {
+        const response = await fetch("/Travel/AddEmployeeTravel", {
             method: "POST",
             headers: {
                 "Content-Type": "application/json; charset=utf-8",
             },
             body: JSON.stringify({ Employee: id }),
-        })
-            .then(response => {
-                if (response.ok) {
-                    return response.json();
-                } else {
-                    throw new Error("Request failed with status: " + response.status);
-                }
-            })
-            .then(data => {
-                resolve(data);
-            })
-            .catch(error => {
-                reject(error);
-            });
-    });
+        });
+
+        if (!response.ok) {
+            throw new Error("Request failed with status: " + response.status);
+        }
+
+        const data = await response.json();
+        return data;
+    } catch (error) {
+        // Handle errors or rethrow for higher-level error handling
+        console.error("An error occurred:", error);
+        throw error;
+    }
 }
 
-
 $("#EmployessAdded tbody").on("click", "input#btnDelEmployee", async function () {
-    let data = tableEmployessAdded.row($(this).parents("tr")).data();
-    let Employee_ID = data[0];
-    let Kilometers = (data[3])
+    try {
+        let data = tableEmployessAdded.row($(this).parents("tr")).data();
+        let employeeID = data[0];
+        let kilometers = data[3];
 
+        console.log(`Remove ${employeeID}`);
 
-    console.log(`Remove ${Employee_ID}`);
+        const res = await removeEmployeeToTravel(employeeID);
 
-    RemoveEmployeeToTravelPromise(Employee_ID)
-        .then(response => {
+        if (!res || res.error) {
+            // Handle null response or specific error case
+            console.error(res ? res.errorMessage : "Response is null");
+            return;
+        }
 
+        updateTotalCost(subtract, kilometers);
+        updateDistance(subtract, kilometers);
 
-            updateTotalCost(subtract, Kilometers);
+        // Change the button id from #btnDelEmployee to #btnAddEmployee
+        data[4] = '<input name="id02" type="button" id="btnAddEmployee" value="&nbsp;Agregar &#9658" class="btn btn-primary btn-xs">';
 
-            updateDistance(subtract, Kilometers);
-            //Cambiar id de #btnDelEmployee a #btnAddEmployee
-            data[4] = '<input name="id02" type="button" id="btnAddEmployee" value="&nbsp;Agregar &#9658" class="btn btn-primary btn-xs">';
+        // Move the row to tableEmployessAvalaible
+        tableEmployessAvalaible.row.add(data).draw();
 
-            // Mueve la fila a tabla1
-            tableEmployessAvalaible.row.add(data).draw();
+        // Remove the row from tableEmployessAdded
+        tableEmployessAdded.row($(this).parents("tr")).remove().draw();
 
-            // Elimina la fila de tabla2
-            tableEmployessAdded.row($(this).parents("tr")).remove().draw();
+        tableEmployessAvalaible.order([0, 'asc']).draw();
 
-            tableEmployessAvalaible.order([0, 'asc']).draw();
-
-
-
-            checkTables();
-        })
-        .catch(error => {
-            console.error(error); // Request timed out
-        });
+        checkTables();
+    } catch (error) {
+        console.error("An error occurred:", error);
+    }
 });
 
-function RemoveEmployeeToTravelPromise(id) {
 
-    return new Promise((resolve, reject) => {
-
-        fetch("/Travel/RemoveEmployeeTravel", {
+async function removeEmployeeToTravel(id) {
+    try {
+        const response = await fetch("/Travel/RemoveEmployeeTravel", {
             method: "POST",
             headers: {
                 "Content-Type": "application/json; charset=utf-8",
             },
             body: JSON.stringify({ Employee: id }),
-        })
-            .then(response => {
-                if (response.ok) {
-                    return response.json();
-                } else {
-                    throw new Error("Request failed with status: " + response.status);
-                }
-            })
-            .then(data => {
-                resolve(data);
-            })
-            .catch(error => {
-                reject(error);
-            });
-    });
+        });
+
+        if (!response.ok) {
+            throw new Error("Request failed with status: " + response.status);
+        }
+
+        const data = await response.json();
+        return data;
+    } catch (error) {
+        // Handle errors or rethrow for higher-level error handling
+        console.error("An error occurred:", error);
+        throw error;
+    }
 }
 
 

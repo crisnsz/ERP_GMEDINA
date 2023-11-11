@@ -244,9 +244,6 @@
         </Function>
         <Function Name="UDP_Gral_tbEmployeesSubsidiaries_Delete" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="Gral">
           <Parameter Name="employeeSubsidiary_ID" Type="int" Mode="In" />
-          <Parameter Name="employee_ID" Type="int" Mode="In" />
-          <Parameter Name="subsidiary_ID" Type="int" Mode="In" />
-          <Parameter Name="employeeSubsidiary_DistanceKM" Type="decimal" Mode="In" />
         </Function>
         <Function Name="UDP_Gral_tbEmployeesSubsidiaries_Insert" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="Gral">
           <Parameter Name="employee_ID" Type="int" Mode="In" />
@@ -259,13 +256,35 @@
           <Parameter Name="subsidiary_ID" Type="int" Mode="In" />
           <Parameter Name="employeeSubsidiary_DistanceKM" Type="decimal" Mode="In" />
         </Function>
+        <Function Name="UDP_Gral_tbTravel_With_tbTravelDetail_Delete" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="Gral">
+          <Parameter Name="travel_ID" Type="int" Mode="In" />
+        </Function>
+        <Function Name="UDP_Gral_tbTravelDetail_Delete" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="Gral">
+          <Parameter Name="travel_Detail_ID" Type="int" Mode="In" />
+        </Function>
         <Function Name="UDP_Gral_tbTravelDetail_Insert" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="Gral">
           <Parameter Name="travel_ID" Type="int" Mode="In" />
           <Parameter Name="employee_ID" Type="int" Mode="In" />
           <Parameter Name="distance_Kilometers" Type="decimal" Mode="In" />
           <Parameter Name="travel_Cost" Type="decimal" Mode="In" />
         </Function>
+        <Function Name="UDP_Gral_tbTravelDetail_Update" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="Gral">
+          <Parameter Name="travel_Detail_ID" Type="int" Mode="In" />
+          <Parameter Name="travel_ID" Type="int" Mode="In" />
+          <Parameter Name="employee_ID" Type="int" Mode="In" />
+          <Parameter Name="distance_Kilometers" Type="decimal" Mode="In" />
+          <Parameter Name="travel_Cost" Type="decimal" Mode="In" />
+        </Function>
         <Function Name="UDP_Gral_tbTravels_Insert" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="Gral">
+          <Parameter Name="subsidiary_ID" Type="int" Mode="In" />
+          <Parameter Name="transporter_ID" Type="int" Mode="In" />
+          <Parameter Name="employee_ID" Type="int" Mode="In" />
+          <Parameter Name="departure_Date_and_Time" Type="datetime" Mode="In" />
+          <Parameter Name="distance_Kilometers" Type="decimal" Mode="In" />
+          <Parameter Name="total_travel_Cost" Type="decimal" Mode="In" />
+        </Function>
+        <Function Name="UDP_Gral_tbTravels_Update" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="Gral">
+          <Parameter Name="travel_ID" Type="int" Mode="In" />
           <Parameter Name="subsidiary_ID" Type="int" Mode="In" />
           <Parameter Name="transporter_ID" Type="int" Mode="In" />
           <Parameter Name="employee_ID" Type="int" Mode="In" />
@@ -392,31 +411,11 @@
             <End Role="tbObject" EntitySet="tbObjects" />
             <End Role="tbAccess" EntitySet="tbAccesses" />
           </AssociationSet>
-          <FunctionImport Name="UDP_Gral_tbEmployees_Delete" ReturnType="Collection(String)">
-          <Parameter Name="employee_ID" Mode="In" Type="Int32" />
-          </FunctionImport>
-          <FunctionImport Name="UDP_Gral_tbEmployees_Update" ReturnType="Collection(String)">
+          <FunctionImport Name="UDP_Gral_tbEmployees_Update" ReturnType="Collection(FARSIMANModel.UDP_Gral_tbEmployees_Update_Result)">
             <Parameter Name="employee_ID" Mode="In" Type="Int32" />
             <Parameter Name="employee_Name" Mode="In" Type="String" />
             <Parameter Name="employee_Direction" Mode="In" Type="String" />
             <Parameter Name="position_ID" Mode="In" Type="Int32" />
-          </FunctionImport>
-          <FunctionImport Name="UDP_Gral_tbEmployeesSubsidiaries_Delete" ReturnType="Collection(String)">
-            <Parameter Name="employeeSubsidiary_ID" Mode="In" Type="Int32" />
-            <Parameter Name="employee_ID" Mode="In" Type="Int32" />
-            <Parameter Name="subsidiary_ID" Mode="In" Type="Int32" />
-            <Parameter Name="employeeSubsidiary_DistanceKM" Mode="In" Type="Decimal" />
-          </FunctionImport>
-          <FunctionImport Name="UDP_Gral_tbEmployeesSubsidiaries_Insert" ReturnType="Collection(FARSIMANModel.UDP_Gral_tbEmployeesSubsidiaries_Insert_Result)">
-            <Parameter Name="employee_ID" Mode="In" Type="Int32" />
-            <Parameter Name="subsidiary_ID" Mode="In" Type="Int32" />
-            <Parameter Name="employeeSubsidiary_DistanceKM" Mode="In" Type="Decimal" />
-          </FunctionImport>
-          <FunctionImport Name="UDP_Gral_tbEmployeesSubsidiaries_Update" ReturnType="Collection(String)">
-            <Parameter Name="employeeSubsidiary_ID" Mode="In" Type="Int32" />
-            <Parameter Name="employee_ID" Mode="In" Type="Int32" />
-            <Parameter Name="subsidiary_ID" Mode="In" Type="Int32" />
-            <Parameter Name="employeeSubsidiary_DistanceKM" Mode="In" Type="Decimal" />
           </FunctionImport>
           <FunctionImport Name="UDP_Gral_tbTravelDetail_Insert" ReturnType="Collection(FARSIMANModel.UDP_Gral_tbTravelDetail_Insert_Result)">
             <Parameter Name="travel_ID" Mode="In" Type="Int32" />
@@ -440,6 +439,45 @@
             <Parameter Name="employee_Name" Mode="In" Type="String" />
             <Parameter Name="employee_Direction" Mode="In" Type="String" />
             <Parameter Name="position_ID" Mode="In" Type="Int32" />
+          </FunctionImport>
+          <FunctionImport Name="UDP_Gral_tbTravel_With_tbTravelDetail_Delete" ReturnType="Collection(FARSIMANModel.UDP_Gral_tbTravel_With_tbTravelDetail_Delete_Result)">
+          <Parameter Name="travel_ID" Mode="In" Type="Int32" />
+          </FunctionImport>
+          <FunctionImport Name="UDP_Gral_tbTravelDetail_Delete" ReturnType="Collection(FARSIMANModel.UDP_Gral_tbTravelDetail_Delete_Result)">
+          <Parameter Name="travel_Detail_ID" Mode="In" Type="Int32" />
+          </FunctionImport>
+          <FunctionImport Name="UDP_Gral_tbTravelDetail_Update" ReturnType="Collection(FARSIMANModel.UDP_Gral_tbTravelDetail_Update_Result)">
+            <Parameter Name="travel_Detail_ID" Mode="In" Type="Int32" />
+            <Parameter Name="travel_ID" Mode="In" Type="Int32" />
+            <Parameter Name="employee_ID" Mode="In" Type="Int32" />
+            <Parameter Name="distance_Kilometers" Mode="In" Type="Decimal" />
+            <Parameter Name="travel_Cost" Mode="In" Type="Decimal" />
+          </FunctionImport>
+          <FunctionImport Name="UDP_Gral_tbTravels_Update" ReturnType="Collection(FARSIMANModel.UDP_Gral_tbTravels_Update_Result)">
+            <Parameter Name="travel_ID" Mode="In" Type="Int32" />
+            <Parameter Name="subsidiary_ID" Mode="In" Type="Int32" />
+            <Parameter Name="transporter_ID" Mode="In" Type="Int32" />
+            <Parameter Name="employee_ID" Mode="In" Type="Int32" />
+            <Parameter Name="departure_Date_and_Time" Mode="In" Type="DateTime" />
+            <Parameter Name="distance_Kilometers" Mode="In" Type="Decimal" />
+            <Parameter Name="total_travel_Cost" Mode="In" Type="Decimal" />
+          </FunctionImport>
+          <FunctionImport Name="UDP_Gral_tbEmployeesSubsidiaries_Delete" ReturnType="Collection(FARSIMANModel.UDP_Gral_tbEmployeesSubsidiaries_Delete_Result)">
+          <Parameter Name="employeeSubsidiary_ID" Mode="In" Type="Int32" />
+          </FunctionImport>
+          <FunctionImport Name="UDP_Gral_tbEmployeesSubsidiaries_Insert" ReturnType="Collection(FARSIMANModel.UDP_Gral_tbEmployeesSubsidiaries_Insert_Result)">
+            <Parameter Name="employee_ID" Mode="In" Type="Int32" />
+            <Parameter Name="subsidiary_ID" Mode="In" Type="Int32" />
+            <Parameter Name="employeeSubsidiary_DistanceKM" Mode="In" Type="Decimal" />
+          </FunctionImport>
+          <FunctionImport Name="UDP_Gral_tbEmployeesSubsidiaries_Update" ReturnType="Collection(FARSIMANModel.UDP_Gral_tbEmployeesSubsidiaries_Update_Result)">
+            <Parameter Name="employeeSubsidiary_ID" Mode="In" Type="Int32" />
+            <Parameter Name="employee_ID" Mode="In" Type="Int32" />
+            <Parameter Name="subsidiary_ID" Mode="In" Type="Int32" />
+            <Parameter Name="employeeSubsidiary_DistanceKM" Mode="In" Type="Decimal" />
+          </FunctionImport>
+          <FunctionImport Name="UDP_Gral_tbEmployees_Delete" ReturnType="Collection(FARSIMANModel.UDP_Gral_tbEmployees_Delete_Result)">
+          <Parameter Name="employee_ID" Mode="In" Type="Int32" />
           </FunctionImport>
         </EntityContainer>
         <EntityType Name="tbEmployee">
@@ -702,10 +740,34 @@
         <ComplexType Name="UDP_Gral_tbTravelDetail_Insert_Result">
           <Property Type="String" Name="ErrorMessage" Nullable="true" MaxLength="30" />
         </ComplexType>
+        <ComplexType Name="UDP_Gral_tbEmployees_Insert_Result">
+          <Property Type="String" Name="ErrorMessage" Nullable="true" MaxLength="30" />
+        </ComplexType>
+        <ComplexType Name="UDP_Gral_tbTravel_With_tbTravelDetail_Delete_Result">
+          <Property Type="String" Name="ErrorMessage" Nullable="true" MaxLength="30" />
+        </ComplexType>
+        <ComplexType Name="UDP_Gral_tbTravels_Update_Result">
+          <Property Type="String" Name="ErrorMessage" Nullable="true" MaxLength="30" />
+        </ComplexType>
+        <ComplexType Name="UDP_Gral_tbTravelDetail_Update_Result">
+          <Property Type="String" Name="ErrorMessage" Nullable="true" MaxLength="30" />
+        </ComplexType>
+        <ComplexType Name="UDP_Gral_tbTravelDetail_Delete_Result">
+          <Property Type="String" Name="ErrorMessage" Nullable="true" MaxLength="30" />
+        </ComplexType>
+        <ComplexType Name="UDP_Gral_tbEmployeesSubsidiaries_Delete_Result">
+          <Property Type="String" Name="ErrorMessage" Nullable="true" MaxLength="30" />
+        </ComplexType>
         <ComplexType Name="UDP_Gral_tbEmployeesSubsidiaries_Insert_Result">
           <Property Type="String" Name="ErrorMessage" Nullable="true" MaxLength="30" />
         </ComplexType>
-        <ComplexType Name="UDP_Gral_tbEmployees_Insert_Result">
+        <ComplexType Name="UDP_Gral_tbEmployeesSubsidiaries_Update_Result">
+          <Property Type="String" Name="ErrorMessage" Nullable="true" MaxLength="30" />
+        </ComplexType>
+        <ComplexType Name="UDP_Gral_tbEmployees_Update_Result">
+          <Property Type="String" Name="ErrorMessage" Nullable="true" MaxLength="30" />
+        </ComplexType>
+        <ComplexType Name="UDP_Gral_tbEmployees_Delete_Result">
           <Property Type="String" Name="ErrorMessage" Nullable="true" MaxLength="30" />
         </ComplexType>
         </Schema>
@@ -815,17 +877,13 @@
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
-          <FunctionImportMapping FunctionImportName="UDP_Gral_tbEmployees_Delete" FunctionName="FARSIMANModel.Store.UDP_Gral_tbEmployees_Delete" />
-          <FunctionImportMapping FunctionImportName="UDP_Gral_tbEmployees_Update" FunctionName="FARSIMANModel.Store.UDP_Gral_tbEmployees_Update" />
-          <FunctionImportMapping FunctionImportName="UDP_Gral_tbEmployeesSubsidiaries_Delete" FunctionName="FARSIMANModel.Store.UDP_Gral_tbEmployeesSubsidiaries_Delete" />
-          <FunctionImportMapping FunctionImportName="UDP_Gral_tbEmployeesSubsidiaries_Insert" FunctionName="FARSIMANModel.Store.UDP_Gral_tbEmployeesSubsidiaries_Insert" >
+          <FunctionImportMapping FunctionImportName="UDP_Gral_tbEmployees_Update" FunctionName="FARSIMANModel.Store.UDP_Gral_tbEmployees_Update" >
             <ResultMapping>
-              <ComplexTypeMapping TypeName="FARSIMANModel.UDP_Gral_tbEmployeesSubsidiaries_Insert_Result">
+              <ComplexTypeMapping TypeName="FARSIMANModel.UDP_Gral_tbEmployees_Update_Result">
                 <ScalarProperty Name="ErrorMessage" ColumnName="ErrorMessage" />
               </ComplexTypeMapping>
             </ResultMapping>
           </FunctionImportMapping>
-          <FunctionImportMapping FunctionImportName="UDP_Gral_tbEmployeesSubsidiaries_Update" FunctionName="FARSIMANModel.Store.UDP_Gral_tbEmployeesSubsidiaries_Update" />
           <FunctionImportMapping FunctionImportName="UDP_Gral_tbTravelDetail_Insert" FunctionName="FARSIMANModel.Store.UDP_Gral_tbTravelDetail_Insert" >
             <ResultMapping>
               <ComplexTypeMapping TypeName="FARSIMANModel.UDP_Gral_tbTravelDetail_Insert_Result">
@@ -856,6 +914,62 @@
           <FunctionImportMapping FunctionImportName="UDP_Gral_tbEmployees_Insert" FunctionName="FARSIMANModel.Store.UDP_Gral_tbEmployees_Insert" >
             <ResultMapping>
               <ComplexTypeMapping TypeName="FARSIMANModel.UDP_Gral_tbEmployees_Insert_Result">
+                <ScalarProperty Name="ErrorMessage" ColumnName="ErrorMessage" />
+              </ComplexTypeMapping>
+            </ResultMapping>
+          </FunctionImportMapping>
+          <FunctionImportMapping FunctionImportName="UDP_Gral_tbTravel_With_tbTravelDetail_Delete" FunctionName="FARSIMANModel.Store.UDP_Gral_tbTravel_With_tbTravelDetail_Delete" >
+            <ResultMapping>
+              <ComplexTypeMapping TypeName="FARSIMANModel.UDP_Gral_tbTravel_With_tbTravelDetail_Delete_Result">
+                <ScalarProperty Name="ErrorMessage" ColumnName="ErrorMessage" />
+              </ComplexTypeMapping>
+            </ResultMapping>
+          </FunctionImportMapping>
+          <FunctionImportMapping FunctionImportName="UDP_Gral_tbTravelDetail_Delete" FunctionName="FARSIMANModel.Store.UDP_Gral_tbTravelDetail_Delete" >
+            <ResultMapping>
+              <ComplexTypeMapping TypeName="FARSIMANModel.UDP_Gral_tbTravelDetail_Delete_Result">
+                <ScalarProperty Name="ErrorMessage" ColumnName="ErrorMessage" />
+              </ComplexTypeMapping>
+            </ResultMapping>
+          </FunctionImportMapping>
+          <FunctionImportMapping FunctionImportName="UDP_Gral_tbTravelDetail_Update" FunctionName="FARSIMANModel.Store.UDP_Gral_tbTravelDetail_Update" >
+            <ResultMapping>
+              <ComplexTypeMapping TypeName="FARSIMANModel.UDP_Gral_tbTravelDetail_Update_Result">
+                <ScalarProperty Name="ErrorMessage" ColumnName="ErrorMessage" />
+              </ComplexTypeMapping>
+            </ResultMapping>
+          </FunctionImportMapping>
+          <FunctionImportMapping FunctionImportName="UDP_Gral_tbTravels_Update" FunctionName="FARSIMANModel.Store.UDP_Gral_tbTravels_Update" >
+            <ResultMapping>
+              <ComplexTypeMapping TypeName="FARSIMANModel.UDP_Gral_tbTravels_Update_Result">
+                <ScalarProperty Name="ErrorMessage" ColumnName="ErrorMessage" />
+              </ComplexTypeMapping>
+            </ResultMapping>
+          </FunctionImportMapping>
+          <FunctionImportMapping FunctionImportName="UDP_Gral_tbEmployeesSubsidiaries_Delete" FunctionName="FARSIMANModel.Store.UDP_Gral_tbEmployeesSubsidiaries_Delete" >
+            <ResultMapping>
+              <ComplexTypeMapping TypeName="FARSIMANModel.UDP_Gral_tbEmployeesSubsidiaries_Delete_Result">
+                <ScalarProperty Name="ErrorMessage" ColumnName="ErrorMessage" />
+              </ComplexTypeMapping>
+            </ResultMapping>
+          </FunctionImportMapping>
+          <FunctionImportMapping FunctionImportName="UDP_Gral_tbEmployeesSubsidiaries_Insert" FunctionName="FARSIMANModel.Store.UDP_Gral_tbEmployeesSubsidiaries_Insert" >
+            <ResultMapping>
+              <ComplexTypeMapping TypeName="FARSIMANModel.UDP_Gral_tbEmployeesSubsidiaries_Insert_Result">
+                <ScalarProperty Name="ErrorMessage" ColumnName="ErrorMessage" />
+              </ComplexTypeMapping>
+            </ResultMapping>
+          </FunctionImportMapping>
+          <FunctionImportMapping FunctionImportName="UDP_Gral_tbEmployeesSubsidiaries_Update" FunctionName="FARSIMANModel.Store.UDP_Gral_tbEmployeesSubsidiaries_Update" >
+            <ResultMapping>
+              <ComplexTypeMapping TypeName="FARSIMANModel.UDP_Gral_tbEmployeesSubsidiaries_Update_Result">
+                <ScalarProperty Name="ErrorMessage" ColumnName="ErrorMessage" />
+              </ComplexTypeMapping>
+            </ResultMapping>
+          </FunctionImportMapping>
+          <FunctionImportMapping FunctionImportName="UDP_Gral_tbEmployees_Delete" FunctionName="FARSIMANModel.Store.UDP_Gral_tbEmployees_Delete" >
+            <ResultMapping>
+              <ComplexTypeMapping TypeName="FARSIMANModel.UDP_Gral_tbEmployees_Delete_Result">
                 <ScalarProperty Name="ErrorMessage" ColumnName="ErrorMessage" />
               </ComplexTypeMapping>
             </ResultMapping>

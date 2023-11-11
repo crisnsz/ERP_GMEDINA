@@ -115,34 +115,33 @@ namespace ERP_GMEDINA.Controllers
 
             Modified = false;
 
+            Session["employees"] = null;
+            Session["travelDetails"] = null;
+
             ListEmployees.Clear();
-            ListTravelDetails.Clear();
+            //ListTravelDetails.Clear();
 
         }
 
         private void GetUserInformation()
         {
-
-            int UserId = 0;
+            int employee_ID = 0;
 
             List<tbUser> UserInformation = Login.getUserInformation();
 
             foreach (tbUser user in UserInformation)
             {
-                UserId = user.user_ID;
+                employee_ID = user.employee_ID;
             }
 
-
-
-            EmployeeInfo = db.tbEmployees.Find(UserId);
-
+            EmployeeInfo = db.tbEmployees.Find(employee_ID);
         }
 
 
 
         // GET: /Travel/
 
-        [SessionManager("TravelHistory/Index")]
+        [SessionManager("Travel/Index")]
         public ActionResult Index()
         {
 
@@ -162,7 +161,7 @@ namespace ERP_GMEDINA.Controllers
 
         // GET: /Travel/Details/5
 
-        [SessionManager("TravelHistory/Details")]
+        [SessionManager("Travel/Details")]
         public ActionResult Details(int? id)
         {
             CleanVariables();
@@ -181,11 +180,10 @@ namespace ERP_GMEDINA.Controllers
 
         // GET: /Travel/Create
 
-        [SessionManager("TravelHistory/Create")]
+        [SessionManager("Travel/Create")]
         public ActionResult Create()
         {
 
-            Session["travelDetail"] = null;
             CleanVariables();
 
             GetUserInformation();
@@ -203,7 +201,6 @@ namespace ERP_GMEDINA.Controllers
             {
                 distance_Kilometers = 0,
                 total_travel_Cost = 0,
-
             };
 
             return View(tbTravel);
@@ -215,60 +212,67 @@ namespace ERP_GMEDINA.Controllers
 
         [HttpPost]
         [ValidateAntiForgeryToken]
-        [SessionManager("TravelHistory/Create")]
+        [SessionManager("Travel/Create")]
         public ActionResult Create([Bind(Include = "travel_ID,subsidiary_ID,transporter_ID,employee_ID,departure_Date_and_Time,distance_Kilometers,total_travel_Cost")] tbTravel tbTravel)
         {
             try
             {
-                GetUserInformation();
-
-                if (!ModelState.IsValid || ListEmployees.Count <= 0)
-                {
-                    ViewBag.employee_ID = EmployeeInfo.employee_ID;
-                    ViewBag.employee_Name = EmployeeInfo.employee_Name;
-                    ViewBag.subsidiary_ID = new SelectList(db.tbSubsidiaries, "subsidiary_ID", "subsidiary_Name");
-                    ViewBag.transporter_ID = new SelectList(db.tbTransporters, "transporter_ID", "transporter_Name");
-                    return View(tbTravel);
-                }
-
                 using (TransactionScope Tran = new TransactionScope())
                 {
-                    var listTravel = db.UDP_Gral_tbTravels_Insert(
+                    GetUserInformation();
+
+                    var travelDetails = (List<tbTravelDetail>)Session["travelDetails"];
+
+                    if (travelDetails is null)
+                    {
+                        ModelState.AddModelError("", $"No se pudo agregar el registro. Error: Detalle del Viaje Vacio");
+                        HandleErrorsOnCreate();
+                        return View(tbTravel);
+                    }
+
+                    var travelHeader = db.UDP_Gral_tbTravels_Insert(
                         tbTravel.subsidiary_ID, tbTravel.transporter_ID, tbTravel.employee_ID,
                         tbTravel.departure_Date_and_Time, tbTravel.distance_Kilometers, tbTravel.total_travel_Cost)
                         .FirstOrDefault();
 
-                    var list = (List<tbTravelDetail>)Session["travelDetail"];
 
-                    if (listTravel is null || listTravel.ErrorMessage.StartsWith("-1"))
+                    if (travelHeader is null || travelHeader.ErrorMessage.StartsWith("-1"))
                     {
                         ModelState.AddModelError("", "No se pudo agregar el registro");
+                        HandleErrorsOnCreate();
                         return View(tbTravel);
                     }
 
-                    var errorMessage = Convert.ToInt32(listTravel.ErrorMessage);
+                    var errorOrInsertedID = Convert.ToInt32(travelHeader.ErrorMessage);
 
-                    if (errorMessage <= 0)
+                    if (errorOrInsertedID <= 0)
                     {
                         ModelState.AddModelError("", "No se pudo agregar el registro");
-                        Session["travelDetail"] = null;
+                        HandleErrorsOnCreate();
                         return View(tbTravel);
                     }
 
-                    if (list != null && list.Any())
+                    if (!(travelDetails is null) && travelDetails.Any())
                     {
-                        foreach (tbTravelDetail travelDetail in list)
+                        foreach (tbTravelDetail travelDetail in travelDetails)
                         {
                             var listTravelDetalle = db.UDP_Gral_tbTravelDetail_Insert(
-                                errorMessage, travelDetail.employee_ID, travelDetail.distance_Kilometers, travelDetail.travel_Cost)
+                                errorOrInsertedID, travelDetail.employee_ID, travelDetail.distance_Kilometers, travelDetail.travel_Cost)
                                 .FirstOrDefault();
 
                             if (listTravelDetalle is null || listTravelDetalle.ErrorMessage.StartsWith("-1"))
                             {
+                                HandleErrorsOnCreate();
                                 ModelState.AddModelError("", "No se pudo agregar el registro detalle");
                                 return View(tbTravel);
                             }
                         }
+                    }
+
+                    if (!ModelState.IsValid || travelDetails is null || travelDetails.Count <= 0)
+                    {
+                        HandleErrorsOnCreate();
+                        return View(tbTravel);
                     }
 
                     Tran.Complete();
@@ -277,19 +281,27 @@ namespace ERP_GMEDINA.Controllers
             catch (Exception ex)
             {
                 ModelState.AddModelError("", $"No se pudo agregar el registro. Error: {ex.Message}");
+                HandleErrorsOnCreate();
                 throw;
             }
 
-            Session["travelDetail"] = null;
             return RedirectToAction("Index");
         }
+        private void HandleErrorsOnCreate()
+        {
+            CleanVariables();
+            ViewBag.employee_ID = EmployeeInfo.employee_ID;
+            ViewBag.employee_Name = EmployeeInfo.employee_Name;
+            ViewBag.subsidiary_ID = new SelectList(db.tbSubsidiaries, "subsidiary_ID", "subsidiary_Name");
+            ViewBag.transporter_ID = new SelectList(db.tbTransporters, "transporter_ID", "transporter_Name");
 
+        }
 
 
 
         // GET: /Travel/Edit/5
 
-        [SessionManager("TravelHistory/Edit")]
+        [SessionManager("Travel/Edit")]
         public ActionResult Edit(int? id)
         {
             if (id == null)
@@ -373,6 +385,11 @@ namespace ERP_GMEDINA.Controllers
         public ActionResult Edit([Bind(Include = "travel_ID,subsidiary_ID,transporter_ID,employee_ID,departure_Date_and_Time,distance_Kilometers,total_travel_Cost")] tbTravel tbTravel)
         {
             GetUserInformation();
+            var travelDetails = (List<tbTravelDetail>)Session["travelDetail"];
+            if (travelDetails == null)
+            {
+                ModelState.AddModelError("", $"No se pudo agregar el registro. Error: Detalle del Viaje Vacio");
+            }
 
             if (!ModelState.IsValid || ListEmployees.Count <= 0)
             {
@@ -391,20 +408,20 @@ namespace ERP_GMEDINA.Controllers
                 ViewBag.subsidiaryAddress = db.tbSubsidiaries.Find(tbTravel.subsidiary_ID).subsidiary_Direction;
 
 
-                var travelDetails = from detail in db.tbTravelDetails
-                                    where detail.travel_ID == tbTravel.travel_ID
-                                    select detail;
+                var travelDetailsFromDB = from detail in db.tbTravelDetails
+                                          where detail.travel_ID == tbTravel.travel_ID
+                                          select detail;
 
-                ListTravelDetails = travelDetails.ToList();
+                ListTravelDetails = travelDetailsFromDB.ToList();
 
-                ListEmployees = travelDetails.Select(detail => detail.employee_ID).ToList();
+                ListEmployees = travelDetailsFromDB.Select(detail => detail.employee_ID).ToList();
 
                 var employeesAvaliable = from employeeSubsidiary in db.tbEmployeesSubsidiaries
                             .Include(es => es.tbEmployee) // Include related entity tbSubsidiary
                             .Include(es => es.tbSubsidiary)   // Include related entity tbEmployee
                                                               // Add more .Include statements for other related entities as needed
                                          join employee in db.tbEmployees on employeeSubsidiary.employee_ID equals employee.employee_ID
-                                         join travelDetail in travelDetails on employee.employee_ID equals travelDetail.employee_ID into travelDetailGroup
+                                         join travelDetail in travelDetailsFromDB on employee.employee_ID equals travelDetail.employee_ID into travelDetailGroup
                                          from travelDetail in travelDetailGroup.DefaultIfEmpty()
                                          join travel in db.tbTravels on employeeSubsidiary.subsidiary_ID equals travel.subsidiary_ID
                                          where travelDetail == null
@@ -426,6 +443,48 @@ namespace ERP_GMEDINA.Controllers
 
                 return View(tbTravel);
             }
+
+            using (TransactionScope Tran = new TransactionScope())
+            {
+                var listTravel = db.UDP_Gral_tbTravels_Update(tbTravel.travel_ID, tbTravel.subsidiary_ID, tbTravel.transporter_ID, tbTravel.employee_ID, tbTravel.departure_Date_and_Time, tbTravel.distance_Kilometers, tbTravel.total_travel_Cost)
+                        .FirstOrDefault();
+
+
+                if (listTravel is null || listTravel.ErrorMessage.StartsWith("-1"))
+                {
+                    ModelState.AddModelError("", "No se pudo agregar el registro");
+                    return View(tbTravel);
+                }
+
+                var errorOrUpdatedID = Convert.ToInt32(listTravel.ErrorMessage);
+
+                if (errorOrUpdatedID <= 0)
+                {
+                    ModelState.AddModelError("", "No se pudo agregar el registro");
+                    Session["travelDetail"] = null;
+                    return View(tbTravel);
+                }
+
+                if (travelDetails != null && travelDetails.Any())
+                {
+                    foreach (tbTravelDetail travelDetail in travelDetails)
+                    {
+
+                        var listTravelDetalle = db.UDP_Gral_tbTravelDetail_Update(
+                            errorOrUpdatedID, travelDetail.travel_ID, travelDetail.employee_ID, travelDetail.distance_Kilometers, travelDetail.travel_Cost)
+                            .FirstOrDefault();
+
+                        if (listTravelDetalle is null || listTravelDetalle.ErrorMessage.StartsWith("-1"))
+                        {
+                            ModelState.AddModelError("", "No se pudo agregar el registro detalle");
+                            return View(tbTravel);
+                        }
+                    }
+                }
+
+                Tran.Complete();
+            }
+
 
             using (var transaction = db.Database.BeginTransaction())
             {
@@ -510,8 +569,64 @@ namespace ERP_GMEDINA.Controllers
 
         }
 
+        #region Actions
+        private void DetectChanges(List<tbEmployeesSubsidiary> database, List<tbEmployeesSubsidiary> local)
+        {
+            // Find new and updated rows
+            var newAndUpdatedRows = local.Where(localRow =>
+                                 database.Exists(dbRow => dbRow.employee_ID == localRow.employee_ID &&
+                                   !AreRowsEqual(localRow, dbRow)));
+
+            foreach (var row in newAndUpdatedRows)
+            {
+                var existingInDatabase = database.Find(dbRow => dbRow.employeeSubsidiary_ID == row.employeeSubsidiary_ID);
+
+                if (existingInDatabase == null)
+                {
+                    // Row with ID not found in database, so it is a new row
+                    Console.WriteLine($"Row with ID {row.employeeSubsidiary_ID} is inserted.");
+                    _ = db.UDP_Gral_tbEmployeesSubsidiaries_Insert(row.employee_ID, row.subsidiary_ID, row.employeeSubsidiary_DistanceKM).FirstOrDefault();
+                }
+                else
+                {
+                    // Row with ID found in database, so it is an updated row
+                    Console.WriteLine($"Row with ID {row.employeeSubsidiary_ID} is updated.");
+                    _ = db.UDP_Gral_tbEmployeesSubsidiaries_Update(row.employeeSubsidiary_ID, row.employee_ID, row.subsidiary_ID, row.employeeSubsidiary_DistanceKM).FirstOrDefault();
+                }
+            }
+
+            // Find deleted rows
+            var deletedRows = database.Where(dbRow =>
+                !local.Exists(localRow => localRow.employeeSubsidiary_ID == dbRow.employeeSubsidiary_ID));
+
+            foreach (var employeeSubsidiary_ID in deletedRows.Select(x => x.employeeSubsidiary_ID))
+            {
+                Console.WriteLine($"Row with ID {employeeSubsidiary_ID} is deleted.");
+                _ = db.UDP_Gral_tbEmployeesSubsidiaries_Delete(employeeSubsidiary_ID).FirstOrDefault();
+                //var EmployeesSubsidiary = db.UDP_Gral_tbEmployeesSubsidiaries_Delete(employeeSubsidiary_ID).FirstOrDefault();
+
+                //if (EmployeesSubsidiary is null || EmployeesSubsidiary.ErrorMessage.StartsWith("-1"))
+                //{
+                //    ModelState.AddModelError("", "Error al eliminar la subsidiaria.");
+                //}
+            }
+        }
+
+        private bool AreRowsEqual(tbEmployeesSubsidiary row1, tbEmployeesSubsidiary row2)
+        {
+            // Compare properties to check for equality
+            return row1.employeeSubsidiary_ID == row2.employeeSubsidiary_ID &&
+                   row1.employeeSubsidiary_DistanceKM == row2.employeeSubsidiary_DistanceKM;
+            // Add more properties as needed
+        }
+
+        #endregion
+
+
+
+
         // GET: /Travel/Delete/5
-        [SessionManager("TravelHistory/Delete")]
+        [SessionManager("Travel/Delete")]
         public ActionResult Delete(int? id)
         {
             if (id == null)
@@ -527,7 +642,7 @@ namespace ERP_GMEDINA.Controllers
         }
 
         // POST: /Travel/Delete/5
-        [SessionManager("TravelHistory/Delete")]
+        [SessionManager("Travel/Delete")]
         [HttpPost, ActionName("Delete")]
         [ValidateAntiForgeryToken]
         public ActionResult DeleteConfirmed(int id)
@@ -674,22 +789,31 @@ namespace ERP_GMEDINA.Controllers
         {
             try
             {
-                ListEmployees.Add(Employee);
+                if (!ModelState.IsValid)
+                {
+                    return Json(new { success = false, errors = ModelState.Values.SelectMany(v => v.Errors).Select(e => e.ErrorMessage) });
+                }
+                var listTravelDetailsSession = (List<tbTravelDetail>)Session["travelDetails"];
 
-                ListTravelDetails.Add(new tbTravelDetail { employee_ID = Employee });
+                if (listTravelDetailsSession == null)
+                {
+                    listTravelDetailsSession = new List<tbTravelDetail>();
+                    Session["travelDetails"] = listTravelDetailsSession;
+                }
 
+                listTravelDetailsSession.Add(new tbTravelDetail { employee_ID = Employee });
                 Modified = true;
 
-                return Json(true, JsonRequestBehavior.AllowGet);
+                return Json(new { success = true }, JsonRequestBehavior.AllowGet);
             }
-            catch (Exception)
+            catch (Exception ex)
             {
-                return Json(false, JsonRequestBehavior.DenyGet);
+                // Log the exception for debugging purposes
+                // logger.LogError($"Error in AddSubsidiary: {ex.Message}");
+
+                return Json(new { success = false, error = $"No se pudo asignar el empleado al viaje, Error {ex.Message}." }, JsonRequestBehavior.DenyGet);
             }
-
         }
-
-
 
         [HttpPost]
         public JsonResult RemoveEmployeestoTravelT(tbTravelDetail tbTravelDetail)
@@ -715,20 +839,27 @@ namespace ERP_GMEDINA.Controllers
         {
             try
             {
+                var listTravelDetailsSession = (List<tbTravelDetail>)Session["travelDetails"];
 
-                ListEmployees.RemoveAll(item => item == Employee);
-
-                ListTravelDetails.RemoveAll(employee => employee.employee_ID == Employee);
-
-                Modified = true;
-
-                return Json(true, JsonRequestBehavior.AllowGet);
+                if (listTravelDetailsSession != null)
+                {
+                    listTravelDetailsSession.RemoveAll(item => item.employee_ID == Employee);
+                    Modified = true;
+                    return Json(new { success = true }, JsonRequestBehavior.AllowGet);
+                }
+                else
+                {
+                    // Handle the case where the session list is null
+                    return Json(new { success = false, error = "Session list is null." }, JsonRequestBehavior.AllowGet);
+                }
             }
-            catch (Exception)
+            catch (Exception ex)
             {
-                return Json(false, JsonRequestBehavior.DenyGet);
-            }
+                // Log the exception for debugging purposes
+                // logger.LogError($"Error in RemoveSubsidiary: {ex.Message}");
 
+                return Json(new { success = false, error = $"No se pudo asignar el empleado al viaje, Error {ex.Message}." }, JsonRequestBehavior.DenyGet);
+            }
         }
 
 

@@ -38,16 +38,7 @@ namespace ERP_GMEDINA.Models
         public virtual DbSet<tbObject> tbObjects { get; set; }
         public virtual DbSet<tbUser> tbUsers { get; set; }
     
-        public virtual ObjectResult<string> UDP_Gral_tbEmployees_Delete(Nullable<int> employee_ID)
-        {
-            var employee_IDParameter = employee_ID.HasValue ?
-                new ObjectParameter("employee_ID", employee_ID) :
-                new ObjectParameter("employee_ID", typeof(int));
-    
-            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<string>("UDP_Gral_tbEmployees_Delete", employee_IDParameter);
-        }
-    
-        public virtual ObjectResult<string> UDP_Gral_tbEmployees_Update(Nullable<int> employee_ID, string employee_Name, string employee_Direction, Nullable<int> position_ID)
+        public virtual ObjectResult<UDP_Gral_tbEmployees_Update_Result> UDP_Gral_tbEmployees_Update(Nullable<int> employee_ID, string employee_Name, string employee_Direction, Nullable<int> position_ID)
         {
             var employee_IDParameter = employee_ID.HasValue ?
                 new ObjectParameter("employee_ID", employee_ID) :
@@ -65,66 +56,7 @@ namespace ERP_GMEDINA.Models
                 new ObjectParameter("position_ID", position_ID) :
                 new ObjectParameter("position_ID", typeof(int));
     
-            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<string>("UDP_Gral_tbEmployees_Update", employee_IDParameter, employee_NameParameter, employee_DirectionParameter, position_IDParameter);
-        }
-    
-        public virtual ObjectResult<string> UDP_Gral_tbEmployeesSubsidiaries_Delete(Nullable<int> employeeSubsidiary_ID, Nullable<int> employee_ID, Nullable<int> subsidiary_ID, Nullable<decimal> employeeSubsidiary_DistanceKM)
-        {
-            var employeeSubsidiary_IDParameter = employeeSubsidiary_ID.HasValue ?
-                new ObjectParameter("employeeSubsidiary_ID", employeeSubsidiary_ID) :
-                new ObjectParameter("employeeSubsidiary_ID", typeof(int));
-    
-            var employee_IDParameter = employee_ID.HasValue ?
-                new ObjectParameter("employee_ID", employee_ID) :
-                new ObjectParameter("employee_ID", typeof(int));
-    
-            var subsidiary_IDParameter = subsidiary_ID.HasValue ?
-                new ObjectParameter("subsidiary_ID", subsidiary_ID) :
-                new ObjectParameter("subsidiary_ID", typeof(int));
-    
-            var employeeSubsidiary_DistanceKMParameter = employeeSubsidiary_DistanceKM.HasValue ?
-                new ObjectParameter("employeeSubsidiary_DistanceKM", employeeSubsidiary_DistanceKM) :
-                new ObjectParameter("employeeSubsidiary_DistanceKM", typeof(decimal));
-    
-            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<string>("UDP_Gral_tbEmployeesSubsidiaries_Delete", employeeSubsidiary_IDParameter, employee_IDParameter, subsidiary_IDParameter, employeeSubsidiary_DistanceKMParameter);
-        }
-    
-        public virtual ObjectResult<UDP_Gral_tbEmployeesSubsidiaries_Insert_Result> UDP_Gral_tbEmployeesSubsidiaries_Insert(Nullable<int> employee_ID, Nullable<int> subsidiary_ID, Nullable<decimal> employeeSubsidiary_DistanceKM)
-        {
-            var employee_IDParameter = employee_ID.HasValue ?
-                new ObjectParameter("employee_ID", employee_ID) :
-                new ObjectParameter("employee_ID", typeof(int));
-    
-            var subsidiary_IDParameter = subsidiary_ID.HasValue ?
-                new ObjectParameter("subsidiary_ID", subsidiary_ID) :
-                new ObjectParameter("subsidiary_ID", typeof(int));
-    
-            var employeeSubsidiary_DistanceKMParameter = employeeSubsidiary_DistanceKM.HasValue ?
-                new ObjectParameter("employeeSubsidiary_DistanceKM", employeeSubsidiary_DistanceKM) :
-                new ObjectParameter("employeeSubsidiary_DistanceKM", typeof(decimal));
-    
-            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<UDP_Gral_tbEmployeesSubsidiaries_Insert_Result>("UDP_Gral_tbEmployeesSubsidiaries_Insert", employee_IDParameter, subsidiary_IDParameter, employeeSubsidiary_DistanceKMParameter);
-        }
-    
-        public virtual ObjectResult<string> UDP_Gral_tbEmployeesSubsidiaries_Update(Nullable<int> employeeSubsidiary_ID, Nullable<int> employee_ID, Nullable<int> subsidiary_ID, Nullable<decimal> employeeSubsidiary_DistanceKM)
-        {
-            var employeeSubsidiary_IDParameter = employeeSubsidiary_ID.HasValue ?
-                new ObjectParameter("employeeSubsidiary_ID", employeeSubsidiary_ID) :
-                new ObjectParameter("employeeSubsidiary_ID", typeof(int));
-    
-            var employee_IDParameter = employee_ID.HasValue ?
-                new ObjectParameter("employee_ID", employee_ID) :
-                new ObjectParameter("employee_ID", typeof(int));
-    
-            var subsidiary_IDParameter = subsidiary_ID.HasValue ?
-                new ObjectParameter("subsidiary_ID", subsidiary_ID) :
-                new ObjectParameter("subsidiary_ID", typeof(int));
-    
-            var employeeSubsidiary_DistanceKMParameter = employeeSubsidiary_DistanceKM.HasValue ?
-                new ObjectParameter("employeeSubsidiary_DistanceKM", employeeSubsidiary_DistanceKM) :
-                new ObjectParameter("employeeSubsidiary_DistanceKM", typeof(decimal));
-    
-            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<string>("UDP_Gral_tbEmployeesSubsidiaries_Update", employeeSubsidiary_IDParameter, employee_IDParameter, subsidiary_IDParameter, employeeSubsidiary_DistanceKMParameter);
+            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<UDP_Gral_tbEmployees_Update_Result>("UDP_Gral_tbEmployees_Update", employee_IDParameter, employee_NameParameter, employee_DirectionParameter, position_IDParameter);
         }
     
         public virtual ObjectResult<UDP_Gral_tbTravelDetail_Insert_Result> UDP_Gral_tbTravelDetail_Insert(Nullable<int> travel_ID, Nullable<int> employee_ID, Nullable<decimal> distance_Kilometers, Nullable<decimal> travel_Cost)
@@ -205,6 +137,138 @@ namespace ERP_GMEDINA.Models
                 new ObjectParameter("position_ID", typeof(int));
     
             return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<UDP_Gral_tbEmployees_Insert_Result>("UDP_Gral_tbEmployees_Insert", employee_NameParameter, employee_DirectionParameter, position_IDParameter);
+        }
+    
+        public virtual ObjectResult<UDP_Gral_tbTravel_With_tbTravelDetail_Delete_Result> UDP_Gral_tbTravel_With_tbTravelDetail_Delete(Nullable<int> travel_ID)
+        {
+            var travel_IDParameter = travel_ID.HasValue ?
+                new ObjectParameter("travel_ID", travel_ID) :
+                new ObjectParameter("travel_ID", typeof(int));
+    
+            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<UDP_Gral_tbTravel_With_tbTravelDetail_Delete_Result>("UDP_Gral_tbTravel_With_tbTravelDetail_Delete", travel_IDParameter);
+        }
+    
+        public virtual ObjectResult<UDP_Gral_tbTravelDetail_Delete_Result> UDP_Gral_tbTravelDetail_Delete(Nullable<int> travel_Detail_ID)
+        {
+            var travel_Detail_IDParameter = travel_Detail_ID.HasValue ?
+                new ObjectParameter("travel_Detail_ID", travel_Detail_ID) :
+                new ObjectParameter("travel_Detail_ID", typeof(int));
+    
+            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<UDP_Gral_tbTravelDetail_Delete_Result>("UDP_Gral_tbTravelDetail_Delete", travel_Detail_IDParameter);
+        }
+    
+        public virtual ObjectResult<UDP_Gral_tbTravelDetail_Update_Result> UDP_Gral_tbTravelDetail_Update(Nullable<int> travel_Detail_ID, Nullable<int> travel_ID, Nullable<int> employee_ID, Nullable<decimal> distance_Kilometers, Nullable<decimal> travel_Cost)
+        {
+            var travel_Detail_IDParameter = travel_Detail_ID.HasValue ?
+                new ObjectParameter("travel_Detail_ID", travel_Detail_ID) :
+                new ObjectParameter("travel_Detail_ID", typeof(int));
+    
+            var travel_IDParameter = travel_ID.HasValue ?
+                new ObjectParameter("travel_ID", travel_ID) :
+                new ObjectParameter("travel_ID", typeof(int));
+    
+            var employee_IDParameter = employee_ID.HasValue ?
+                new ObjectParameter("employee_ID", employee_ID) :
+                new ObjectParameter("employee_ID", typeof(int));
+    
+            var distance_KilometersParameter = distance_Kilometers.HasValue ?
+                new ObjectParameter("distance_Kilometers", distance_Kilometers) :
+                new ObjectParameter("distance_Kilometers", typeof(decimal));
+    
+            var travel_CostParameter = travel_Cost.HasValue ?
+                new ObjectParameter("travel_Cost", travel_Cost) :
+                new ObjectParameter("travel_Cost", typeof(decimal));
+    
+            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<UDP_Gral_tbTravelDetail_Update_Result>("UDP_Gral_tbTravelDetail_Update", travel_Detail_IDParameter, travel_IDParameter, employee_IDParameter, distance_KilometersParameter, travel_CostParameter);
+        }
+    
+        public virtual ObjectResult<UDP_Gral_tbTravels_Update_Result> UDP_Gral_tbTravels_Update(Nullable<int> travel_ID, Nullable<int> subsidiary_ID, Nullable<int> transporter_ID, Nullable<int> employee_ID, Nullable<System.DateTime> departure_Date_and_Time, Nullable<decimal> distance_Kilometers, Nullable<decimal> total_travel_Cost)
+        {
+            var travel_IDParameter = travel_ID.HasValue ?
+                new ObjectParameter("travel_ID", travel_ID) :
+                new ObjectParameter("travel_ID", typeof(int));
+    
+            var subsidiary_IDParameter = subsidiary_ID.HasValue ?
+                new ObjectParameter("subsidiary_ID", subsidiary_ID) :
+                new ObjectParameter("subsidiary_ID", typeof(int));
+    
+            var transporter_IDParameter = transporter_ID.HasValue ?
+                new ObjectParameter("transporter_ID", transporter_ID) :
+                new ObjectParameter("transporter_ID", typeof(int));
+    
+            var employee_IDParameter = employee_ID.HasValue ?
+                new ObjectParameter("employee_ID", employee_ID) :
+                new ObjectParameter("employee_ID", typeof(int));
+    
+            var departure_Date_and_TimeParameter = departure_Date_and_Time.HasValue ?
+                new ObjectParameter("departure_Date_and_Time", departure_Date_and_Time) :
+                new ObjectParameter("departure_Date_and_Time", typeof(System.DateTime));
+    
+            var distance_KilometersParameter = distance_Kilometers.HasValue ?
+                new ObjectParameter("distance_Kilometers", distance_Kilometers) :
+                new ObjectParameter("distance_Kilometers", typeof(decimal));
+    
+            var total_travel_CostParameter = total_travel_Cost.HasValue ?
+                new ObjectParameter("total_travel_Cost", total_travel_Cost) :
+                new ObjectParameter("total_travel_Cost", typeof(decimal));
+    
+            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<UDP_Gral_tbTravels_Update_Result>("UDP_Gral_tbTravels_Update", travel_IDParameter, subsidiary_IDParameter, transporter_IDParameter, employee_IDParameter, departure_Date_and_TimeParameter, distance_KilometersParameter, total_travel_CostParameter);
+        }
+    
+        public virtual ObjectResult<UDP_Gral_tbEmployeesSubsidiaries_Delete_Result> UDP_Gral_tbEmployeesSubsidiaries_Delete(Nullable<int> employeeSubsidiary_ID)
+        {
+            var employeeSubsidiary_IDParameter = employeeSubsidiary_ID.HasValue ?
+                new ObjectParameter("employeeSubsidiary_ID", employeeSubsidiary_ID) :
+                new ObjectParameter("employeeSubsidiary_ID", typeof(int));
+    
+            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<UDP_Gral_tbEmployeesSubsidiaries_Delete_Result>("UDP_Gral_tbEmployeesSubsidiaries_Delete", employeeSubsidiary_IDParameter);
+        }
+    
+        public virtual ObjectResult<UDP_Gral_tbEmployeesSubsidiaries_Insert_Result> UDP_Gral_tbEmployeesSubsidiaries_Insert(Nullable<int> employee_ID, Nullable<int> subsidiary_ID, Nullable<decimal> employeeSubsidiary_DistanceKM)
+        {
+            var employee_IDParameter = employee_ID.HasValue ?
+                new ObjectParameter("employee_ID", employee_ID) :
+                new ObjectParameter("employee_ID", typeof(int));
+    
+            var subsidiary_IDParameter = subsidiary_ID.HasValue ?
+                new ObjectParameter("subsidiary_ID", subsidiary_ID) :
+                new ObjectParameter("subsidiary_ID", typeof(int));
+    
+            var employeeSubsidiary_DistanceKMParameter = employeeSubsidiary_DistanceKM.HasValue ?
+                new ObjectParameter("employeeSubsidiary_DistanceKM", employeeSubsidiary_DistanceKM) :
+                new ObjectParameter("employeeSubsidiary_DistanceKM", typeof(decimal));
+    
+            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<UDP_Gral_tbEmployeesSubsidiaries_Insert_Result>("UDP_Gral_tbEmployeesSubsidiaries_Insert", employee_IDParameter, subsidiary_IDParameter, employeeSubsidiary_DistanceKMParameter);
+        }
+    
+        public virtual ObjectResult<UDP_Gral_tbEmployeesSubsidiaries_Update_Result> UDP_Gral_tbEmployeesSubsidiaries_Update(Nullable<int> employeeSubsidiary_ID, Nullable<int> employee_ID, Nullable<int> subsidiary_ID, Nullable<decimal> employeeSubsidiary_DistanceKM)
+        {
+            var employeeSubsidiary_IDParameter = employeeSubsidiary_ID.HasValue ?
+                new ObjectParameter("employeeSubsidiary_ID", employeeSubsidiary_ID) :
+                new ObjectParameter("employeeSubsidiary_ID", typeof(int));
+    
+            var employee_IDParameter = employee_ID.HasValue ?
+                new ObjectParameter("employee_ID", employee_ID) :
+                new ObjectParameter("employee_ID", typeof(int));
+    
+            var subsidiary_IDParameter = subsidiary_ID.HasValue ?
+                new ObjectParameter("subsidiary_ID", subsidiary_ID) :
+                new ObjectParameter("subsidiary_ID", typeof(int));
+    
+            var employeeSubsidiary_DistanceKMParameter = employeeSubsidiary_DistanceKM.HasValue ?
+                new ObjectParameter("employeeSubsidiary_DistanceKM", employeeSubsidiary_DistanceKM) :
+                new ObjectParameter("employeeSubsidiary_DistanceKM", typeof(decimal));
+    
+            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<UDP_Gral_tbEmployeesSubsidiaries_Update_Result>("UDP_Gral_tbEmployeesSubsidiaries_Update", employeeSubsidiary_IDParameter, employee_IDParameter, subsidiary_IDParameter, employeeSubsidiary_DistanceKMParameter);
+        }
+    
+        public virtual ObjectResult<UDP_Gral_tbEmployees_Delete_Result> UDP_Gral_tbEmployees_Delete(Nullable<int> employee_ID)
+        {
+            var employee_IDParameter = employee_ID.HasValue ?
+                new ObjectParameter("employee_ID", employee_ID) :
+                new ObjectParameter("employee_ID", typeof(int));
+    
+            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<UDP_Gral_tbEmployees_Delete_Result>("UDP_Gral_tbEmployees_Delete", employee_IDParameter);
         }
     }
 }

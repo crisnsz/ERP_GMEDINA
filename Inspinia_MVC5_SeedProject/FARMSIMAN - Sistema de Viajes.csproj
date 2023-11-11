@@ -271,7 +271,10 @@
     <Compile Include="Models\IdentityModels.cs" />
     <Compile Include="Models\Metadata\Employee.cs" />
     <Compile Include="Models\Metadata\EmployeesSubsidiaries.cs" />
-    <Compile Include="Models\Metadata\TravelHistory.cs" />
+    <Compile Include="Models\Metadata\Position.cs" />
+    <Compile Include="Models\Metadata\Travel.cs" />
+    <Compile Include="Models\Metadata\Users.cs" />
+    <Compile Include="Models\Subsidiary.cs" />
     <Compile Include="Models\tbAccess.cs">
       <DependentUpon>FARSIMAN.tt</DependentUpon>
     </Compile>
@@ -303,16 +306,40 @@
       <DependentUpon>FARSIMAN.tt</DependentUpon>
     </Compile>
     <Compile Include="Models\TravelReportDataModel.cs" />
+    <Compile Include="Models\UDP_Gral_tbEmployeesSubsidiaries_Delete_Result.cs">
+      <DependentUpon>FARSIMAN.tt</DependentUpon>
+    </Compile>
     <Compile Include="Models\UDP_Gral_tbEmployeesSubsidiaries_Insert_Result.cs">
+      <DependentUpon>FARSIMAN.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\UDP_Gral_tbEmployeesSubsidiaries_Update_Result.cs">
+      <DependentUpon>FARSIMAN.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\UDP_Gral_tbEmployees_Delete_Result.cs">
       <DependentUpon>FARSIMAN.tt</DependentUpon>
     </Compile>
     <Compile Include="Models\UDP_Gral_tbEmployees_Insert_Result.cs">
       <DependentUpon>FARSIMAN.tt</DependentUpon>
     </Compile>
+    <Compile Include="Models\UDP_Gral_tbEmployees_Update_Result.cs">
+      <DependentUpon>FARSIMAN.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\UDP_Gral_tbTravelDetail_Delete_Result.cs">
+      <DependentUpon>FARSIMAN.tt</DependentUpon>
+    </Compile>
     <Compile Include="Models\UDP_Gral_tbTravelDetail_Insert_Result.cs">
       <DependentUpon>FARSIMAN.tt</DependentUpon>
     </Compile>
+    <Compile Include="Models\UDP_Gral_tbTravelDetail_Update_Result.cs">
+      <DependentUpon>FARSIMAN.tt</DependentUpon>
+    </Compile>
     <Compile Include="Models\UDP_Gral_tbTravels_Insert_Result.cs">
+      <DependentUpon>FARSIMAN.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\UDP_Gral_tbTravels_Update_Result.cs">
+      <DependentUpon>FARSIMAN.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\UDP_Gral_tbTravel_With_tbTravelDetail_Delete_Result.cs">
       <DependentUpon>FARSIMAN.tt</DependentUpon>
     </Compile>
     <Compile Include="Models\UDP_Sec_Login_Result.cs">

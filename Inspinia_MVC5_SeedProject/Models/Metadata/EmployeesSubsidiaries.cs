@@ -9,7 +9,7 @@ namespace ERP_GMEDINA.Models
     [MetadataType(typeof(EmployeesSubsidiariesMetaData))]
     public partial class tbEmployeesSubsidiary
     {
-
+        public Nullable<bool> EmployeeSubsidiary_Modified { get; set; }
     }
     public class EmployeesSubsidiariesMetaData
     {

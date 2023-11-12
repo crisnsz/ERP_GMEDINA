@@ -472,13 +472,20 @@ function AddEmployeeToTravelPromise(id) {
 
 $("#EmployessAdded tbody").on("click", "input#btnDelEmployee", async function () {
     let data = tableEmployessAdded.row($(this).parents("tr")).data();
+
+    //let dataId2 = this.closest("tr.odd").getAttribute("data-id");
+
+
+    let travelDetail_ID = this.closest("tr").dataset.id;
+
+    console.log(travelDetail_ID);
+
     let Employee_ID = data[0];
     let Kilometers = (data[3])
 
+    
 
-    console.log(`Remove ${Employee_ID}`);
-
-    RemoveEmployeeToTravelPromise(Employee_ID)
+    RemoveEmployeeToTravelPromise(Employee_ID, travelDetail_ID)
         .then(response => {
 
 
@@ -505,7 +512,7 @@ $("#EmployessAdded tbody").on("click", "input#btnDelEmployee", async function ()
         });
 });
 
-function RemoveEmployeeToTravelPromise(id) {
+function RemoveEmployeeToTravelPromise(Employee, travelDetail_ID) {
 
     return new Promise((resolve, reject) => {
 
@@ -514,7 +521,7 @@ function RemoveEmployeeToTravelPromise(id) {
             headers: {
                 "Content-Type": "application/json; charset=utf-8",
             },
-            body: JSON.stringify({ Employee: id }),
+            body: JSON.stringify({ Employee, travelDetail_ID }),
         })
             .then(response => {
                 if (response.ok) {

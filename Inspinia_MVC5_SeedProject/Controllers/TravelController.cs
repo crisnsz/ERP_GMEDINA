@@ -584,9 +584,29 @@ namespace ERP_GMEDINA.Controllers
         [ValidateAntiForgeryToken]
         public ActionResult DeleteConfirmed(int id)
         {
-            tbTravel tbTravel = db.tbTravels.Find(id);
-            db.tbTravels.Remove(tbTravel);
-            db.SaveChanges();
+            try
+            {
+
+                tbTravel tbTravel = db.tbTravels.Find(id);
+
+                using (TransactionScope Tran = new TransactionScope())
+                {
+                    var TravelDelete = db.UDP_Gral_tbTravel_With_tbTravelDetail_Delete(id).FirstOrDefault();
+
+                    if (TravelDelete is null || TravelDelete.ErrorMessage.StartsWith("-1"))
+                    {
+                        ModelState.AddModelError("", "No se pudo agregar el registro");
+                        return View(tbTravel);
+                    }
+                    Tran.Complete();
+                }
+            }
+            catch (Exception ex)
+            {
+                // Log or print the exception message
+                Console.WriteLine("Exception: " + ex.Message);
+                throw; // Rethrow the exception to prevent silent failure
+            }
             return RedirectToAction("Index");
         }
 
@@ -688,32 +708,16 @@ namespace ERP_GMEDINA.Controllers
             }
         }
 
-        [HttpPost]
-        public JsonResult AddEmployeestoTravelT(tbTravelDetail tbTravelDetail)
-        {
-            try
-            {
-                ListTravelDetails.Add(tbTravelDetail);
-
-                Modified = true;
-
-                return Json(true, JsonRequestBehavior.AllowGet);
-            }
-            catch (Exception)
-            {
-                return Json(false, JsonRequestBehavior.DenyGet);
-            }
-        }
-
-        [HttpPost]
-        public JsonResult AddEmployeeTravel(int Employee)
+        public ActionResult AddEmployeeTravel(int Employee, int travelDetail_ID)
         {
             try
             {
                 if (!ModelState.IsValid)
                 {
+                    // Return a JSON object with success false and errors
                     return Json(new { success = false, errors = ModelState.Values.SelectMany(v => v.Errors).Select(e => e.ErrorMessage) });
                 }
+
                 var listTravelDetailsSession = (List<tbTravelDetail>)Session["travelDetails"];
 
                 if (listTravelDetailsSession == null)
@@ -725,47 +729,33 @@ namespace ERP_GMEDINA.Controllers
                 listTravelDetailsSession.Add(new tbTravelDetail { employee_ID = Employee });
                 Modified = true;
 
-                return Json(new { success = true }, JsonRequestBehavior.AllowGet);
+                // Return a JSON object with success true
+                return Json(new { success = true, travelDetail_ID }, JsonRequestBehavior.AllowGet);
             }
             catch (Exception ex)
             {
                 // Log the exception for debugging purposes
                 // logger.LogError($"Error in AddSubsidiary: {ex.Message}");
 
-                return Json(new { success = false, error = $"No se pudo asignar el empleado al viaje, Error {ex.Message}." }, JsonRequestBehavior.DenyGet);
+                // Return a JSON object with success false and an error message
+                return Json(new { success = false, error = $"No se pudo asignar el empleado al viaje, Error: {ex.Message}" }, JsonRequestBehavior.DenyGet);
             }
         }
 
-        [HttpPost]
-        public JsonResult RemoveEmployeestoTravelT(tbTravelDetail tbTravelDetail)
-        {
-            try
-            {
-                ListTravelDetails.RemoveAll(item => item.employee_ID == tbTravelDetail.employee_ID);
 
-                Modified = true;
-
-                return Json(true, JsonRequestBehavior.AllowGet);
-            }
-            catch (Exception)
-            {
-                return Json(false, JsonRequestBehavior.DenyGet);
-            }
-        }
 
         [HttpPost]
-        public JsonResult RemoveEmployeeTravel(int Employee, int travelDetail_ID)
+        public ActionResult RemoveEmployeeTravel(int Employee, int travelDetail_ID)
         {
             try
             {
                 var listTravelDetailsSession = (List<tbTravelDetail>)Session["travelDetails"];
-
                 var listTravelDetailsDeletedSession = (List<tbTravelDetail>)Session["travelDetailsDeleted"];
 
                 if (listTravelDetailsDeletedSession is null)
                 {
                     listTravelDetailsDeletedSession = new List<tbTravelDetail>();
-                    Session["travelDetailsDeleted"] = listTravelDetailsSession;
+                    Session["travelDetailsDeleted"] = listTravelDetailsDeletedSession;
                 }
 
                 if (listTravelDetailsSession != null)
@@ -773,20 +763,20 @@ namespace ERP_GMEDINA.Controllers
                     var listTravelDetailsFromDB = db.tbTravelDetails.Find(travelDetail_ID);
                     if (listTravelDetailsFromDB != null)
                     {
-
-                        listTravelDetailsDeletedSession.Add(new tbTravelDetail { employee_ID = Employee });
-
+                        listTravelDetailsDeletedSession.Add(new tbTravelDetail { travel_Detail_ID = travelDetail_ID, employee_ID = Employee });
                     }
-
 
                     listTravelDetailsSession.RemoveAll(item => item.employee_ID == Employee);
                     Modified = true;
-                    return Json(new { success = true }, JsonRequestBehavior.AllowGet);
+
+                    // Return a JSON object with success and travelDetail_ID
+                    return Json(new { success = true, travelDetail_ID }, JsonRequestBehavior.AllowGet);
                 }
                 else
                 {
                     // Handle the case where the session list is null
-                    return Json(new { success = false, error = "Session list is null." }, JsonRequestBehavior.AllowGet);
+                    // Return a JSON object with success and an error message
+                    return Json(new { success = false, error = "Session list is null." }, JsonRequestBehavior.DenyGet);
                 }
             }
             catch (Exception ex)
@@ -794,9 +784,11 @@ namespace ERP_GMEDINA.Controllers
                 // Log the exception for debugging purposes
                 // logger.LogError($"Error in RemoveSubsidiary: {ex.Message}");
 
-                return Json(new { success = false, error = $"No se pudo asignar el empleado al viaje, Error {ex.Message}." }, JsonRequestBehavior.DenyGet);
+                // Return a JSON object with success false and an error message
+                return Json(new { success = false, error = $"No se pudo asignar el empleado al viaje, Error: {ex.Message}" }, JsonRequestBehavior.DenyGet);
             }
         }
+
 
         [HttpPost]
         public JsonResult GetTransporterInfo(int Transporter)

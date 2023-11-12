@@ -394,147 +394,162 @@ async function checkTables() {
     //}
 }
 
-
 $("#EmployessAvalaible tbody").on("click", "input#btnAddEmployee", async function () {
+    try {
+        // Get employee data from the selected row
+        let rowData = tableEmployessAvalaible.row($(this).parents("tr")).data();
+        let employeeId = rowData[0];
+        let kilometers = parseFloat(rowData[3]);
+        // Use dataset to get data-id attribute
+        let travelDetail_ID = this.closest("tr").dataset.id;
 
-    let data = tableEmployessAvalaible.row($(this).parents("tr")).data();
-    let Employee_ID = data[0];
-    let Kilometers = (data[3])
+        console.log(employeeId);
+        console.log(travelDetail_ID);
 
-    let futureKM = parseFloat(Kilometers) + parseFloat(distance.value)
 
-    if (futureKM > 100) {
-        alert("Limite de distancia excedida!");
-        return;
+        // Calculate the future total kilometers
+        let updatedTotalKilometers = kilometers + parseFloat(distance.value);
+
+        // Check if the future total kilometers exceed the limit
+        if (updatedTotalKilometers > 100) {
+            alert("Limite de distancia excedida!");
+            return;
+        }
+
+        // Check if the employee has a travel today (replace with actual logic)
+        const employeeTravelToday = false;
+        if (employeeTravelToday) {
+            alert("Este empleado ya tiene un viaje registrado el día de hoy!");
+            return;
+        }
+
+        // Add the employee to the travel list
+        const res = await addEmployeeToTravel(employeeId, travelDetail_ID);
+
+        if (!res || res.error) {
+            console.error(res ? res.errorMessage : "Response is null");
+            return;
+        }
+
+        // Update total cost and distance
+        updateTotalCost(add, kilometers);
+        updateDistance(add, kilometers);
+
+        // Update the button and move the row to the added table
+        rowData[4] = '<input name="id02" type="button" id="btnDelEmployee" value="&#9668; Quitar &nbsp;&nbsp;" class="btn btn-primary btn-xs">';
+
+        // Move the row to tableEmployessAdded
+        let addedRow = tableEmployessAdded.row.add(rowData).draw(false).node();
+
+        // Set the data-id attribute on the <tr> element
+        addedRow.setAttribute("data-id", res.travelDetail_ID);
+
+        // Remove the row from the available table
+        tableEmployessAvalaible.row($(this).parents("tr")).remove().draw();
+
+        // Check and update table states
+        checkTables();
+
+    } catch (error) {
+        console.error("An error occurred:", error);
     }
-
-    //const employeeTravelToday = await EmployeeTravelToday(Employee_ID);
-
-    const employeeTravelToday = false;
-    if (employeeTravelToday) {
-        alert("Este empleado ya tiene un viaje registrado el día de hoy!");
-        return;
-    }
-
-
-    AddEmployeeToTravelPromise(Employee_ID)
-        .then(response => {
-
-            updateTotalCost(add, Kilometers);
-
-            updateDistance(add, Kilometers);
-
-            //#DelSubsidiary
-            data[4] = '<input name="id02" type="button" id="btnDelEmployee" value="&#9668; Quitar &nbsp;&nbsp;" class="btn btn-primary btn-xs">'
-
-
-            // Mueve la fila a tabla2
-            tableEmployessAdded.row.add(data).draw();
-
-            // Elimina la fila de tabla1
-            tableEmployessAvalaible.row($(this).parents("tr")).remove().draw();
-
-            checkTables();
-        })
-        .catch(error => {
-            console.error(error); // Request timed out
-        });
-
-
-})
-
-function AddEmployeeToTravelPromise(id) {
-    return new Promise((resolve, reject) => {
-        fetch("/Travel/AddEmployeeTravel", {
-            method: "POST",
-            headers: {
-                "Content-Type": "application/json; charset=utf-8",
-            },
-            body: JSON.stringify({ Employee: id }),
-        })
-            .then(response => {
-                if (response.ok) {
-                    return response.json();
-                } else {
-                    throw new Error("Request failed with status: " + response.status);
-                }
-            })
-            .then(data => {
-                resolve(data);
-            })
-            .catch(error => {
-                reject(error);
-            });
-    });
-}
-
-
-
-$("#EmployessAdded tbody").on("click", "input#btnDelEmployee", async function () {
-    let data = tableEmployessAdded.row($(this).parents("tr")).data();
-
-    //let dataId2 = this.closest("tr.odd").getAttribute("data-id");
-
-
-    let travelDetail_ID = this.closest("tr").dataset.id;
-
-    console.log(travelDetail_ID);
-
-    let Employee_ID = data[0];
-    let Kilometers = (data[3])
-
-    
-
-    RemoveEmployeeToTravelPromise(Employee_ID, travelDetail_ID)
-        .then(response => {
-
-
-            updateTotalCost(subtract, Kilometers)
-
-            updateDistance(subtract, Kilometers)
-
-
-            //Cambiar id de #btnDelEmployee a #btnAddEmployee
-            data[4] = '<input name="id02" type="button" id="btnAddEmployee" value="&nbsp;Agregar &#9658" class="btn btn-primary btn-xs">'
-
-            // Mueve la fila a tabla1
-            tableEmployessAvalaible.row.add(data).draw();
-
-            // Elimina la fila de tabla2
-            tableEmployessAdded.row($(this).parents("tr")).remove().draw();
-
-            tableEmployessAvalaible.order([0, 'asc']).draw();
-
-            checkTables();
-        })
-        .catch(error => {
-            console.error(error); // Request timed out
-        });
 });
 
-function RemoveEmployeeToTravelPromise(Employee, travelDetail_ID) {
 
-    return new Promise((resolve, reject) => {
-
-        fetch("/Travel/RemoveEmployeeTravel", {
+async function addEmployeeToTravel(Employee, travelDetail_ID) {
+    try {
+        const response = await fetch("/Travel/AddEmployeeTravel", {
             method: "POST",
             headers: {
                 "Content-Type": "application/json; charset=utf-8",
             },
             body: JSON.stringify({ Employee, travelDetail_ID }),
-        })
-            .then(response => {
-                if (response.ok) {
-                    return response.json();
-                } else {
-                    throw new Error("Request failed with status: " + response.status);
-                }
-            })
-            .then(data => {
-                resolve(data);
-            })
-            .catch(error => {
-                reject(error);
-            });
-    });
+        });
+
+        if (!response.ok) {
+            throw new Error("Request failed with status: " + response.status);
+        }
+
+        const data = await response.json();
+        return data;
+    } catch (error) {
+        console.error("An error occurred:", error);
+        throw error; // Re-throw the error for higher-level error handling
+    }
+}
+
+
+
+$("#EmployessAdded tbody").on("click", "input#btnDelEmployee", async function () {
+    try {
+        let rowData = tableEmployessAdded.row($(this).parents("tr")).data();
+
+        // Use dataset to get data-id attribute
+        let travelDetail_ID = this.closest("tr").dataset.id;
+
+        console.log(travelDetail_ID);
+
+        let Employee_ID = rowData[0];
+        let Kilometers = rowData[3];
+
+        const res = await removeEmployeeToTravel(Employee_ID, travelDetail_ID);
+
+        if (!res || res.error) {
+            // Handle null response or specific error case
+            console.error(res ? res.errorMessage : "Response is null");
+            return;
+        }
+
+        updateTotalCost(subtract, Kilometers);
+        updateDistance(subtract, Kilometers);
+
+        // Log the response from the server
+        console.log(res.travelDetail_ID);
+
+        // Change id from #btnDelEmployee to #btnAddEmployee
+        rowData[4] = '<input name="id02" type="button" id="btnAddEmployee" value="&nbsp;Agregar &#9658" class="btn btn-primary btn-xs">';
+
+        // Move the row to tableEmployessAvalaible
+        let addedRow = tableEmployessAvalaible.row.add(rowData).draw(false).node();
+
+        // Set the data-id attribute on the <tr> element
+        addedRow.setAttribute("data-id", res.travelDetail_ID);
+
+        // Remove the row from tableEmployessAdded
+        tableEmployessAdded.row($(this).parents("tr")).remove().draw();
+
+        // Order and draw the available table
+        tableEmployessAvalaible.order([0, 'asc']).draw();
+
+        // Check and update table states
+        checkTables();
+    } catch (error) {
+        console.error("An error occurred:", error);
+    }
+});
+
+
+
+
+
+async function removeEmployeeToTravel(Employee, travelDetail_ID) {
+    try {
+        const response = await fetch("/Travel/RemoveEmployeeTravel", {
+            method: "POST",
+            headers: {
+                "Content-Type": "application/json; charset=utf-8",
+            },
+            body: JSON.stringify({ Employee, travelDetail_ID }),
+        });
+
+        if (!response.ok) {
+            throw new Error("Request failed with status: " + response.status);
+        }
+
+        const data = await response.json();
+        return data;
+    } catch (error) {
+        console.error("An error occurred:", error);
+        throw error; // Re-throw the error for higher-level error handling
+    }
 }

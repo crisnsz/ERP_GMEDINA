@@ -272,6 +272,7 @@
     <Compile Include="Models\Metadata\Employee.cs" />
     <Compile Include="Models\Metadata\EmployeesSubsidiaries.cs" />
     <Compile Include="Models\Metadata\Position.cs" />
+    <Compile Include="Models\Metadata\Transporter.cs" />
     <Compile Include="Models\Metadata\Travel.cs" />
     <Compile Include="Models\Metadata\Users.cs" />
     <Compile Include="Models\Subsidiary.cs" />

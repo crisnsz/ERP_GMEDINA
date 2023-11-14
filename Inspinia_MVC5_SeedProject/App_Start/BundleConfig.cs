@@ -3,8 +3,9 @@ using System.Web.Optimization;
 
 namespace ERP_GMEDINA
 {
-    public class BundleConfig
+    public static class BundleConfig
     {
+
         public static void RegisterBundles(BundleCollection bundles)
         {
 

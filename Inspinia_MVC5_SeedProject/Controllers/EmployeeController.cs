@@ -26,7 +26,6 @@ namespace ERP_GMEDINA.Controllers
 
             Modified = false;
             Session["employeesSubsidiary"] = null;
-            //ListEmployeesSubsidiaries.Clear();
 
         }
         // GET: /Employee/
@@ -205,8 +204,6 @@ namespace ERP_GMEDINA.Controllers
                 var tbEmployeesSubsidiaries = db.tbEmployeesSubsidiaries
                                                 .Where(x => x.employee_ID == tbEmployee.employee_ID);
 
-                //var listEmployeesSubsidiarySession = ;
-
 
                 if (!ModelState.IsValid)
                 {
@@ -298,13 +295,12 @@ namespace ERP_GMEDINA.Controllers
             foreach (var employeeSubsidiary_ID in deletedRows.Select(x => x.employeeSubsidiary_ID))
             {
                 Console.WriteLine($"Row with ID {employeeSubsidiary_ID} is deleted.");
-                _ = db.UDP_Gral_tbEmployeesSubsidiaries_Delete(employeeSubsidiary_ID).FirstOrDefault();
-                //var EmployeesSubsidiary = db.UDP_Gral_tbEmployeesSubsidiaries_Delete(employeeSubsidiary_ID).FirstOrDefault();
+                var EmployeesSubsidiary = db.UDP_Gral_tbEmployeesSubsidiaries_Delete(employeeSubsidiary_ID).FirstOrDefault();
 
-                //if (EmployeesSubsidiary is null || EmployeesSubsidiary.ErrorMessage.StartsWith("-1"))
-                //{
-                //    ModelState.AddModelError("", "Error al eliminar la subsidiaria.");
-                //}
+                if (EmployeesSubsidiary is null || EmployeesSubsidiary.ErrorMessage.StartsWith("-1"))
+                {
+                    ModelState.AddModelError("", "Error al eliminar la subsidiaria.");
+                }
             }
         }
 
@@ -358,9 +354,7 @@ namespace ERP_GMEDINA.Controllers
             catch (Exception ex)
             {
                 // Log the exception for debugging purposes
-                // logger.LogError($"Error in AddSubsidiary: {ex.Message}");
-
-                return Json(new { success = false, error = $"No se pudo asignar el empleado a la subsidiaria {tbEmployeesSubsidiary.tbSubsidiary.subsidiary_Name}." }, JsonRequestBehavior.DenyGet);
+                return Json(new { success = false, error = $"No se pudo asignar el empleado a la subsidiaria {tbEmployeesSubsidiary.tbSubsidiary.subsidiary_Name}.", exception = ex.Message.ToString() }, JsonRequestBehavior.DenyGet);
             }
         }
 
@@ -388,9 +382,7 @@ namespace ERP_GMEDINA.Controllers
             catch (Exception ex)
             {
                 // Log the exception for debugging purposes
-                // logger.LogError($"Error in RemoveSubsidiary: {ex.Message}");
-
-                return Json(new { success = false, error = $"No se pudo eliminar la subsidiaria asiganda: {tbEmployeesSubsidiary.tbSubsidiary.subsidiary_Name}." }, JsonRequestBehavior.DenyGet);
+                return Json(new { success = false, error = $"No se pudo eliminar la subsidiaria asiganda: {tbEmployeesSubsidiary.tbSubsidiary.subsidiary_Name}.", exception = ex.Message.ToString() }, JsonRequestBehavior.DenyGet);
             }
         }
 

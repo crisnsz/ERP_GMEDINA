@@ -4,7 +4,7 @@ using System.ComponentModel.DataAnnotations;
 using System.Linq;
 using System.Web;
 
-namespace ERP_GMEDINA.Models.Metadata
+namespace ERP_GMEDINA.Models
 {
     [MetadataType(typeof(TransporterMetaData))]
     public partial class tbTransporter

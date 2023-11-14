@@ -114,7 +114,6 @@ namespace ERP_GMEDINA.Controllers
             Session["travelDetails"] = null;
 
             ListEmployees.Clear();
-            //ListTravelDetails.Clear();
         }
 
         private void GetUserInformation()
@@ -233,7 +232,7 @@ namespace ERP_GMEDINA.Controllers
                         return View(tbTravel);
                     }
 
-                    if (!(travelDetails is null) && travelDetails.Any())
+                    if (travelDetails.Any())
                     {
                         var Transportists = db.tbTransporters.Find(tbTravel.transporter_ID);
 
@@ -243,9 +242,9 @@ namespace ERP_GMEDINA.Controllers
                             return View(tbTravel);
                         }
 
-                        foreach (tbTravelDetail travelDetail in travelDetails)
+                        foreach (int travelDetailEmployee_ID in travelDetails.Select(travelDetail => travelDetail.employee_ID))
                         {
-                            var EmployeesSubsidiariesInfo = db.tbEmployeesSubsidiaries.Where(x => x.employee_ID == travelDetail.employee_ID && x.subsidiary_ID == tbTravel.subsidiary_ID).SingleOrDefault();
+                            var EmployeesSubsidiariesInfo = db.tbEmployeesSubsidiaries.Where(x => x.employee_ID == travelDetailEmployee_ID && x.subsidiary_ID == tbTravel.subsidiary_ID).SingleOrDefault();
 
                             if (EmployeesSubsidiariesInfo is null)
                             {
@@ -256,7 +255,7 @@ namespace ERP_GMEDINA.Controllers
                             var travel_Cost = Transportists.transporter_Fee * (decimal)EmployeesSubsidiariesInfo.employeeSubsidiary_DistanceKM;
 
                             var listTravelDetalle = db.UDP_Gral_tbTravelDetail_Insert(
-                                errorOrInsertedID, travelDetail.employee_ID, EmployeesSubsidiariesInfo.employeeSubsidiary_DistanceKM, travel_Cost)
+                                errorOrInsertedID, travelDetailEmployee_ID, EmployeesSubsidiariesInfo.employeeSubsidiary_DistanceKM, travel_Cost)
                                 .FirstOrDefault();
 
                             if (listTravelDetalle is null || listTravelDetalle.ErrorMessage.StartsWith("-1"))
@@ -267,7 +266,7 @@ namespace ERP_GMEDINA.Controllers
                         }
                     }
 
-                    if (!ModelState.IsValid || travelDetails is null || travelDetails.Count <= 0)
+                    if (!ModelState.IsValid || travelDetails.Count <= 0)
                     {
                         HandleErrorsOnCreate("No se pudo agregar el registro detalle");
                         return View(tbTravel);
@@ -327,10 +326,6 @@ namespace ERP_GMEDINA.Controllers
             var travelDetails = from detail in db.tbTravelDetails
                                 where detail.travel_ID == id
                                 select detail;
-
-            //ListTravelDetails = travelDetails.ToList();
-
-            //ListEmployees = travelDetails.Select(detail => detail.employee_ID).ToList();
 
             var employeesAvaliable = from employeeSubsidiary in db.tbEmployeesSubsidiaries
                         .Include(es => es.tbEmployee) // Include related entity tbSubsidiary
@@ -451,12 +446,6 @@ namespace ERP_GMEDINA.Controllers
 
             ViewBag.EmployeesAvaliable = employeesAvaliable.ToList();
 
-            //var employeesAdded = (from travelDetail in db.tbTravelDetails
-            //                      .Include(es => es.tbEmployee) // Include related entity tbSubsidiary
-            //                      .Include(es => es.tbTravel) // Include related entity tbSubsidiary
-            //                      join employee in db.tbEmployees
-            //                        on travelDetail.employee_ID equals employee.employee_ID
-            //                      select travelDetail).ToList();
 
             var employeesAdded = (from travelDetail in db.tbTravelDetails
                                   .Include(es => es.tbEmployee) // Include related entity tbSubsidiary
@@ -543,21 +532,21 @@ namespace ERP_GMEDINA.Controllers
                 Session["travelDetails"] = listTravelDetailSession;
             }
 
-            listTravelDetailSession.ForEach(travelDetail =>
+            foreach (tbTravelDetail travelDetail in listTravelDetailSession)
             {
-                var employeeInfo = db.tbEmployees.Find(travelDetail.employee_ID).tbEmployeesSubsidiaries.FirstOrDefault();
+                var employeeInfo = db.tbEmployees.Find(travelDetail.employee_ID)?.tbEmployeesSubsidiaries.FirstOrDefault();
                 var transporterInfo = db.tbTransporters.Find(tbTravel.transporter_ID);
+
                 if (employeeInfo == null)
                 {
-                    throw new ArgumentNullException(nameof(employeeInfo), "Employee information cannot be null.");
+                    throw new InvalidOperationException("Employee information cannot be null.");
                 }
 
                 travelDetail.travel_ID = tbTravel.travel_ID;
-
                 travelDetail.distance_Kilometers = employeeInfo.employeeSubsidiary_DistanceKM.Value;
-
                 travelDetail.travel_Cost = Math.Round(transporterInfo.transporter_Fee * travelDetail.distance_Kilometers, 2);
-            });
+            }
+
 
             return listTravelDetailSession.ToList();
         }
@@ -735,7 +724,6 @@ namespace ERP_GMEDINA.Controllers
             catch (Exception ex)
             {
                 // Log the exception for debugging purposes
-                // logger.LogError($"Error in AddSubsidiary: {ex.Message}");
 
                 // Return a JSON object with success false and an error message
                 return Json(new { success = false, error = $"No se pudo asignar el empleado al viaje, Error: {ex.Message}" }, JsonRequestBehavior.DenyGet);
@@ -782,7 +770,6 @@ namespace ERP_GMEDINA.Controllers
             catch (Exception ex)
             {
                 // Log the exception for debugging purposes
-                // logger.LogError($"Error in RemoveSubsidiary: {ex.Message}");
 
                 // Return a JSON object with success false and an error message
                 return Json(new { success = false, error = $"No se pudo asignar el empleado al viaje, Error: {ex.Message}" }, JsonRequestBehavior.DenyGet);
